@@ -1,1 +1,555 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda & Kalender | Pesantren Modern Al-Izzah</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = { theme: { extend: {
+            colors: { emerald: { 900: '#064E3B', 800: '#065F46' }, gold: { 400: '#D97706', 500: '#B45309', light: '#FCD34D' }, slate: { 900: '#0f172a' },
+            mint: { 50: '#E8F5EC', 100: '#DCEFE2', 200: '#C2E0CC', 300: '#A3CDB1' } },
+            fontFamily: { serif: ['Cinzel', 'serif'], sans: ['Plus Jakarta Sans', 'sans-serif'] }
+        } } }
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: #DCEFE2; } ::-webkit-scrollbar-thumb { background: #064E3B; border-radius: 4px; }
+        .glass-nav { background: rgba(232, 245, 236, 0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(6, 95, 70, 0.12); box-shadow: 0 4px 20px rgba(6, 78, 59, 0.1); }
+        #navbar.glass-nav .nav-link { color: #334155; }
+        #navbar.glass-nav .nav-link:hover { color: #D97706; }
+        #navbar.glass-nav .logo-title { color: #064E3B; }
+        #navbar.glass-nav .logo-sub { color: #475569; }
+        #navbar.glass-nav .menu-toggle { color: #064E3B; }
+        .text-gold-gradient { background: linear-gradient(to right,#D97706,#FCD34D,#D97706); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-size: 200% auto; animation: shine 5s linear infinite; }
+        @keyframes shine { to { background-position: 200% center; } }
+        .group:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+        .dropdown-menu { opacity: 0; visibility: hidden; transform: translateY(10px); transition: all .3s ease-in-out; }
+        .pattern-islamic { background-image: radial-gradient(rgba(217,119,6,0.10) 1px, transparent 1px); background-size: 28px 28px; }
+        /* ====== KARTU HIJAU ELEGAN (sama dengan index.html) ====== */
+        .card-green {
+            background: linear-gradient(135deg, #065F46 0%, #064E3B 55%, #053B2C 100%);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            box-shadow: 0 10px 30px rgba(6, 78, 59, 0.25);
+            transition: all .4s ease;
+        }
+        .card-green:hover {
+            border-color: rgba(217, 119, 6, 0.55);
+            box-shadow: 0 15px 40px rgba(6, 78, 59, 0.4), 0 0 25px rgba(217, 119, 6, 0.12);
+        }
+        .card-green::before {
+            content: '';
+            position: absolute; inset: 0;
+            border-radius: inherit;
+            background: radial-gradient(circle at top left, rgba(252,211,77,0.08), transparent 45%);
+            pointer-events: none;
+        }
+        /* Sel kalender */
+        .cal-day { transition: all .2s ease; }
+        .cal-day:hover { background: rgba(217,119,6,0.12); }
+        .cal-active { background: linear-gradient(135deg, #D97706, #B45309); color: #0f172a !important; font-weight: 700; box-shadow: 0 4px 15px rgba(217,119,6,0.4); }
+        .cal-event { position: relative; }
+        .cal-event::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; border-radius: 50%; background: #FCD34D; }
+    </style>
+</head>
+<body class="bg-mint-50 text-gray-800 font-sans antialiased overflow-x-hidden">
 
+    <!-- ============ NAVBAR ============ -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-5">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-3 group">
+                <div class="w-11 h-11 bg-emerald-900/80 rounded-full flex items-center justify-center border border-gold-400 shadow-[0_0_15px_rgba(217,119,6,0.3)] backdrop-blur-sm"><i class="fas fa-mosque text-gold-400 text-lg"></i></div>
+                <div>
+                    <h1 class="logo-title font-serif text-xl font-bold text-white tracking-wider group-hover:text-gold-400 transition">AL-IZZAH</h1>
+                    <p class="logo-sub text-[9px] uppercase tracking-[0.25em] text-gray-300 font-medium">International Boarding School</p>
+                </div>
+            </a>
+            <div class="hidden lg:flex items-center gap-5 xl:gap-7">
+                <a href="index.html" class="nav-link text-sm font-medium text-gray-200 hover:text-gold-400 transition">Beranda</a>
+                <div class="relative group">
+                    <button class="nav-link text-sm font-medium text-gray-200 hover:text-gold-400 transition flex items-center gap-1 py-2">Profil <i class="fas fa-chevron-down text-[10px] mt-0.5"></i></button>
+                    <div class="dropdown-menu absolute top-full left-0 w-64 bg-white/95 backdrop-blur-xl border border-mint-200 rounded-xl shadow-2xl overflow-hidden py-2">
+                        <a href="profil.html" class="block px-5 py-3 text-sm text-gray-700 hover:bg-mint-100 hover:text-gold-500 hover:pl-6 transition-all border-l-2 border-transparent hover:border-gold-400"><i class="fas fa-school w-5 text-gold-400/70 mr-2"></i> Profil Sekolah<span class="block text-[10px] text-gray-400 mt-0.5 pl-7">Visi, Misi & Sejarah</span></a>
+                        <a href="struktur.html" class="block px-5 py-3 text-sm text-gray-700 hover:bg-mint-100 hover:text-gold-500 hover:pl-6 transition-all border-l-2 border-transparent hover:border-gold-400"><i class="fas fa-sitemap w-5 text-gold-400/70 mr-2"></i> Struktur Organisasi</a>
+                        <a href="index.html#facilities" class="block px-5 py-3 text-sm text-gray-700 hover:bg-mint-100 hover:text-gold-500 hover:pl-6 transition-all border-l-2 border-transparent hover:border-gold-400"><i class="fas fa-building w-5 text-gold-400/70 mr-2"></i> Fasilitas & Infrastruktur</a>
+                        <a href="galeri.html" class="block px-5 py-3 text-sm text-gray-700 hover:bg-mint-100 hover:text-gold-500 hover:pl-6 transition-all border-l-2 border-transparent hover:border-gold-400"><i class="fas fa-images w-5 text-gold-400/70 mr-2"></i> Galeri Foto & Video</a>
+                    </div>
+                </div>
+                <div class="relative group">
+                    <button class="nav-link text-sm font-medium text-gold-400 transition flex items-center gap-1 py-2">Kabar Berita <i class="fas fa-chevron-down text-[10px] mt-0.5"></i></button>
+                    <div class="dropdown-menu absolute top-full left-0 w-64 bg-white/95 backdrop-blur-xl border border-mint-200 rounded-xl shadow-2xl overflow-hidden py-2">
+                        <a href="berita.html" class="block px-5 py-3 text-sm text-gray-700 hover:bg-mint-100 hover:text-gold-500 hover:pl-6 transition-all border-l-2 border-transparent hover:border-gold-400"><i class="fas fa-newspaper w-5 text-gold-400/70 mr-2"></i> Berita & Artikel</a>
+                        <a href="agenda.html" class="block px-5 py-3 text-sm bg-mint-100 text-gold-500 border-l-2 border-gold-400 font-semibold"><i class="fas fa-calendar-alt w-5 text-gold-400/70 mr-2"></i> Agenda & Kalender</a>
+                        <a href="prestasi.html" class="block px-5 py-3 text-sm text-gray-700 hover:bg-mint-100 hover:text-gold-500 hover:pl-6 transition-all border-l-2 border-transparent hover:border-gold-400"><i class="fas fa-trophy w-5 text-gold-400/70 mr-2"></i> Prestasi & Penghargaan</a>
+                    </div>
+                </div>
+                <div class="relative group">
+                    <button class="text-sm font-medium text-gold-400 hover:text-gold-light transition flex items-center gap-1.5 py-2">
+                        <span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-gold-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-gold-400"></span></span>
+                        SPMB Online <i class="fas fa-chevron-down text-[10px] mt-0.5"></i>
+                    </button>
+                    <div class="dropdown-menu absolute top-full left-0 w-72 bg-white/95 backdrop-blur-xl border border-gold-400/30 rounded-xl shadow-2xl overflow-hidden py-2">
+                        <a href="index.html#spmb-info" class="block px-5 py-3 text-sm text-gray-700 hover:bg-mint-100 hover:text-gold-500 hover:pl-6 transition-all border-l-2 border-transparent hover:border-gold-400"><i class="fas fa-circle-info w-5 text-gold-400/70 mr-2"></i> Halaman Informasi SPMB</a>
+                        <a href="index.html#spmb-result" class="block px-5 py-3 text-sm text-gray-700 hover:bg-mint-100 hover:text-gold-500 hover:pl-6 transition-all border-l-2 border-transparent hover:border-gold-400"><i class="fas fa-bullhorn w-5 text-gold-400/70 mr-2"></i> Pengumuman Hasil Seleksi</a>
+                    </div>
+                </div>
+                <a href="index.html#kurikulum" class="nav-link text-sm font-medium text-gray-200 hover:text-gold-400 transition">Kurikulum</a>
+                <a href="index.html#testimoni" class="nav-link text-sm font-medium text-gray-200 hover:text-gold-400 transition">Kontak</a>
+            </div>
+            <div class="hidden lg:block">
+                <a href="dashboard.html" class="px-6 py-2.5 bg-gradient-to-r from-emerald-900 to-emerald-800 border border-emerald-700/50 text-white text-sm font-semibold rounded-full hover:shadow-[0_0_20px_rgba(6,78,59,0.6)] transition transform hover:-translate-y-0.5 flex items-center gap-2"><i class="fas fa-user-lock text-gold-400"></i> Portal PSB & Login</a>
+            </div>
+            <button class="menu-toggle lg:hidden text-white text-2xl" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
+        </div>
+        <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-mint-50/95 backdrop-blur-xl border-t border-mint-200 p-6 flex-col gap-4 shadow-2xl max-h-[85vh] overflow-y-auto">
+            <a href="index.html" class="block text-gray-700 hover:text-gold-500 py-2 font-medium">Beranda</a>
+            <div class="border-l-2 border-emerald-800 pl-4 space-y-3">
+                <p class="text-xs text-gold-500 uppercase tracking-widest font-bold mb-1">Profil</p>
+                <a href="profil.html" class="block text-sm text-gray-600 hover:text-emerald-900">Profil Sekolah (Visi, Misi, Sejarah)</a>
+                <a href="struktur.html" class="block text-sm text-gray-600 hover:text-emerald-900">Struktur Organisasi</a>
+                <a href="index.html#facilities" class="block text-sm text-gray-600 hover:text-emerald-900">Fasilitas & Infrastruktur</a>
+                <a href="galeri.html" class="block text-sm text-gray-600 hover:text-emerald-900">Galeri Foto & Video</a>
+            </div>
+            <div class="border-l-2 border-gold-400 pl-4 space-y-3 bg-gold-400/5 rounded-r-lg py-3 pr-3">
+                <p class="text-xs text-gold-500 uppercase tracking-widest font-bold mb-1">Kabar Berita</p>
+                <a href="berita.html" class="block text-sm text-gray-600 hover:text-emerald-900">Berita & Artikel Sekolah</a>
+                <a href="agenda.html" class="block text-sm text-gold-500 font-semibold">Agenda & Kalender Kegiatan</a>
+                <a href="prestasi.html" class="block text-sm text-gray-600 hover:text-emerald-900">Prestasi & Penghargaan</a>
+            </div>
+            <div class="border-l-2 border-emerald-800 pl-4 space-y-3">
+                <p class="text-xs text-gold-500 uppercase tracking-widest font-bold mb-1"><i class="fas fa-bolt mr-1"></i> SPMB Online</p>
+                <a href="index.html#spmb-info" class="block text-sm text-gray-600 hover:text-emerald-900">Halaman Informasi SPMB</a>
+                <a href="index.html#spmb-result" class="block text-sm text-gray-600 hover:text-emerald-900">Pengumuman Hasil Seleksi</a>
+            </div>
+            <a href="index.html#kurikulum" class="block text-gray-700 hover:text-gold-500 py-2 font-medium">Kurikulum</a>
+            <a href="index.html#testimoni" class="block text-gray-700 hover:text-gold-500 py-2 font-medium">Kontak</a>
+            <a href="dashboard.html" class="block text-center bg-emerald-900 text-white py-3 rounded-lg font-bold mt-2 border border-emerald-700">Portal PSB & Login</a>
+        </div>
+    </nav>
+
+    <!-- ============ PAGE HERO ============ -->
+    <header class="relative pt-44 pb-24 overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="pichero.jpg" alt="Kampus Pesantren Al-Izzah" class="w-full h-full object-cover object-center opacity-30">
+            <div class="absolute inset-0 bg-gradient-to-b from-slate-900/90 via-emerald-900/70 to-slate-900"></div>
+        </div>
+        <div class="container mx-auto px-6 relative z-10 text-center">
+            <nav class="flex items-center justify-center gap-2 text-xs text-gray-400 mb-6" data-aos="fade-down">
+                <a href="index.html" class="hover:text-gold-400 transition">Beranda</a>
+                <i class="fas fa-chevron-right text-[8px] text-gold-400"></i>
+                <span class="text-gold-400 font-semibold">Agenda & Kalender</span>
+            </nav>
+            <p class="text-gold-400 text-xs font-bold tracking-[0.35em] uppercase mb-4" data-aos="fade-up">Jadwal Kegiatan Kampus</p>
+            <h1 class="font-serif text-4xl md:text-6xl font-bold text-white mb-6 drop-shadow-2xl" data-aos="fade-up" data-aos-delay="100">Agenda & <span class="text-gold-gradient italic">Kalender</span></h1>
+            <div class="flex items-center justify-center gap-4 mb-6" data-aos="fade-up" data-aos-delay="200">
+                <span class="h-px w-16 md:w-24 bg-gradient-to-r from-transparent to-gold-400"></span>
+                <i class="fas fa-star-and-crescent text-gold-400 text-lg"></i>
+                <span class="h-px w-16 md:w-24 bg-gradient-to-l from-transparent to-gold-400"></span>
+            </div>
+            <p class="text-gray-300 max-w-2xl mx-auto font-light leading-relaxed" data-aos="fade-up" data-aos-delay="300">Pantau seluruh kegiatan akademik, tahfidz, dan acara kampus agar tidak ada momen yang terlewat.</p>
+        </div>
+    </header>
+
+    <!-- ============ KALENDER BULANAN ============ -->
+    <section class="py-16 bg-mint-50">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+                <!-- KALENDER -->
+                <div class="lg:col-span-2 card-green relative rounded-2xl p-6 md:p-8" data-aos="fade-right">
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-6">
+                            <div>
+                                <h2 class="font-serif text-xl font-bold text-white">September 2026</h2>
+                                <p class="text-emerald-100/60 text-xs mt-1">Rabiul Awal — Rabiul Akhir 1448 H</p>
+                            </div>
+                            <div class="flex gap-2">
+                                <button class="w-9 h-9 rounded-lg bg-white/5 border border-white/10 text-emerald-100 hover:bg-gold-400 hover:text-slate-900 transition text-sm"><i class="fas fa-chevron-left"></i></button>
+                                <button class="w-9 h-9 rounded-lg bg-white/5 border border-white/10 text-emerald-100 hover:bg-gold-400 hover:text-slate-900 transition text-sm"><i class="fas fa-chevron-right"></i></button>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-7 gap-1 md:gap-2 text-center">
+                            <div class="text-[10px] font-bold uppercase tracking-widest text-gold-light py-2">Min</div>
+                            <div class="text-[10px] font-bold uppercase tracking-widest text-emerald-100/60 py-2">Sen</div>
+                            <div class="text-[10px] font-bold uppercase tracking-widest text-emerald-100/60 py-2">Sel</div>
+                            <div class="text-[10px] font-bold uppercase tracking-widest text-emerald-100/60 py-2">Rab</div>
+                            <div class="text-[10px] font-bold uppercase tracking-widest text-emerald-100/60 py-2">Kam</div>
+                            <div class="text-[10px] font-bold uppercase tracking-widest text-emerald-100/60 py-2">Jum</div>
+                            <div class="text-[10px] font-bold uppercase tracking-widest text-emerald-100/60 py-2">Sab</div>
+                            <!-- Baris 1 -->
+                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-emerald-100/30">30</div>
+                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">1</div>
+                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">2</div>
+                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">3</div>
+                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">4</div>
+                            <div class="cal-day cal-event aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">5</div>
+                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">6</div>
+                            <!-- Baris 2 -->
+                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">7</div>
+                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">8</div>
+                            <div class="cal-day cal-event aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">9</div>
+                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">10</div>
+                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">11</div>
+                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">12</div>
+                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">13</div>
+                            <!-- Baris 3 -->
+                            <div class="cal-day cal-active aspect-square rounded-lg flex items-center justify-center text-sm cursor-pointer">14</div>
+                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">15</div>
+                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">16</div>
+                            <div class="cal-day cal-event aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">17</div>
+                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">18</div>
+                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">19</div>
+                            <div class="cal-day cal-event aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">20</div>
+                            <!-- Baris 4 -->
+                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">21</div>
+                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">22</div>
+                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">23</div>
+                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">24</div>
+                            <div class="cal-day cal-event aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">25</div>
+                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">26</div>
+                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">27</div>
+                            <!-- Baris 5 -->
+                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">28</div>
+                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">29</div>
+                            <div class="cal-day cal-event aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">30</div>
+                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-emerald-100/30">1</div>
+                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-emerald-100/30">2</div>
+                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-emerald-100/30">3</div>
+                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-emerald-100/30">4</div>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-5 mt-6 pt-5 border-t border-white/10 text-xs text-emerald-100/70">
+                            <span class="flex items-center gap-2"><span class="w-3 h-3 rounded bg-gradient-to-br from-gold-400 to-gold-500"></span> Hari ini</span>
+                            <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-gold-light"></span> Ada kegiatan</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AGENDA HARI INI -->
+                <div class="space-y-4" data-aos="fade-left">
+                    <div class="card-green relative rounded-2xl p-6">
+                        <div class="relative z-10">
+                            <div class="flex items-center gap-3 mb-5">
+                                <div class="w-10 h-10 rounded-lg bg-gold-400/15 border border-gold-400/40 flex items-center justify-center"><i class="fas fa-calendar-day text-gold-light"></i></div>
+                                <div>
+                                    <h3 class="font-serif font-bold text-white">Hari Ini</h3>
+                                    <p class="text-emerald-100/60 text-xs">Senin, 14 September 2026</p>
+                                </div>
+                            </div>
+                            <div class="space-y-4">
+                                <div class="flex gap-3">
+                                    <span class="text-gold-light text-xs font-bold w-12 shrink-0 pt-0.5">04.00</span>
+                                    <div class="border-l border-gold-400/30 pl-3"><p class="text-white text-sm font-semibold">Qiyamul Lail & Tahajud</p><p class="text-emerald-100/60 text-xs">Masjid Agung Al-Izzah</p></div>
+                                </div>
+                                <div class="flex gap-3">
+                                    <span class="text-gold-light text-xs font-bold w-12 shrink-0 pt-0.5">05.00</span>
+                                    <div class="border-l border-gold-400/30 pl-3"><p class="text-white text-sm font-semibold">Halaqah Tahfidz Ba'da Subuh</p><p class="text-emerald-100/60 text-xs">Serambi Masjid & Asrama</p></div>
+                                </div>
+                                <div class="flex gap-3">
+                                    <span class="text-gold-light text-xs font-bold w-12 shrink-0 pt-0.5">07.00</span>
+                                    <div class="border-l border-gold-400/30 pl-3"><p class="text-white text-sm font-semibold">KBM Cambridge & Nasional</p><p class="text-emerald-100/60 text-xs">Gedung Akademik A & B</p></div>
+                                </div>
+                                <div class="flex gap-3">
+                                    <span class="text-gold-light text-xs font-bold w-12 shrink-0 pt-0.5">16.00</span>
+                                    <div class="border-l border-gold-400/30 pl-3"><p class="text-white text-sm font-semibold">Ekstrakurikuler & Olahraga</p><p class="text-emerald-100/60 text-xs">Lapangan & Aula Serbaguna</p></div>
+                                </div>
+                                <div class="flex gap-3">
+                                    <span class="text-gold-light text-xs font-bold w-12 shrink-0 pt-0.5">20.00</span>
+                                    <div class="border-l border-gold-400/30 pl-3"><p class="text-white text-sm font-semibold">Muhadatsah Bilingual</p><p class="text-emerald-100/60 text-xs">Area Asrama</p></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-green relative rounded-2xl p-6 border-gold-400/30">
+                        <div class="relative z-10">
+                            <h4 class="font-serif font-bold text-white mb-2"><i class="fas fa-bell text-gold-light mr-2"></i> Pengingat Wali Santri</h4>
+                            <p class="text-emerald-100/80 text-sm leading-relaxed">Kunjungan wali santri (ziarah) dibuka setiap Ahad pekan ke-2 dan ke-4, pukul 08.00–16.00 WIB.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ DAFTAR AGENDA MENDATANG ============ -->
+    <section class="py-16 bg-mint-100 pattern-islamic">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <p class="text-gold-500 text-xs font-bold tracking-[0.3em] uppercase mb-3" data-aos="fade-up">Jadwal Kegiatan</p>
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-slate-900 mb-4" data-aos="fade-up">Agenda Mendatang</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-transparent via-gold-400 to-transparent mx-auto rounded-full"></div>
+            </div>
+
+            <!-- MOUNT AGENDA DARI CMS DASHBOARD (INTEGRASI) -->
+            <div id="cmsAgendaMount" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10"></div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="card-green relative flex gap-5 rounded-2xl p-6" data-aos="fade-up">
+                    <div class="relative z-10 flex gap-5 w-full">
+                        <div class="shrink-0 w-16 text-center bg-gold-400/15 border border-gold-400/40 rounded-xl py-3">
+                            <p class="font-serif text-2xl font-bold text-gold-light leading-none">17</p>
+                            <p class="text-[10px] uppercase tracking-widest text-emerald-100/70 mt-1">Sep</p>
+                        </div>
+                        <div>
+                            <span class="inline-block bg-gold-400 text-slate-900 text-[9px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full mb-2">Akademik</span>
+                            <h3 class="font-serif font-bold text-white mb-1 leading-snug">Penilaian Tengah Semester (PTS) Ganjil</h3>
+                            <p class="text-emerald-100/70 text-xs mb-2"><i class="far fa-clock mr-1"></i> 07.00 – 12.00 WIB · <i class="fas fa-location-dot mx-1"></i> Gedung Akademik</p>
+                            <p class="text-emerald-100/80 text-sm leading-relaxed">Ujian tengah semester untuk seluruh jenjang SMP & SMA dengan sistem CBT.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-green relative flex gap-5 rounded-2xl p-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="relative z-10 flex gap-5 w-full">
+                        <div class="shrink-0 w-16 text-center bg-gold-400/15 border border-gold-400/40 rounded-xl py-3">
+                            <p class="font-serif text-2xl font-bold text-gold-light leading-none">20</p>
+                            <p class="text-[10px] uppercase tracking-widest text-emerald-100/70 mt-1">Sep</p>
+                        </div>
+                        <div>
+                            <span class="inline-block bg-gold-400 text-slate-900 text-[9px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full mb-2">Keagamaan</span>
+                            <h3 class="font-serif font-bold text-white mb-1 leading-snug">Peringatan Maulid Nabi Muhammad SAW</h3>
+                            <p class="text-emerald-100/70 text-xs mb-2"><i class="far fa-clock mr-1"></i> 19.30 – selesai · <i class="fas fa-location-dot mx-1"></i> Masjid Agung Al-Izzah</p>
+                            <p class="text-emerald-100/80 text-sm leading-relaxed">Tabligh akbar bersama alim ulama dan terbuka untuk wali santri serta masyarakat umum.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-green relative flex gap-5 rounded-2xl p-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="relative z-10 flex gap-5 w-full">
+                        <div class="shrink-0 w-16 text-center bg-gold-400/15 border border-gold-400/40 rounded-xl py-3">
+                            <p class="font-serif text-2xl font-bold text-gold-light leading-none">25</p>
+                            <p class="text-[10px] uppercase tracking-widest text-emerald-100/70 mt-1">Sep</p>
+                        </div>
+                        <div>
+                            <span class="inline-block bg-gold-400 text-slate-900 text-[9px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full mb-2">Tahfidz</span>
+                            <h3 class="font-serif font-bold text-white mb-1 leading-snug">Wisuda Tahfidz Angkatan XII</h3>
+                            <p class="text-emerald-100/70 text-xs mb-2"><i class="far fa-clock mr-1"></i> 08.00 – 15.00 WIB · <i class="fas fa-location-dot mx-1"></i> Aula Serbaguna</p>
+                            <p class="text-emerald-100/80 text-sm leading-relaxed">Penganugerahan syahadah bagi 120 santri yang menyelesaikan hafalan 30 juz.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-green relative flex gap-5 rounded-2xl p-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="relative z-10 flex gap-5 w-full">
+                        <div class="shrink-0 w-16 text-center bg-gold-400/15 border border-gold-400/40 rounded-xl py-3">
+                            <p class="font-serif text-2xl font-bold text-gold-light leading-none">30</p>
+                            <p class="text-[10px] uppercase tracking-widest text-emerald-100/70 mt-1">Sep</p>
+                        </div>
+                        <div>
+                            <span class="inline-block bg-gold-400 text-slate-900 text-[9px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full mb-2">SPMB</span>
+                            <h3 class="font-serif font-bold text-white mb-1 leading-snug">Batas Akhir Pendaftaran SPMB Gelombang 1</h3>
+                            <p class="text-emerald-100/70 text-xs mb-2"><i class="far fa-clock mr-1"></i> 23.59 WIB · <i class="fas fa-location-dot mx-1"></i> Online</p>
+                            <p class="text-emerald-100/80 text-sm leading-relaxed">Kesempatan terakhir meraih diskon 25% uang pangkal. Daftar melalui formulir online.</p>
+                            <a href="index.html#spmb-form" class="inline-flex items-center gap-2 mt-3 text-xs font-bold text-gold-light hover:text-white transition">Daftar Sekarang <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ JADWAL HARIAN SANTRI ============ -->
+    <section class="py-16 bg-mint-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <p class="text-gold-500 text-xs font-bold tracking-[0.3em] uppercase mb-3" data-aos="fade-up">Rutinitas Kampus</p>
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-slate-900 mb-4" data-aos="fade-up">Jadwal Harian Santri</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-transparent via-gold-400 to-transparent mx-auto rounded-full"></div>
+                <p class="text-gray-600 max-w-2xl mx-auto mt-4 text-sm md:text-base" data-aos="fade-up">Keseimbangan ibadah, akademik, dan pengembangan diri dalam 24 jam kehidupan pesantren.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                <div class="card-green relative rounded-2xl p-6" data-aos="fade-up">
+                    <div class="relative z-10">
+                        <div class="w-12 h-12 rounded-xl bg-gold-400/15 border border-gold-400/40 flex items-center justify-center mb-4"><i class="fas fa-moon text-gold-light text-lg"></i></div>
+                        <p class="text-gold-light text-xs font-bold uppercase tracking-widest mb-1">03.30 – 05.30</p>
+                        <h3 class="font-serif font-bold text-white mb-3">Spiritual Pagi</h3>
+                        <ul class="space-y-2 text-emerald-100/80 text-sm">
+                            <li class="flex gap-2"><i class="fas fa-circle text-[4px] mt-2 text-gold-light"></i> Qiyamul lail berjamaah</li>
+                            <li class="flex gap-2"><i class="fas fa-circle text-[4px] mt-2 text-gold-light"></i> Shalat Subuh & dzikir</li>
+                            <li class="flex gap-2"><i class="fas fa-circle text-[4px] mt-2 text-gold-light"></i> Halaqah tahfidz</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-green relative rounded-2xl p-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="relative z-10">
+                        <div class="w-12 h-12 rounded-xl bg-gold-400/15 border border-gold-400/40 flex items-center justify-center mb-4"><i class="fas fa-book-open text-gold-light text-lg"></i></div>
+                        <p class="text-gold-light text-xs font-bold uppercase tracking-widest mb-1">07.00 – 15.00</p>
+                        <h3 class="font-serif font-bold text-white mb-3">Akademik</h3>
+                        <ul class="space-y-2 text-emerald-100/80 text-sm">
+                            <li class="flex gap-2"><i class="fas fa-circle text-[4px] mt-2 text-gold-light"></i> KBM Cambridge & nasional</li>
+                            <li class="flex gap-2"><i class="fas fa-circle text-[4px] mt-2 text-gold-light"></i> Praktikum sains & robotik</li>
+                            <li class="flex gap-2"><i class="fas fa-circle text-[4px] mt-2 text-gold-light"></i> Shalat Dzuhur & makan siang</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-green relative rounded-2xl p-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="relative z-10">
+                        <div class="w-12 h-12 rounded-xl bg-gold-400/15 border border-gold-400/40 flex items-center justify-center mb-4"><i class="fas fa-futbol text-gold-light text-lg"></i></div>
+                        <p class="text-gold-light text-xs font-bold uppercase tracking-widest mb-1">16.00 – 19.30</p>
+                        <h3 class="font-serif font-bold text-white mb-3">Pengembangan Diri</h3>
+                        <ul class="space-y-2 text-emerald-100/80 text-sm">
+                            <li class="flex gap-2"><i class="fas fa-circle text-[4px] mt-2 text-gold-light"></i> Olahraga & ekstrakurikuler</li>
+                            <li class="flex gap-2"><i class="fas fa-circle text-[4px] mt-2 text-gold-light"></i> Shalat Maghrib & mengaji</li>
+                            <li class="flex gap-2"><i class="fas fa-circle text-[4px] mt-2 text-gold-light"></i> Makan malam bersama</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-green relative rounded-2xl p-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="relative z-10">
+                        <div class="w-12 h-12 rounded-xl bg-gold-400/15 border border-gold-400/40 flex items-center justify-center mb-4"><i class="fas fa-language text-gold-light text-lg"></i></div>
+                        <p class="text-gold-light text-xs font-bold uppercase tracking-widest mb-1">20.00 – 22.00</p>
+                        <h3 class="font-serif font-bold text-white mb-3">Malam Pembinaan</h3>
+                        <ul class="space-y-2 text-emerald-100/80 text-sm">
+                            <li class="flex gap-2"><i class="fas fa-circle text-[4px] mt-2 text-gold-light"></i> Shalat Isya berjamaah</li>
+                            <li class="flex gap-2"><i class="fas fa-circle text-[4px] mt-2 text-gold-light"></i> Belajar mandiri terpimpin</li>
+                            <li class="flex gap-2"><i class="fas fa-circle text-[4px] mt-2 text-gold-light"></i> Muhadatsah bilingual</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ CTA SPMB ============ -->
+    <section class="py-16 bg-gradient-to-r from-emerald-900 via-emerald-800 to-emerald-900 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#FCD34D 1px, transparent 1px); background-size: 24px 24px;"></div>
+        <div class="container mx-auto px-6 text-center relative z-10 max-w-3xl">
+            <i class="fas fa-calendar-check text-gold-400 text-4xl mb-6" data-aos="fade-up"></i>
+            <h2 class="font-serif text-3xl font-bold text-white mb-4" data-aos="fade-up">Jadilah Bagian dari Keluarga Al-Izzah</h2>
+            <p class="text-emerald-100/80 mb-8" data-aos="fade-up" data-aos-delay="100">Pendaftaran Santri Baru 2026/2027 Gelombang 1 masih dibuka hingga 30 September 2026. Kuota terbatas!</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center" data-aos="fade-up" data-aos-delay="200">
+                <a href="index.html#spmb-form" class="px-8 py-4 bg-gold-400 hover:bg-gold-500 text-slate-900 font-bold rounded-lg transition transform hover:-translate-y-0.5">Daftar Sekarang</a>
+                <a href="index.html#spmb-info" class="px-8 py-4 border border-gold-400/60 text-gold-light hover:bg-white/10 font-semibold rounded-lg transition">Info Lengkap SPMB</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="bg-mint-100 pt-20 pb-10 border-t border-mint-200">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+                <div>
+                    <div class="flex items-center gap-2 mb-6"><i class="fas fa-mosque text-gold-500 text-2xl"></i><h2 class="font-serif text-2xl font-bold text-slate-900">AL-IZZAH</h2></div>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-6">Lembaga pendidikan Islam modern yang mencetak generasi Qur'ani, berwawasan global, dan siap memimpin masa depan.</p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-mint-200 flex items-center justify-center text-emerald-900 hover:bg-gold-400 hover:text-white transition"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-mint-200 flex items-center justify-center text-emerald-900 hover:bg-gold-400 hover:text-white transition"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-mint-200 flex items-center justify-center text-emerald-900 hover:bg-gold-400 hover:text-white transition"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-slate-900 font-bold mb-6">Navigasi</h3>
+                    <ul class="space-y-3 text-sm text-gray-600">
+                        <li><a href="index.html" class="hover:text-gold-500 transition">Beranda</a></li>
+                        <li><a href="profil.html" class="hover:text-gold-500 transition">Profil Sekolah</a></li>
+                        <li><a href="berita.html" class="hover:text-gold-500 transition">Berita & Artikel</a></li>
+                        <li><a href="index.html#spmb" class="hover:text-gold-500 transition">SPMB Online</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-slate-900 font-bold mb-6">Kabar Berita</h3>
+                    <ul class="space-y-3 text-sm text-gray-600">
+                        <li><a href="berita.html" class="hover:text-gold-500 transition">Berita & Artikel</a></li>
+                        <li><a href="agenda.html" class="hover:text-gold-500 transition">Agenda & Kalender</a></li>
+                        <li><a href="prestasi.html" class="hover:text-gold-500 transition">Prestasi & Penghargaan</a></li>
+                        <li><a href="galeri.html" class="hover:text-gold-500 transition">Galeri Foto & Video</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-slate-900 font-bold mb-6">Hubungi Kami</h3>
+                    <ul class="space-y-4 text-sm text-gray-600">
+                        <li class="flex items-start gap-3"><i class="fas fa-map-marker-alt text-gold-500 mt-1"></i><span>Jl. Pendidikan Islam No. 99, Kota Baru, Indonesia 40123</span></li>
+                        <li class="flex items-center gap-3"><i class="fas fa-phone text-gold-500"></i><span>+62 812-3456-7890</span></li>
+                        <li class="flex items-center gap-3"><i class="fas fa-envelope text-gold-500"></i><span>info@alizzah.sch.id</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-mint-200 pt-8 text-center text-sm text-gray-500">&copy; 2026 Pesantren Modern Al-Izzah. All Rights Reserved.</div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: true, offset: 80 });
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) { navbar.classList.add('glass-nav', 'py-2'); navbar.classList.remove('py-5'); }
+            else { navbar.classList.remove('glass-nav', 'py-2'); navbar.classList.add('py-5'); }
+        });
+        function toggleMobileMenu() { const m = document.getElementById('mobile-menu'); m.classList.toggle('hidden'); m.classList.toggle('flex'); }
+    </script>
+    <!-- Jembatan CMS dashboard → halaman publik (INTEGRASI) -->
+    <script src="cms-public.js"></script>
+<!-- ============================================================ -->
+    <!-- 🔒 Proteksi Konten (TETAP SAMA)                              -->
+    <!-- ============================================================ -->
+    <script>
+    (function() {
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            showToastCustom('🔒 Konten dilindungi. Klik kanan dinonaktifkan.');
+            return false;
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'u') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.key === 's') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.key === 'c') { e.preventDefault(); return false; }
+            if ((e.ctrlKey && e.shiftKey && e.key === 'I') || e.key === 'F12') { 
+                e.preventDefault(); 
+                showToastCustom('🔒 Developer Tools dinonaktifkan.');
+                return false; 
+            }
+            if (e.ctrlKey && e.shiftKey && e.key === 'J') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.key === 'p') { e.preventDefault(); return false; }
+        });
+
+        document.addEventListener('selectstart', function(e) {
+            if (!['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        document.addEventListener('dragstart', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        function showToastCustom(message) {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed; top: 20px; right: 20px; z-index: 99999;
+                background: linear-gradient(135deg, #064e3b, #059669);
+                color: white; padding: 14px 20px; border-radius: 10px;
+                font-weight: 600; font-size: 0.9rem; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                animation: slideInToast 0.3s ease-out;
+            `;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.3s';
+                setTimeout(() => toast.remove(), 300);
+            }, 2500);
+        }
+
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInToast {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            body { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
+            input, textarea, select { -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text; }
+        `;
+        document.head.appendChild(style);
+
+        console.log('%c🔒 Proteksi Konten Aktif', 'color: #059669; font-size: 14px; font-weight: bold;');
+    })();
+    </script>
+
+</body>
+</html>
