@@ -91,7 +91,7 @@
             background-size: 200% auto;
             animation: shine 5s linear infinite;
         }
-        /* Versi gradien emas untuk teks di atas latar gelap (hero, testimoni) */
+        /* Versi gradien emas untuk teks di atas latar gelap (hero, testimoni, kartu hijau) */
         .text-gold-gradient-light {
             background: linear-gradient(to right, #D97706, #FCD34D, #D97706);
             -webkit-background-clip: text;
@@ -122,6 +122,26 @@
 
         /* Font tanda tangan pimpinan (section sambutan) */
         .font-signature { font-family: 'Great Vibes', cursive; }
+
+        /* ====== KARTU HIJAU ELEGAN (dipakai di semua section) ====== */
+        .card-green {
+            background: linear-gradient(135deg, #065F46 0%, #064E3B 55%, #053B2C 100%);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            box-shadow: 0 10px 30px rgba(6, 78, 59, 0.25);
+            transition: all .4s ease;
+        }
+        .card-green:hover {
+            border-color: rgba(217, 119, 6, 0.55);
+            box-shadow: 0 15px 40px rgba(6, 78, 59, 0.4), 0 0 25px rgba(217, 119, 6, 0.12);
+        }
+        /* Kilau halus di pojok atas kartu */
+        .card-green::before {
+            content: '';
+            position: absolute; inset: 0;
+            border-radius: inherit;
+            background: radial-gradient(circle at top left, rgba(252,211,77,0.08), transparent 45%);
+            pointer-events: none;
+        }
 
         /* ====== TOPBAR: efek kilau emas berjalan ====== */
         #topbar::after {
@@ -432,17 +452,17 @@
                         </p>
 
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
-                            <div class="flex items-center gap-3 bg-white border border-mint-200 hover:border-gold-400/50 rounded-xl px-4 py-3 transition shadow-sm">
-                                <i class="fas fa-heart text-gold-500"></i>
-                                <span class="text-sm text-gray-700 font-semibold">Iman yang Kokoh</span>
+                            <div class="card-green relative flex items-center gap-3 rounded-xl px-4 py-3">
+                                <i class="fas fa-heart text-gold-light"></i>
+                                <span class="text-sm text-white font-semibold">Iman yang Kokoh</span>
                             </div>
-                            <div class="flex items-center gap-3 bg-white border border-mint-200 hover:border-gold-400/50 rounded-xl px-4 py-3 transition shadow-sm">
-                                <i class="fas fa-book-open text-gold-500"></i>
-                                <span class="text-sm text-gray-700 font-semibold">Ilmu yang Luas</span>
+                            <div class="card-green relative flex items-center gap-3 rounded-xl px-4 py-3">
+                                <i class="fas fa-book-open text-gold-light"></i>
+                                <span class="text-sm text-white font-semibold">Ilmu yang Luas</span>
                             </div>
-                            <div class="flex items-center gap-3 bg-white border border-mint-200 hover:border-gold-400/50 rounded-xl px-4 py-3 transition shadow-sm">
-                                <i class="fas fa-gem text-gold-500"></i>
-                                <span class="text-sm text-gray-700 font-semibold">Akhlak yang Mulia</span>
+                            <div class="card-green relative flex items-center gap-3 rounded-xl px-4 py-3">
+                                <i class="fas fa-gem text-gold-light"></i>
+                                <span class="text-sm text-white font-semibold">Akhlak yang Mulia</span>
                             </div>
                         </div>
 
@@ -471,33 +491,41 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="group bg-white p-8 rounded-2xl border border-mint-200 shadow-sm hover:border-gold-400/50 hover:shadow-lg transition duration-500 hover:-translate-y-2" data-aos="fade-up">
-                    <div class="w-14 h-14 bg-emerald-900/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-gold-400 transition duration-500">
-                        <i class="fas fa-quran text-2xl text-gold-500 group-hover:text-emerald-900 transition"></i>
+                <div class="card-green relative group p-8 rounded-2xl hover:-translate-y-2" data-aos="fade-up">
+                    <div class="relative z-10">
+                        <div class="w-14 h-14 bg-gold-400/10 border border-gold-400/30 rounded-xl flex items-center justify-center mb-6 group-hover:bg-gold-400 transition duration-500">
+                            <i class="fas fa-quran text-2xl text-gold-light group-hover:text-emerald-900 transition"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3 font-serif">Tahfidz 30 Juz</h3>
+                        <p class="text-emerald-100/80 text-sm leading-relaxed">Program intensif hafalan Al-Quran dengan metode Talaqqi dan sanad yang jelas.</p>
                     </div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-3 font-serif">Tahfidz 30 Juz</h3>
-                    <p class="text-gray-600 text-sm leading-relaxed">Program intensif hafalan Al-Quran dengan metode Talaqqi dan sanad yang jelas.</p>
                 </div>
-                <div class="group bg-white p-8 rounded-2xl border border-mint-200 shadow-sm hover:border-gold-400/50 hover:shadow-lg transition duration-500 hover:-translate-y-2" data-aos="fade-up" data-aos-delay="100">
-                    <div class="w-14 h-14 bg-emerald-900/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-gold-400 transition duration-500">
-                        <i class="fas fa-globe text-2xl text-gold-500 group-hover:text-emerald-900 transition"></i>
+                <div class="card-green relative group p-8 rounded-2xl hover:-translate-y-2" data-aos="fade-up" data-aos-delay="100">
+                    <div class="relative z-10">
+                        <div class="w-14 h-14 bg-gold-400/10 border border-gold-400/30 rounded-xl flex items-center justify-center mb-6 group-hover:bg-gold-400 transition duration-500">
+                            <i class="fas fa-globe text-2xl text-gold-light group-hover:text-emerald-900 transition"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3 font-serif">Cambridge Curriculum</h3>
+                        <p class="text-emerald-100/80 text-sm leading-relaxed">Standar internasional IGCSE & A-Level untuk persiapan studi ke universitas global.</p>
                     </div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-3 font-serif">Cambridge Curriculum</h3>
-                    <p class="text-gray-600 text-sm leading-relaxed">Standar internasional IGCSE & A-Level untuk persiapan studi ke universitas global.</p>
                 </div>
-                <div class="group bg-white p-8 rounded-2xl border border-mint-200 shadow-sm hover:border-gold-400/50 hover:shadow-lg transition duration-500 hover:-translate-y-2" data-aos="fade-up" data-aos-delay="200">
-                    <div class="w-14 h-14 bg-emerald-900/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-gold-400 transition duration-500">
-                        <i class="fas fa-language text-2xl text-gold-500 group-hover:text-emerald-900 transition"></i>
+                <div class="card-green relative group p-8 rounded-2xl hover:-translate-y-2" data-aos="fade-up" data-aos-delay="200">
+                    <div class="relative z-10">
+                        <div class="w-14 h-14 bg-gold-400/10 border border-gold-400/30 rounded-xl flex items-center justify-center mb-6 group-hover:bg-gold-400 transition duration-500">
+                            <i class="fas fa-language text-2xl text-gold-light group-hover:text-emerald-900 transition"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3 font-serif">Bilingual Area</h3>
+                        <p class="text-emerald-100/80 text-sm leading-relaxed">Bahasa Arab & Inggris sebagai bahasa komunikasi sehari-hari di lingkungan Pondok.</p>
                     </div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-3 font-serif">Bilingual Area</h3>
-                    <p class="text-gray-600 text-sm leading-relaxed">Bahasa Arab & Inggris sebagai bahasa komunikasi sehari-hari di lingkungan Pondok.</p>
                 </div>
-                <div class="group bg-white p-8 rounded-2xl border border-mint-200 shadow-sm hover:border-gold-400/50 hover:shadow-lg transition duration-500 hover:-translate-y-2" data-aos="fade-up" data-aos-delay="300">
-                    <div class="w-14 h-14 bg-emerald-900/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-gold-400 transition duration-500">
-                        <i class="fas fa-robot text-2xl text-gold-500 group-hover:text-emerald-900 transition"></i>
+                <div class="card-green relative group p-8 rounded-2xl hover:-translate-y-2" data-aos="fade-up" data-aos-delay="300">
+                    <div class="relative z-10">
+                        <div class="w-14 h-14 bg-gold-400/10 border border-gold-400/30 rounded-xl flex items-center justify-center mb-6 group-hover:bg-gold-400 transition duration-500">
+                            <i class="fas fa-robot text-2xl text-gold-light group-hover:text-emerald-900 transition"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3 font-serif">Digital & Robotik</h3>
+                        <p class="text-emerald-100/80 text-sm leading-relaxed">Ekstrakurikuler coding, AI dasar, dan robotika untuk menghadapi era industri 4.0.</p>
                     </div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-3 font-serif">Digital & Robotik</h3>
-                    <p class="text-gray-600 text-sm leading-relaxed">Ekstrakurikuler coding, AI dasar, dan robotika untuk menghadapi era industri 4.0.</p>
                 </div>
             </div>
         </div>
@@ -517,125 +545,135 @@
             </div>
 
             <div id="spmb-info" class="scroll-mt-28 grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-                <div class="bg-white border border-mint-200 shadow-sm rounded-2xl p-8 hover:border-gold-400/50 transition" data-aos="fade-right">
-                    <div class="flex items-center gap-4 mb-6">
-                        <div class="w-12 h-12 rounded-xl bg-gold-400/10 border border-gold-400/30 flex items-center justify-center">
-                            <i class="fas fa-circle-info text-gold-500 text-xl"></i>
+                <div class="card-green relative rounded-2xl p-8" data-aos="fade-right">
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-12 h-12 rounded-xl bg-gold-400/15 border border-gold-400/40 flex items-center justify-center">
+                                <i class="fas fa-circle-info text-gold-light text-xl"></i>
+                            </div>
+                            <h3 class="font-serif text-xl font-bold text-white">Informasi & Persyaratan</h3>
                         </div>
-                        <h3 class="font-serif text-xl font-bold text-slate-900">Informasi & Persyaratan</h3>
+                        <ul class="space-y-3 text-sm text-emerald-100/85">
+                            <li class="flex gap-3"><i class="fas fa-check-circle text-gold-light mt-0.5"></i> Terbuka untuk jenjang SMP & SMA Tahfidz / Cambridge / Sains.</li>
+                            <li class="flex gap-3"><i class="fas fa-check-circle text-gold-light mt-0.5"></i> Fotokopi Kartu Keluarga, Akta Kelahiran & Rapor 2 semester terakhir.</li>
+                            <li class="flex gap-3"><i class="fas fa-check-circle text-gold-light mt-0.5"></i> Pas foto 3×4 berlatar merah (format digital untuk unggah).</li>
+                            <li class="flex gap-3"><i class="fas fa-check-circle text-gold-light mt-0.5"></i> Tes membaca Al-Quran, akademik, dan wawancara wali santri.</li>
+                            <li class="flex gap-3"><i class="fas fa-check-circle text-gold-light mt-0.5"></i> Biaya pendaftaran Rp 350.000 (gelombang 1 & 2).</li>
+                        </ul>
+                        <a href="#spmb-form" class="inline-flex items-center gap-2 mt-6 text-sm font-bold text-gold-light hover:text-white transition">
+                            Lanjut ke Formulir Pendaftaran <i class="fas fa-arrow-right"></i>
+                        </a>
                     </div>
-                    <ul class="space-y-3 text-sm text-gray-600">
-                        <li class="flex gap-3"><i class="fas fa-check-circle text-gold-500 mt-0.5"></i> Terbuka untuk jenjang SMP & SMA Tahfidz / Cambridge / Sains.</li>
-                        <li class="flex gap-3"><i class="fas fa-check-circle text-gold-500 mt-0.5"></i> Fotokopi Kartu Keluarga, Akta Kelahiran & Rapor 2 semester terakhir.</li>
-                        <li class="flex gap-3"><i class="fas fa-check-circle text-gold-500 mt-0.5"></i> Pas foto 3×4 berlatar merah (format digital untuk unggah).</li>
-                        <li class="flex gap-3"><i class="fas fa-check-circle text-gold-500 mt-0.5"></i> Tes membaca Al-Quran, akademik, dan wawancara wali santri.</li>
-                        <li class="flex gap-3"><i class="fas fa-check-circle text-gold-500 mt-0.5"></i> Biaya pendaftaran Rp 350.000 (gelombang 1 & 2).</li>
-                    </ul>
-                    <a href="#spmb-form" class="inline-flex items-center gap-2 mt-6 text-sm font-bold text-gold-500 hover:text-gold-400 transition">
-                        Lanjut ke Formulir Pendaftaran <i class="fas fa-arrow-right"></i>
-                    </a>
                 </div>
-                <div class="bg-white border border-mint-200 shadow-sm rounded-2xl p-8 hover:border-gold-400/50 transition" data-aos="fade-left">
-                    <div class="flex items-center gap-4 mb-6">
-                        <div class="w-12 h-12 rounded-xl bg-gold-400/10 border border-gold-400/30 flex items-center justify-center">
-                            <i class="fas fa-calendar-days text-gold-500 text-xl"></i>
+                <div class="card-green relative rounded-2xl p-8" data-aos="fade-left">
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-12 h-12 rounded-xl bg-gold-400/15 border border-gold-400/40 flex items-center justify-center">
+                                <i class="fas fa-calendar-days text-gold-light text-xl"></i>
+                            </div>
+                            <h3 class="font-serif text-xl font-bold text-white">Jadwal Pendaftaran</h3>
                         </div>
-                        <h3 class="font-serif text-xl font-bold text-slate-900">Jadwal Pendaftaran</h3>
-                    </div>
-                    <div class="space-y-4">
-                        <div class="flex items-center gap-4 border-l-2 border-gold-400 pl-4 py-1">
-                            <div><p class="text-slate-900 font-semibold text-sm">Gelombang 1 — Early Bird</p><p class="text-gray-500 text-xs">1 Sep – 30 Nov 2026 · Diskon 25% uang pangkal</p></div>
-                        </div>
-                        <div class="flex items-center gap-4 border-l-2 border-emerald-700 pl-4 py-1">
-                            <div><p class="text-slate-900 font-semibold text-sm">Gelombang 2 — Reguler</p><p class="text-gray-500 text-xs">1 Des 2026 – 28 Feb 2027</p></div>
-                        </div>
-                        <div class="flex items-center gap-4 border-l-2 border-emerald-700 pl-4 py-1">
-                            <div><p class="text-slate-900 font-semibold text-sm">Gelombang 3 — Terakhir</p><p class="text-gray-500 text-xs">1 Mar – 30 Apr 2027 · Kuota terbatas</p></div>
-                        </div>
-                        <div class="flex items-center gap-4 border-l-2 border-gold-400 pl-4 py-1">
-                            <div><p class="text-slate-900 font-semibold text-sm">Tes Seleksi & Pengumuman</p><p class="text-gray-500 text-xs">Mei 2027 · Hasil diumumkan online</p></div>
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-4 border-l-2 border-gold-400 pl-4 py-1">
+                                <div><p class="text-white font-semibold text-sm">Gelombang 1 — Early Bird</p><p class="text-emerald-100/70 text-xs">1 Sep – 30 Nov 2026 · Diskon 25% uang pangkal</p></div>
+                            </div>
+                            <div class="flex items-center gap-4 border-l-2 border-emerald-400/60 pl-4 py-1">
+                                <div><p class="text-white font-semibold text-sm">Gelombang 2 — Reguler</p><p class="text-emerald-100/70 text-xs">1 Des 2026 – 28 Feb 2027</p></div>
+                            </div>
+                            <div class="flex items-center gap-4 border-l-2 border-emerald-400/60 pl-4 py-1">
+                                <div><p class="text-white font-semibold text-sm">Gelombang 3 — Terakhir</p><p class="text-emerald-100/70 text-xs">1 Mar – 30 Apr 2027 · Kuota terbatas</p></div>
+                            </div>
+                            <div class="flex items-center gap-4 border-l-2 border-gold-400 pl-4 py-1">
+                                <div><p class="text-white font-semibold text-sm">Tes Seleksi & Pengumuman</p><p class="text-emerald-100/70 text-xs">Mei 2027 · Hasil diumumkan online</p></div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
-                <div class="lg:col-span-3 bg-white border border-mint-200 shadow-sm rounded-2xl p-8" data-aos="fade-up">
-                    <div id="spmb-form" class="scroll-mt-28 flex items-center gap-4 mb-6">
-                        <div class="w-12 h-12 rounded-xl bg-gold-400/10 border border-gold-400/30 flex items-center justify-center">
-                            <i class="fas fa-user-pen text-gold-500 text-xl"></i>
+                <div class="lg:col-span-3 card-green relative rounded-2xl p-8" data-aos="fade-up">
+                    <div class="relative z-10">
+                        <div id="spmb-form" class="scroll-mt-28 flex items-center gap-4 mb-6">
+                            <div class="w-12 h-12 rounded-xl bg-gold-400/15 border border-gold-400/40 flex items-center justify-center">
+                                <i class="fas fa-user-pen text-gold-light text-xl"></i>
+                            </div>
+                            <h3 class="font-serif text-xl font-bold text-white">Formulir Pendaftaran Online</h3>
                         </div>
-                        <h3 class="font-serif text-xl font-bold text-slate-900">Formulir Pendaftaran Online</h3>
+
+                        <form id="psbForm" onsubmit="submitPSB(event)" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-xs text-emerald-100/80 mb-1.5 uppercase tracking-wide">Nama Lengkap Calon Santri *</label>
+                                <input type="text" id="psbNama" required class="w-full bg-mint-50 border border-mint-300 rounded-lg px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-gold-400 focus:bg-white transition" placeholder="cth: Muhammad Fatih">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-emerald-100/80 mb-1.5 uppercase tracking-wide">Asal Sekolah *</label>
+                                <input type="text" id="psbSekolah" required class="w-full bg-mint-50 border border-mint-300 rounded-lg px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-gold-400 focus:bg-white transition" placeholder="cth: SDIT Al-Azhar">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-emerald-100/80 mb-1.5 uppercase tracking-wide">Jenjang & Program *</label>
+                                <select id="psbProgram" required class="w-full bg-mint-50 border border-mint-300 rounded-lg px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-gold-400 focus:bg-white transition">
+                                    <option value="">— Pilih Program —</option>
+                                    <option>SMP — Tahfidz Intensif</option>
+                                    <option>SMP — Cambridge Class</option>
+                                    <option>SMA — Tahfidz & Sains</option>
+                                    <option>SMA — Cambridge A-Level</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs text-emerald-100/80 mb-1.5 uppercase tracking-wide">No. WhatsApp Wali *</label>
+                                <input type="tel" id="psbWa" required class="w-full bg-mint-50 border border-mint-300 rounded-lg px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-gold-400 focus:bg-white transition" placeholder="cth: 0812xxxxxxx">
+                            </div>
+
+                            <div id="spmb-upload" class="scroll-mt-28 md:col-span-2">
+                                <label class="block text-xs text-emerald-100/80 mb-1.5 uppercase tracking-wide"><i class="fas fa-cloud-arrow-up text-gold-light mr-1"></i> Upload Dokumen Persyaratan *</label>
+                                <label class="flex flex-col items-center justify-center gap-2 border-2 border-dashed border-mint-300 hover:border-gold-400 rounded-xl py-8 px-4 cursor-pointer transition bg-mint-50 group">
+                                    <i class="fas fa-file-arrow-up text-3xl text-gray-400 group-hover:text-gold-500 transition"></i>
+                                    <span class="text-sm text-gray-600 group-hover:text-slate-900 transition">Klik untuk unggah <span class="text-gold-500 font-semibold">(KK, Rapor, Pas Foto)</span></span>
+                                    <span class="text-[10px] text-gray-400">PDF/JPG/PNG · maks 5 MB per file</span>
+                                    <input type="file" id="psbFiles" multiple accept=".pdf,.jpg,.jpeg,.png" class="hidden" onchange="listFiles(this)">
+                                </label>
+                                <ul id="fileList" class="mt-3 space-y-1 text-xs text-gold-light"></ul>
+                            </div>
+
+                            <div class="md:col-span-2">
+                                <button type="submit" class="w-full py-4 bg-gold-400 hover:bg-gold-500 text-slate-900 font-bold rounded-lg shadow-[0_10px_30px_rgba(217,119,6,0.3)] hover:shadow-[0_10px_40px_rgba(217,119,6,0.5)] transition-all transform hover:-translate-y-0.5">
+                                    <i class="fas fa-paper-plane mr-2"></i> Kirim Pendaftaran
+                                </button>
+                                <p id="psbSuccess" class="hidden mt-4 text-center text-sm bg-emerald-50 border border-emerald-300 text-emerald-700 rounded-lg py-3 px-4"></p>
+                            </div>
+                        </form>
                     </div>
-
-                    <form id="psbForm" onsubmit="submitPSB(event)" class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                        <div>
-                            <label class="block text-xs text-gray-500 mb-1.5 uppercase tracking-wide">Nama Lengkap Calon Santri *</label>
-                            <input type="text" id="psbNama" required class="w-full bg-mint-50 border border-mint-300 rounded-lg px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-gold-400 focus:bg-white transition" placeholder="cth: Muhammad Fatih">
-                        </div>
-                        <div>
-                            <label class="block text-xs text-gray-500 mb-1.5 uppercase tracking-wide">Asal Sekolah *</label>
-                            <input type="text" id="psbSekolah" required class="w-full bg-mint-50 border border-mint-300 rounded-lg px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-gold-400 focus:bg-white transition" placeholder="cth: SDIT Al-Azhar">
-                        </div>
-                        <div>
-                            <label class="block text-xs text-gray-500 mb-1.5 uppercase tracking-wide">Jenjang & Program *</label>
-                            <select id="psbProgram" required class="w-full bg-mint-50 border border-mint-300 rounded-lg px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-gold-400 focus:bg-white transition">
-                                <option value="">— Pilih Program —</option>
-                                <option>SMP — Tahfidz Intensif</option>
-                                <option>SMP — Cambridge Class</option>
-                                <option>SMA — Tahfidz & Sains</option>
-                                <option>SMA — Cambridge A-Level</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-xs text-gray-500 mb-1.5 uppercase tracking-wide">No. WhatsApp Wali *</label>
-                            <input type="tel" id="psbWa" required class="w-full bg-mint-50 border border-mint-300 rounded-lg px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-gold-400 focus:bg-white transition" placeholder="cth: 0812xxxxxxx">
-                        </div>
-
-                        <div id="spmb-upload" class="scroll-mt-28 md:col-span-2">
-                            <label class="block text-xs text-gray-500 mb-1.5 uppercase tracking-wide"><i class="fas fa-cloud-arrow-up text-gold-500 mr-1"></i> Upload Dokumen Persyaratan *</label>
-                            <label class="flex flex-col items-center justify-center gap-2 border-2 border-dashed border-mint-300 hover:border-gold-400 rounded-xl py-8 px-4 cursor-pointer transition bg-mint-50 group">
-                                <i class="fas fa-file-arrow-up text-3xl text-gray-400 group-hover:text-gold-500 transition"></i>
-                                <span class="text-sm text-gray-600 group-hover:text-slate-900 transition">Klik untuk unggah <span class="text-gold-500 font-semibold">(KK, Rapor, Pas Foto)</span></span>
-                                <span class="text-[10px] text-gray-400">PDF/JPG/PNG · maks 5 MB per file</span>
-                                <input type="file" id="psbFiles" multiple accept=".pdf,.jpg,.jpeg,.png" class="hidden" onchange="listFiles(this)">
-                            </label>
-                            <ul id="fileList" class="mt-3 space-y-1 text-xs text-emerald-600"></ul>
-                        </div>
-
-                        <div class="md:col-span-2">
-                            <button type="submit" class="w-full py-4 bg-gold-400 hover:bg-gold-500 text-slate-900 font-bold rounded-lg shadow-[0_10px_30px_rgba(217,119,6,0.3)] hover:shadow-[0_10px_40px_rgba(217,119,6,0.5)] transition-all transform hover:-translate-y-0.5">
-                                <i class="fas fa-paper-plane mr-2"></i> Kirim Pendaftaran
-                            </button>
-                            <p id="psbSuccess" class="hidden mt-4 text-center text-sm bg-emerald-50 border border-emerald-300 text-emerald-700 rounded-lg py-3 px-4"></p>
-                        </div>
-                    </form>
                 </div>
 
                 <div class="lg:col-span-2 space-y-8">
-                    <div id="spmb-result" class="scroll-mt-28 bg-white border border-gold-400/30 shadow-sm rounded-2xl p-8" data-aos="fade-up" data-aos-delay="100">
-                        <div class="flex items-center gap-4 mb-6">
-                            <div class="w-12 h-12 rounded-xl bg-gold-400/10 border border-gold-400/30 flex items-center justify-center">
-                                <i class="fas fa-bullhorn text-gold-500 text-xl"></i>
+                    <div id="spmb-result" class="scroll-mt-28 card-green relative rounded-2xl p-8" data-aos="fade-up" data-aos-delay="100">
+                        <div class="relative z-10">
+                            <div class="flex items-center gap-4 mb-6">
+                                <div class="w-12 h-12 rounded-xl bg-gold-400/15 border border-gold-400/40 flex items-center justify-center">
+                                    <i class="fas fa-bullhorn text-gold-light text-xl"></i>
+                                </div>
+                                <h3 class="font-serif text-xl font-bold text-white">Pengumuman Hasil Seleksi</h3>
                             </div>
-                            <h3 class="font-serif text-xl font-bold text-slate-900">Pengumuman Hasil Seleksi</h3>
+                            <p class="text-sm text-emerald-100/80 mb-4">Masukkan nomor pendaftaran yang Anda terima saat registrasi untuk melihat status seleksi.</p>
+                            <div class="flex gap-2">
+                                <input type="text" id="cekNomor" class="flex-1 bg-mint-50 border border-mint-300 rounded-lg px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-gold-400 focus:bg-white transition" placeholder="cth: PSB-2026-0001">
+                                <button onclick="cekHasil()" class="px-5 py-3 bg-gold-400 hover:bg-gold-500 text-slate-900 text-sm font-bold rounded-lg transition">
+                                    <i class="fas fa-magnifying-glass"></i>
+                                </button>
+                            </div>
+                            <div id="hasilCek" class="hidden mt-4 text-sm rounded-lg py-3 px-4"></div>
                         </div>
-                        <p class="text-sm text-gray-600 mb-4">Masukkan nomor pendaftaran yang Anda terima saat registrasi untuk melihat status seleksi.</p>
-                        <div class="flex gap-2">
-                            <input type="text" id="cekNomor" class="flex-1 bg-mint-50 border border-mint-300 rounded-lg px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-gold-400 focus:bg-white transition" placeholder="cth: PSB-2026-0001">
-                            <button onclick="cekHasil()" class="px-5 py-3 bg-emerald-900 hover:bg-emerald-800 border border-emerald-700 text-white text-sm font-bold rounded-lg transition">
-                                <i class="fas fa-magnifying-glass"></i>
-                            </button>
-                        </div>
-                        <div id="hasilCek" class="hidden mt-4 text-sm rounded-lg py-3 px-4"></div>
                     </div>
 
-                    <div class="bg-gradient-to-br from-emerald-900 to-emerald-800 border border-emerald-700/50 rounded-2xl p-8 shadow-lg" data-aos="fade-up" data-aos-delay="200">
-                        <h4 class="font-serif text-lg font-bold text-white mb-4"><i class="fas fa-headset text-gold-light mr-2"></i> Butuh Bantuan?</h4>
-                        <p class="text-sm text-emerald-100/80 mb-5">Panitia SPMB siap membantu Senin–Sabtu, 08.00–16.00 WIB.</p>
-                        <div class="space-y-2 text-sm text-white">
-                            <p><i class="fab fa-whatsapp text-gold-light mr-2"></i> +62 812-3456-7890</p>
-                            <p><i class="fas fa-envelope text-gold-light mr-2"></i> spmb@alizzah.sch.id</p>
+                    <div class="card-green relative rounded-2xl p-8 border-gold-400/30" data-aos="fade-up" data-aos-delay="200">
+                        <div class="relative z-10">
+                            <h4 class="font-serif text-lg font-bold text-white mb-4"><i class="fas fa-headset text-gold-light mr-2"></i> Butuh Bantuan?</h4>
+                            <p class="text-sm text-emerald-100/80 mb-5">Panitia SPMB siap membantu Senin–Sabtu, 08.00–16.00 WIB.</p>
+                            <div class="space-y-2 text-sm text-white">
+                                <p><i class="fab fa-whatsapp text-gold-light mr-2"></i> +62 812-3456-7890</p>
+                                <p><i class="fas fa-envelope text-gold-light mr-2"></i> spmb@alizzah.sch.id</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -700,35 +738,41 @@
                 <h2 class="font-serif text-3xl md:text-4xl font-bold text-white">Kisah Sukses Alumni & Wali Santri</h2>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-white/5 backdrop-blur-md p-8 rounded-xl border border-white/10 hover:border-gold-400/30 transition duration-300" data-aos="fade-up">
-                    <div class="flex items-center gap-4 mb-6">
-                        <img src="https://randomuser.me/api/portraits/men/32.jpg" class="w-14 h-14 rounded-full border-2 border-gold-400 p-1" alt="Ahmad Zaki">
-                        <div>
-                            <h4 class="text-white font-bold text-lg">Ahmad Zaki</h4>
-                            <p class="text-gold-light text-xs uppercase tracking-wide">Alumni — Mahasiswa Al-Azhar, Kairo</p>
+                <div class="card-green relative p-8 rounded-xl" data-aos="fade-up">
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-4 mb-6">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" class="w-14 h-14 rounded-full border-2 border-gold-400 p-1" alt="Ahmad Zaki">
+                            <div>
+                                <h4 class="text-white font-bold text-lg">Ahmad Zaki</h4>
+                                <p class="text-gold-light text-xs uppercase tracking-wide">Alumni — Mahasiswa Al-Azhar, Kairo</p>
+                            </div>
                         </div>
+                        <p class="text-emerald-100/85 italic leading-relaxed">"Keseimbangan antara agama dan sains membuat saya mudah beradaptasi di Mesir. Fondasi bahasa Arab yang kuat adalah kuncinya."</p>
                     </div>
-                    <p class="text-gray-300 italic leading-relaxed">"Keseimbangan antara agama dan sains membuat saya mudah beradaptasi di Mesir. Fondasi bahasa Arab yang kuat adalah kuncinya."</p>
                 </div>
-                <div class="bg-white/5 backdrop-blur-md p-8 rounded-xl border border-white/10 hover:border-gold-400/30 transition duration-300" data-aos="fade-up" data-aos-delay="100">
-                    <div class="flex items-center gap-4 mb-6">
-                        <img src="https://randomuser.me/api/portraits/women/44.jpg" class="w-14 h-14 rounded-full border-2 border-gold-400 p-1" alt="Siti Aminah">
-                        <div>
-                            <h4 class="text-white font-bold text-lg">Siti Aminah</h4>
-                            <p class="text-gold-light text-xs uppercase tracking-wide">Alumni — Beasiswa IIUM Malaysia</p>
+                <div class="card-green relative p-8 rounded-xl" data-aos="fade-up" data-aos-delay="100">
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-4 mb-6">
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg" class="w-14 h-14 rounded-full border-2 border-gold-400 p-1" alt="Siti Aminah">
+                            <div>
+                                <h4 class="text-white font-bold text-lg">Siti Aminah</h4>
+                                <p class="text-gold-light text-xs uppercase tracking-wide">Alumni — Beasiswa IIUM Malaysia</p>
+                            </div>
                         </div>
+                        <p class="text-emerald-100/85 italic leading-relaxed">"Lingkungan kondusif dan dukungan ustadzah membantu saya menuntaskan hafalan 30 juz sebelum lulus SMA."</p>
                     </div>
-                    <p class="text-gray-300 italic leading-relaxed">"Lingkungan kondusif dan dukungan ustadzah membantu saya menuntaskan hafalan 30 juz sebelum lulus SMA."</p>
                 </div>
-                <div class="bg-white/5 backdrop-blur-md p-8 rounded-xl border border-white/10 hover:border-gold-400/30 transition duration-300" data-aos="fade-up" data-aos-delay="200">
-                    <div class="flex items-center gap-4 mb-6">
-                        <img src="https://randomuser.me/api/portraits/men/85.jpg" class="w-14 h-14 rounded-full border-2 border-gold-400 p-1" alt="Budi Santoso">
-                        <div>
-                            <h4 class="text-white font-bold text-lg">Budi Santoso</h4>
-                            <p class="text-gold-light text-xs uppercase tracking-wide">Wali Santri Angkatan 2020</p>
+                <div class="card-green relative p-8 rounded-xl" data-aos="fade-up" data-aos-delay="200">
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-4 mb-6">
+                            <img src="https://randomuser.me/api/portraits/men/85.jpg" class="w-14 h-14 rounded-full border-2 border-gold-400 p-1" alt="Budi Santoso">
+                            <div>
+                                <h4 class="text-white font-bold text-lg">Budi Santoso</h4>
+                                <p class="text-gold-light text-xs uppercase tracking-wide">Wali Santri Angkatan 2020</p>
+                            </div>
                         </div>
+                        <p class="text-emerald-100/85 italic leading-relaxed">"Akhlak anak saya berubah signifikan: disiplin, mandiri, dan santun. Asramanya bersih dan sangat nyaman."</p>
                     </div>
-                    <p class="text-gray-300 italic leading-relaxed">"Akhlak anak saya berubah signifikan: disiplin, mandiri, dan santun. Asramanya bersih dan sangat nyaman."</p>
                 </div>
             </div>
         </div>
