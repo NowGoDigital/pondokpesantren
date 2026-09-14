@@ -1,1 +1,419 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Berita & Artikel | Pesantren Modern Al-Izzah</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = { theme: { extend: {
+            colors: { emerald: { 900: '#064E3B', 800: '#065F46' }, gold: { 400: '#D97706', 500: '#B45309', light: '#FCD34D' }, slate: { 900: '#0f172a' },
+            mint: { 50: '#E8F5EC', 100: '#DCEFE2', 200: '#C2E0CC', 300: '#A3CDB1' } },
+            fontFamily: { serif: ['Cinzel', 'serif'], sans: ['Plus Jakarta Sans', 'sans-serif'] }
+        } } }
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: #DCEFE2; } ::-webkit-scrollbar-thumb { background: #064E3B; border-radius: 4px; }
+        .glass-nav { background: rgba(232, 245, 236, 0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(6, 95, 70, 0.12); box-shadow: 0 4px 20px rgba(6, 78, 59, 0.1); }
+        /* Saat navbar glass mint aktif, teks ikut gelap */
+        #navbar.glass-nav .nav-link { color: #334155; }
+        #navbar.glass-nav .nav-link:hover { color: #D97706; }
+        #navbar.glass-nav .logo-title { color: #064E3B; }
+        #navbar.glass-nav .logo-sub { color: #475569; }
+        #navbar.glass-nav .menu-toggle { color: #064E3B; }
+        .text-gold-gradient { background: linear-gradient(to right,#D97706,#FCD34D,#D97706); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-size: 200% auto; animation: shine 5s linear infinite; }
+        @keyframes shine { to { background-position: 200% center; } }
+        .group:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+        .dropdown-menu { opacity: 0; visibility: hidden; transform: translateY(10px); transition: all .3s ease-in-out; }
+        .pattern-islamic { background-image: radial-gradient(rgba(217,119,6,0.10) 1px, transparent 1px); background-size: 28px 28px; }
+        /* ====== KARTU HIJAU ELEGAN (sama dengan index.html) ====== */
+        .card-green {
+            background: linear-gradient(135deg, #065F46 0%, #064E3B 55%, #053B2C 100%);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            box-shadow: 0 10px 30px rgba(6, 78, 59, 0.25);
+            transition: all .4s ease;
+        }
+        .card-green:hover {
+            border-color: rgba(217, 119, 6, 0.55);
+            box-shadow: 0 15px 40px rgba(6, 78, 59, 0.4), 0 0 25px rgba(217, 119, 6, 0.12);
+        }
+        .card-green::before {
+            content: '';
+            position: absolute; inset: 0;
+            border-radius: inherit;
+            background: radial-gradient(circle at top left, rgba(252,211,77,0.08), transparent 45%);
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="bg-mint-50 text-gray-800 font-sans antialiased overflow-x-hidden">
 
+    <!-- ============ NAVBAR ============ -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-5">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-3 group">
+                <div class="w-11 h-11 bg-emerald-900/80 rounded-full flex items-center justify-center border border-gold-400 shadow-[0_0_15px_rgba(217,119,6,0.3)] backdrop-blur-sm"><i class="fas fa-mosque text-gold-400 text-lg"></i></div>
+                <div>
+                    <h1 class="logo-title font-serif text-xl font-bold text-white tracking-wider group-hover:text-gold-400 transition">AL-IZZAH</h1>
+                    <p class="logo-sub text-[9px] uppercase tracking-[0.25em] text-gray-300 font-medium">International Boarding School</p>
+                </div>
+            </a>
+            <div class="hidden lg:flex items-center gap-5 xl:gap-7">
+                <a href="index.html" class="nav-link text-sm font-medium text-gray-200 hover:text-gold-400 transition">Beranda</a>
+                <div class="relative group">
+                    <button class="nav-link text-sm font-medium text-gray-200 hover:text-gold-400 transition flex items-center gap-1 py-2">Profil <i class="fas fa-chevron-down text-[10px] mt-0.5"></i></button>
+                    <div class="dropdown-menu absolute top-full left-0 w-64 bg-white/95 backdrop-blur-xl border border-mint-200 rounded-xl shadow-2xl overflow-hidden py-2">
+                        <a href="profil.html" class="block px-5 py-3 text-sm text-gray-700 hover:bg-mint-100 hover:text-gold-500 hover:pl-6 transition-all border-l-2 border-transparent hover:border-gold-400"><i class="fas fa-school w-5 text-gold-400/70 mr-2"></i> Profil Sekolah<span class="block text-[10px] text-gray-400 mt-0.5 pl-7">Visi, Misi & Sejarah</span></a>
+                        <a href="struktur.html" class="block px-5 py-3 text-sm text-gray-700 hover:bg-mint-100 hover:text-gold-500 hover:pl-6 transition-all border-l-2 border-transparent hover:border-gold-400"><i class="fas fa-sitemap w-5 text-gold-400/70 mr-2"></i> Struktur Organisasi</a>
+                        <a href="index.html#facilities" class="block px-5 py-3 text-sm text-gray-700 hover:bg-mint-100 hover:text-gold-500 hover:pl-6 transition-all border-l-2 border-transparent hover:border-gold-400"><i class="fas fa-building w-5 text-gold-400/70 mr-2"></i> Fasilitas & Infrastruktur</a>
+                        <a href="galeri.html" class="block px-5 py-3 text-sm text-gray-700 hover:bg-mint-100 hover:text-gold-500 hover:pl-6 transition-all border-l-2 border-transparent hover:border-gold-400"><i class="fas fa-images w-5 text-gold-400/70 mr-2"></i> Galeri Foto & Video</a>
+                    </div>
+                </div>
+                <div class="relative group">
+                    <button class="nav-link text-sm font-medium text-gold-400 transition flex items-center gap-1 py-2">Kabar Berita <i class="fas fa-chevron-down text-[10px] mt-0.5"></i></button>
+                    <div class="dropdown-menu absolute top-full left-0 w-64 bg-white/95 backdrop-blur-xl border border-mint-200 rounded-xl shadow-2xl overflow-hidden py-2">
+                        <a href="berita.html" class="block px-5 py-3 text-sm bg-mint-100 text-gold-500 border-l-2 border-gold-400 font-semibold"><i class="fas fa-newspaper w-5 text-gold-400/70 mr-2"></i> Berita & Artikel</a>
+                        <a href="agenda.html" class="block px-5 py-3 text-sm text-gray-700 hover:bg-mint-100 hover:text-gold-500 hover:pl-6 transition-all border-l-2 border-transparent hover:border-gold-400"><i class="fas fa-calendar-alt w-5 text-gold-400/70 mr-2"></i> Agenda & Kalender</a>
+                        <a href="prestasi.html" class="block px-5 py-3 text-sm text-gray-700 hover:bg-mint-100 hover:text-gold-500 hover:pl-6 transition-all border-l-2 border-transparent hover:border-gold-400"><i class="fas fa-trophy w-5 text-gold-400/70 mr-2"></i> Prestasi & Penghargaan</a>
+                    </div>
+                </div>
+                <div class="relative group">
+                    <button class="text-sm font-medium text-gold-400 hover:text-gold-light transition flex items-center gap-1.5 py-2">
+                        <span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-gold-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-gold-400"></span></span>
+                        SPMB Online <i class="fas fa-chevron-down text-[10px] mt-0.5"></i>
+                    </button>
+                    <div class="dropdown-menu absolute top-full left-0 w-72 bg-white/95 backdrop-blur-xl border border-gold-400/30 rounded-xl shadow-2xl overflow-hidden py-2">
+                        <a href="index.html#spmb-info" class="block px-5 py-3 text-sm text-gray-700 hover:bg-mint-100 hover:text-gold-500 hover:pl-6 transition-all border-l-2 border-transparent hover:border-gold-400"><i class="fas fa-circle-info w-5 text-gold-400/70 mr-2"></i> Halaman Informasi SPMB</a>
+                        <a href="index.html#spmb-result" class="block px-5 py-3 text-sm text-gray-700 hover:bg-mint-100 hover:text-gold-500 hover:pl-6 transition-all border-l-2 border-transparent hover:border-gold-400"><i class="fas fa-bullhorn w-5 text-gold-400/70 mr-2"></i> Pengumuman Hasil Seleksi</a>
+                    </div>
+                </div>
+                <a href="index.html#kurikulum" class="nav-link text-sm font-medium text-gray-200 hover:text-gold-400 transition">Kurikulum</a>
+                <a href="index.html#testimoni" class="nav-link text-sm font-medium text-gray-200 hover:text-gold-400 transition">Kontak</a>
+            </div>
+            <div class="hidden lg:block">
+                <a href="dashboard.html" class="px-6 py-2.5 bg-gradient-to-r from-emerald-900 to-emerald-800 border border-emerald-700/50 text-white text-sm font-semibold rounded-full hover:shadow-[0_0_20px_rgba(6,78,59,0.6)] transition transform hover:-translate-y-0.5 flex items-center gap-2"><i class="fas fa-user-lock text-gold-400"></i> Portal PSB & Login</a>
+            </div>
+            <button class="menu-toggle lg:hidden text-white text-2xl" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
+        </div>
+        <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-mint-50/95 backdrop-blur-xl border-t border-mint-200 p-6 flex-col gap-4 shadow-2xl max-h-[85vh] overflow-y-auto">
+            <a href="index.html" class="block text-gray-700 hover:text-gold-500 py-2 font-medium">Beranda</a>
+            <div class="border-l-2 border-emerald-800 pl-4 space-y-3">
+                <p class="text-xs text-gold-500 uppercase tracking-widest font-bold mb-1">Profil</p>
+                <a href="profil.html" class="block text-sm text-gray-600 hover:text-emerald-900">Profil Sekolah (Visi, Misi, Sejarah)</a>
+                <a href="struktur.html" class="block text-sm text-gray-600 hover:text-emerald-900">Struktur Organisasi</a>
+                <a href="index.html#facilities" class="block text-sm text-gray-600 hover:text-emerald-900">Fasilitas & Infrastruktur</a>
+                <a href="galeri.html" class="block text-sm text-gray-600 hover:text-emerald-900">Galeri Foto & Video</a>
+            </div>
+            <div class="border-l-2 border-gold-400 pl-4 space-y-3 bg-gold-400/5 rounded-r-lg py-3 pr-3">
+                <p class="text-xs text-gold-500 uppercase tracking-widest font-bold mb-1">Kabar Berita</p>
+                <a href="berita.html" class="block text-sm text-gold-500 font-semibold">Berita & Artikel Sekolah</a>
+                <a href="agenda.html" class="block text-sm text-gray-600 hover:text-emerald-900">Agenda & Kalender Kegiatan</a>
+                <a href="prestasi.html" class="block text-sm text-gray-600 hover:text-emerald-900">Prestasi & Penghargaan</a>
+            </div>
+            <div class="border-l-2 border-emerald-800 pl-4 space-y-3">
+                <p class="text-xs text-gold-500 uppercase tracking-widest font-bold mb-1"><i class="fas fa-bolt mr-1"></i> SPMB Online</p>
+                <a href="index.html#spmb-info" class="block text-sm text-gray-600 hover:text-emerald-900">Halaman Informasi SPMB</a>
+                <a href="index.html#spmb-result" class="block text-sm text-gray-600 hover:text-emerald-900">Pengumuman Hasil Seleksi</a>
+            </div>
+            <a href="index.html#kurikulum" class="block text-gray-700 hover:text-gold-500 py-2 font-medium">Kurikulum</a>
+            <a href="index.html#testimoni" class="block text-gray-700 hover:text-gold-500 py-2 font-medium">Kontak</a>
+            <a href="dashboard.html" class="block text-center bg-emerald-900 text-white py-3 rounded-lg font-bold mt-2 border border-emerald-700">Portal PSB & Login</a>
+        </div>
+    </nav>
+
+    <!-- ============ PAGE HERO ============ -->
+    <header class="relative pt-44 pb-24 overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="pichero.jpg" alt="Kampus Pesantren Al-Izzah" class="w-full h-full object-cover object-center opacity-30">
+            <div class="absolute inset-0 bg-gradient-to-b from-slate-900/90 via-emerald-900/70 to-slate-900"></div>
+        </div>
+        <div class="container mx-auto px-6 relative z-10 text-center">
+            <nav class="flex items-center justify-center gap-2 text-xs text-gray-400 mb-6" data-aos="fade-down">
+                <a href="index.html" class="hover:text-gold-400 transition">Beranda</a>
+                <i class="fas fa-chevron-right text-[8px] text-gold-400"></i>
+                <span class="text-gold-400 font-semibold">Berita & Artikel</span>
+            </nav>
+            <p class="text-gold-400 text-xs font-bold tracking-[0.35em] uppercase mb-4" data-aos="fade-up">Kabar Terkini Kampus</p>
+            <h1 class="font-serif text-4xl md:text-6xl font-bold text-white mb-6 drop-shadow-2xl" data-aos="fade-up" data-aos-delay="100">Berita & <span class="text-gold-gradient italic">Artikel</span></h1>
+            <div class="flex items-center justify-center gap-4 mb-6" data-aos="fade-up" data-aos-delay="200">
+                <span class="h-px w-16 md:w-24 bg-gradient-to-r from-transparent to-gold-400"></span>
+                <i class="fas fa-star-and-crescent text-gold-400 text-lg"></i>
+                <span class="h-px w-16 md:w-24 bg-gradient-to-l from-transparent to-gold-400"></span>
+            </div>
+            <p class="text-gray-300 max-w-2xl mx-auto font-light leading-relaxed" data-aos="fade-up" data-aos-delay="300">Informasi resmi, kisah inspiratif, dan liputan kegiatan dari redaksi media Pesantren Modern Al-Izzah.</p>
+        </div>
+    </header>
+
+    <!-- ============ BERITA UTAMA (FEATURED) ============ -->
+    <section class="py-16 bg-mint-50">
+        <div class="container mx-auto px-6">
+            <div class="card-green relative grid grid-cols-1 lg:grid-cols-2 gap-0 items-center rounded-3xl overflow-hidden" data-aos="fade-up">
+                <div class="relative h-72 lg:h-full min-h-[320px] bg-emerald-900/40 flex items-center justify-center">
+                    <i class="fas fa-trophy text-6xl text-white/10 absolute"></i>
+                    <img onerror="imgFallback(this,'news1')" src="prestasi1.jpg" class="w-full h-full object-cover" alt="Berita Utama">
+                    <span class="absolute top-4 left-4 bg-gold-400 text-slate-900 text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full">Headline</span>
+                </div>
+                <div class="p-8 lg:p-12 relative z-10">
+                    <div class="flex items-center gap-4 text-xs text-emerald-100/70 mb-4">
+                        <span class="text-gold-light font-bold uppercase tracking-widest">Prestasi</span>
+                        <span><i class="far fa-calendar mr-1"></i> 5 September 2026</span>
+                        <span><i class="far fa-user mr-1"></i> Redaksi Al-Izzah</span>
+                    </div>
+                    <h2 class="font-serif text-2xl md:text-3xl font-bold text-white leading-snug mb-4">Santri Al-Izzah Borong 3 Medali Emas di Olimpiade Sains Internasional Jepang</h2>
+                    <p class="text-emerald-100/85 text-sm leading-relaxed mb-6">Tim sains Pesantren Modern Al-Izzah kembali mengharumkan nama bangsa. Tiga santri meraih medali emas pada cabang Matematika, Fisika, dan Biologi dalam International Science Olympiad di Tokyo, mengungguli 240 peserta dari 38 negara.</p>
+                    <a href="#" class="inline-flex items-center gap-2 text-sm font-bold text-gold-light hover:text-white transition">Baca Selengkapnya <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ GRID ARTIKEL + FILTER ============ -->
+    <section class="py-16 bg-mint-100 pattern-islamic">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-wrap justify-center gap-3 mb-12" data-aos="fade-up">
+                <button onclick="filterNews('all', this)" class="news-btn px-5 py-2 rounded-full text-sm border border-gold-400 bg-gold-400 text-slate-900 font-bold transition">Semua</button>
+                <button onclick="filterNews('akademik', this)" class="news-btn px-5 py-2 rounded-full text-sm border border-mint-300 text-gray-600 hover:border-gold-400 hover:text-gold-500 transition">Akademik</button>
+                <button onclick="filterNews('tahfidz', this)" class="news-btn px-5 py-2 rounded-full text-sm border border-mint-300 text-gray-600 hover:border-gold-400 hover:text-gold-500 transition">Tahfidz</button>
+                <button onclick="filterNews('kegiatan', this)" class="news-btn px-5 py-2 rounded-full text-sm border border-mint-300 text-gray-600 hover:border-gold-400 hover:text-gold-500 transition">Kegiatan</button>
+                <button onclick="filterNews('pengumuman', this)" class="news-btn px-5 py-2 rounded-full text-sm border border-mint-300 text-gray-600 hover:border-gold-400 hover:text-gold-500 transition">Pengumuman</button>
+            </div>
+
+            <!-- MOUNT BERITA DARI CMS DASHBOARD (INTEGRASI) -->
+            <div id="cmsNewsMount" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-10"></div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <article class="news-item group card-green relative rounded-2xl overflow-hidden hover:-translate-y-2" data-cat="kegiatan" data-aos="fade-up">
+                    <div class="relative h-48 bg-emerald-900/40 flex items-center justify-center overflow-hidden">
+                        <i class="fas fa-door-open text-4xl text-white/10 absolute"></i>
+                        <img onerror="imgFallback(this,'n2')" src="prestasi2.jpg" class="w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="">
+                        <span class="absolute top-3 left-3 bg-gold-400 text-slate-900 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">Kegiatan</span>
+                    </div>
+                    <div class="p-6 relative z-10">
+                        <p class="text-xs text-emerald-100/60 mb-2"><i class="far fa-calendar mr-1"></i> 1 September 2026</p>
+                        <h3 class="font-serif text-lg font-bold text-white mb-3 group-hover:text-gold-light transition leading-snug">Tahun Ajaran Baru Dimulai, Pesantren Sambut 320 Santri Baru</h3>
+                        <p class="text-emerald-100/80 text-sm leading-relaxed mb-4">Masa ta'aruf berlangsung khidmat dengan pembaiatan santri baru dan pengenalan budaya pesantren selama sepekan.</p>
+                        <a href="#" class="text-sm font-bold text-gold-light hover:text-white transition">Baca <i class="fas fa-arrow-right text-xs ml-1"></i></a>
+                    </div>
+                </article>
+                <article class="news-item group card-green relative rounded-2xl overflow-hidden hover:-translate-y-2" data-cat="tahfidz" data-aos="fade-up" data-aos-delay="100">
+                    <div class="relative h-48 bg-emerald-900/40 flex items-center justify-center overflow-hidden">
+                        <i class="fas fa-quran text-4xl text-white/10 absolute"></i>
+                        <img onerror="imgFallback(this,'n3')" src="prestasi2.jpg" class="w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="">
+                        <span class="absolute top-3 left-3 bg-gold-400 text-slate-900 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">Tahfidz</span>
+                    </div>
+                    <div class="p-6 relative z-10">
+                        <p class="text-xs text-emerald-100/60 mb-2"><i class="far fa-calendar mr-1"></i> 28 Agustus 2026</p>
+                        <h3 class="font-serif text-lg font-bold text-white mb-3 group-hover:text-gold-light transition leading-snug">Tahfidz Camp: Program Intensif 40 Hari Menuju 30 Juz</h3>
+                        <p class="text-emerald-100/80 text-sm leading-relaxed mb-4">Sebanyak 85 santri mengikuti karantina hafalan dengan bimbingan langsung para musyrif bersanad.</p>
+                        <a href="#" class="text-sm font-bold text-gold-light hover:text-white transition">Baca <i class="fas fa-arrow-right text-xs ml-1"></i></a>
+                    </div>
+                </article>
+                <article class="news-item group card-green relative rounded-2xl overflow-hidden hover:-translate-y-2" data-cat="pengumuman" data-aos="fade-up" data-aos-delay="200">
+                    <div class="relative h-48 bg-emerald-900/40 flex items-center justify-center overflow-hidden">
+                        <i class="fas fa-bullhorn text-4xl text-white/10 absolute"></i>
+                        <img onerror="imgFallback(this,'n4')" src="prestasi2.jpg" class="w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="">
+                        <span class="absolute top-3 left-3 bg-gold-400 text-slate-900 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">Pengumuman</span>
+                    </div>
+                    <div class="p-6 relative z-10">
+                        <p class="text-xs text-emerald-100/60 mb-2"><i class="far fa-calendar mr-1"></i> 20 Agustus 2026</p>
+                        <h3 class="font-serif text-lg font-bold text-white mb-3 group-hover:text-gold-light transition leading-snug">Hasil Seleksi SPMB Gelombang 1 & Jadwal Daftar Ulang</h3>
+                        <p class="text-emerald-100/80 text-sm leading-relaxed mb-4">Panitia mengumumkan 412 calon santri lulus seleksi. Daftar ulang dibuka hingga 10 September 2026.</p>
+                        <a href="#" class="text-sm font-bold text-gold-light hover:text-white transition">Baca <i class="fas fa-arrow-right text-xs ml-1"></i></a>
+                    </div>
+                </article>
+                <article class="news-item group card-green relative rounded-2xl overflow-hidden hover:-translate-y-2" data-cat="akademik" data-aos="fade-up">
+                    <div class="relative h-48 bg-emerald-900/40 flex items-center justify-center overflow-hidden">
+                        <i class="fas fa-robot text-4xl text-white/10 absolute"></i>
+                        <img onerror="imgFallback(this,'n5')" src="prestasi2.jpg" class="w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="">
+                        <span class="absolute top-3 left-3 bg-gold-400 text-slate-900 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">Akademik</span>
+                    </div>
+                    <div class="p-6 relative z-10">
+                        <p class="text-xs text-emerald-100/60 mb-2"><i class="far fa-calendar mr-1"></i> 15 Agustus 2026</p>
+                        <h3 class="font-serif text-lg font-bold text-white mb-3 group-hover:text-gold-light transition leading-snug">Lab Robotika Al-Izzah Jalin Riset AI Bersama ITB</h3>
+                        <p class="text-emerald-100/80 text-sm leading-relaxed mb-4">Kerja sama mencakup magang riset santri, pelatihan guru, dan pengembangan kurikulum kecerdasan buatan.</p>
+                        <a href="#" class="text-sm font-bold text-gold-light hover:text-white transition">Baca <i class="fas fa-arrow-right text-xs ml-1"></i></a>
+                    </div>
+                </article>
+                <article class="news-item group card-green relative rounded-2xl overflow-hidden hover:-translate-y-2" data-cat="kegiatan" data-aos="fade-up" data-aos-delay="100">
+                    <div class="relative h-48 bg-emerald-900/40 flex items-center justify-center overflow-hidden">
+                        <i class="fas fa-microphone text-4xl text-white/10 absolute"></i>
+                        <img onerror="imgFallback(this,'n6')" src="prestasi2.jpg" class="w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="">
+                        <span class="absolute top-3 left-3 bg-gold-400 text-slate-900 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">Kegiatan</span>
+                    </div>
+                    <div class="p-6 relative z-10">
+                        <p class="text-xs text-emerald-100/60 mb-2"><i class="far fa-calendar mr-1"></i> 17 Agustus 2026</p>
+                        <h3 class="font-serif text-lg font-bold text-white mb-3 group-hover:text-gold-light transition leading-snug">Lomba Pidato Tiga Bahasa Meriahkan Hari Kemerdekaan</h3>
+                        <p class="text-emerald-100/80 text-sm leading-relaxed mb-4">Santri berpidato dalam Bahasa Arab, Inggris, dan Indonesia di hadapan seluruh civitas akademika.</p>
+                        <a href="#" class="text-sm font-bold text-gold-light hover:text-white transition">Baca <i class="fas fa-arrow-right text-xs ml-1"></i></a>
+                    </div>
+                </article>
+                <article class="news-item group card-green relative rounded-2xl overflow-hidden hover:-translate-y-2" data-cat="akademik" data-aos="fade-up" data-aos-delay="200">
+                    <div class="relative h-48 bg-emerald-900/40 flex items-center justify-center overflow-hidden">
+                        <i class="fas fa-plane-departure text-4xl text-white/10 absolute"></i>
+                        <img onerror="imgFallback(this,'n7')" src="prestasi2.jpg" class="w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="">
+                        <span class="absolute top-3 left-3 bg-gold-400 text-slate-900 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">Akademik</span>
+                    </div>
+                    <div class="p-6 relative z-10">
+                        <p class="text-xs text-emerald-100/60 mb-2"><i class="far fa-calendar mr-1"></i> 10 Agustus 2026</p>
+                        <h3 class="font-serif text-lg font-bold text-white mb-3 group-hover:text-gold-light transition leading-snug">Program Beasiswa Alumni ke Universitas Al-Azhar Kairo Dibuka</h3>
+                        <p class="text-emerald-100/80 text-sm leading-relaxed mb-4">Sepuluh kuota beasiswa penuh disediakan bagi hafidz berprestasi akademik unggulan tahun ini.</p>
+                        <a href="#" class="text-sm font-bold text-gold-light hover:text-white transition">Baca <i class="fas fa-arrow-right text-xs ml-1"></i></a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ BULETIN ============ -->
+    <section class="py-16 bg-gradient-to-r from-emerald-900 via-emerald-800 to-emerald-900 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#FCD34D 1px, transparent 1px); background-size: 24px 24px;"></div>
+        <div class="container mx-auto px-6 text-center relative z-10 max-w-3xl">
+            <i class="fas fa-envelope-open-text text-gold-400 text-4xl mb-6" data-aos="fade-up"></i>
+            <h2 class="font-serif text-3xl font-bold text-white mb-4" data-aos="fade-up">Langganan Buletin Al-Izzah</h2>
+            <p class="text-emerald-100/80 mb-8" data-aos="fade-up" data-aos-delay="100">Dapatkan kabar terbaru, agenda, dan info SPMB langsung ke email Anda setiap pekan.</p>
+            <form onsubmit="event.preventDefault(); this.reset(); alert('Terima kasih! Anda telah berlangganan buletin Al-Izzah');" class="flex flex-col sm:flex-row gap-3 max-w-xl mx-auto" data-aos="fade-up" data-aos-delay="200">
+                <input type="email" required placeholder="alamat@email.com" class="flex-1 bg-mint-50 border border-mint-300 rounded-lg px-5 py-4 text-sm text-slate-900 focus:outline-none focus:border-gold-400 transition">
+                <button class="px-8 py-4 bg-gold-400 hover:bg-gold-500 text-slate-900 font-bold rounded-lg transition transform hover:-translate-y-0.5">Berlangganan</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="bg-mint-100 pt-20 pb-10 border-t border-mint-200">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+                <div>
+                    <div class="flex items-center gap-2 mb-6"><i class="fas fa-mosque text-gold-500 text-2xl"></i><h2 class="font-serif text-2xl font-bold text-slate-900">AL-IZZAH</h2></div>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-6">Lembaga pendidikan Islam modern yang mencetak generasi Qur'ani, berwawasan global, dan siap memimpin masa depan.</p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-mint-200 flex items-center justify-center text-emerald-900 hover:bg-gold-400 hover:text-white transition"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-mint-200 flex items-center justify-center text-emerald-900 hover:bg-gold-400 hover:text-white transition"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-mint-200 flex items-center justify-center text-emerald-900 hover:bg-gold-400 hover:text-white transition"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-slate-900 font-bold mb-6">Navigasi</h3>
+                    <ul class="space-y-3 text-sm text-gray-600">
+                        <li><a href="index.html" class="hover:text-gold-500 transition">Beranda</a></li>
+                        <li><a href="profil.html" class="hover:text-gold-500 transition">Profil Sekolah</a></li>
+                        <li><a href="berita.html" class="hover:text-gold-500 transition">Berita & Artikel</a></li>
+                        <li><a href="index.html#spmb" class="hover:text-gold-500 transition">SPMB Online</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-slate-900 font-bold mb-6">Kabar Berita</h3>
+                    <ul class="space-y-3 text-sm text-gray-600">
+                        <li><a href="berita.html" class="hover:text-gold-500 transition">Berita & Artikel</a></li>
+                        <li><a href="agenda.html" class="hover:text-gold-500 transition">Agenda & Kalender</a></li>
+                        <li><a href="prestasi.html" class="hover:text-gold-500 transition">Prestasi & Penghargaan</a></li>
+                        <li><a href="galeri.html" class="hover:text-gold-500 transition">Galeri Foto & Video</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-slate-900 font-bold mb-6">Hubungi Kami</h3>
+                    <ul class="space-y-4 text-sm text-gray-600">
+                        <li class="flex items-start gap-3"><i class="fas fa-map-marker-alt text-gold-500 mt-1"></i><span>Jl. Pendidikan Islam No. 99, Kota Baru, Indonesia 40123</span></li>
+                        <li class="flex items-center gap-3"><i class="fas fa-phone text-gold-500"></i><span>+62 812-3456-7890</span></li>
+                        <li class="flex items-center gap-3"><i class="fas fa-envelope text-gold-500"></i><span>info@alizzah.sch.id</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-mint-200 pt-8 text-center text-sm text-gray-500">&copy; 2026 Pesantren Modern Al-Izzah. All Rights Reserved.</div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: true, offset: 80 });
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) { navbar.classList.add('glass-nav', 'py-2'); navbar.classList.remove('py-5'); }
+            else { navbar.classList.remove('glass-nav', 'py-2'); navbar.classList.add('py-5'); }
+        });
+        function toggleMobileMenu() { const m = document.getElementById('mobile-menu'); m.classList.toggle('hidden'); m.classList.toggle('flex'); }
+        function imgFallback(img, seed) { if (!img.dataset.fb1) { img.dataset.fb1 = 1; img.src = 'https://picsum.photos/seed/' + seed + '/800/500'; } else { img.style.display = 'none'; } }
+        function filterNews(cat, btn) {
+            document.querySelectorAll('.news-btn').forEach(b => { b.className = 'news-btn px-5 py-2 rounded-full text-sm border border-mint-300 text-gray-600 hover:border-gold-400 hover:text-gold-500 transition'; });
+            btn.className = 'news-btn px-5 py-2 rounded-full text-sm border border-gold-400 bg-gold-400 text-slate-900 font-bold transition';
+            document.querySelectorAll('.news-item').forEach(i => { i.classList.toggle('hidden', !(cat === 'all' || i.dataset.cat === cat)); });
+        }
+    </script>
+    <!-- Jembatan CMS dashboard → halaman publik (INTEGRASI) -->
+    <script src="cms-public.js"></script>
+<!-- ============================================================ -->
+    <!-- 🔒 Proteksi Konten (TETAP SAMA)                              -->
+    <!-- ============================================================ -->
+    <script>
+    (function() {
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            showToastCustom('🔒 Konten dilindungi. Klik kanan dinonaktifkan.');
+            return false;
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'u') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.key === 's') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.key === 'c') { e.preventDefault(); return false; }
+            if ((e.ctrlKey && e.shiftKey && e.key === 'I') || e.key === 'F12') { 
+                e.preventDefault(); 
+                showToastCustom('🔒 Developer Tools dinonaktifkan.');
+                return false; 
+            }
+            if (e.ctrlKey && e.shiftKey && e.key === 'J') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.key === 'p') { e.preventDefault(); return false; }
+        });
+
+        document.addEventListener('selectstart', function(e) {
+            if (!['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        document.addEventListener('dragstart', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        function showToastCustom(message) {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed; top: 20px; right: 20px; z-index: 99999;
+                background: linear-gradient(135deg, #064e3b, #059669);
+                color: white; padding: 14px 20px; border-radius: 10px;
+                font-weight: 600; font-size: 0.9rem; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                animation: slideInToast 0.3s ease-out;
+            `;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.3s';
+                setTimeout(() => toast.remove(), 300);
+            }, 2500);
+        }
+
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInToast {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            body { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
+            input, textarea, select { -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text; }
+        `;
+        document.head.appendChild(style);
+
+        console.log('%c🔒 Proteksi Konten Aktif', 'color: #059669; font-size: 14px; font-weight: bold;');
+    })();
+    </script>
+
+</body>
+</html>
