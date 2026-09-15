@@ -49,7 +49,7 @@
             pointer-events: none;
         }
 
-        /* ================= MINI CALENDAR (BARU — COMPACT & CANTIK) ================= */
+        /* ================= MINI CALENDAR (COMPACT & CANTIK) ================= */
         .mini-cal { width: 100%; max-width: 340px; }
         .mini-cal-head {
             background: linear-gradient(135deg, #D97706 0%, #B45309 100%);
@@ -187,13 +187,13 @@
         </div>
     </header>
 
-    <!-- ============ KALENDER MINI + AGENDA HARI INI ============ -->
+    <!-- ============ KALENDER MINI + AGENDA HARI INI (DUA KOLOM SEIMBANG) ============ -->
     <section class="py-16 bg-mint-50">
         <div class="container mx-auto px-6">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start max-w-5xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start max-w-3xl mx-auto">
 
-                <!-- KOLOM KIRI: MINI KALENDER (compact, max 340px) -->
-                <div class="lg:col-span-5 flex justify-center lg:justify-start" data-aos="fade-right">
+                <!-- KOLOM KIRI: MINI KALENDER -->
+                <div class="flex justify-center lg:justify-start" data-aos="fade-right">
                     <div class="mini-cal card-green relative rounded-2xl overflow-hidden">
                         <!-- Pita header emas -->
                         <div class="mini-cal-head px-4 py-3 flex items-center justify-between relative z-10">
@@ -233,53 +233,77 @@
                     </div>
                 </div>
 
-                <!-- KOLOM KANAN: DETAIL TANGGAL + AGENDA HARI INI -->
-                <div class="lg:col-span-7 space-y-4" data-aos="fade-left">
-                    <!-- Panel detail tanggal terpilih -->
-                    <div id="calDetail" class="card-green relative rounded-2xl p-6 hidden">
+                <!-- KOLOM KANAN: DETAIL TANGGAL + HARI INI + PENGINGAT (MINIMALIS) -->
+                <div class="space-y-3" data-aos="fade-left">
+
+                    <!-- Panel detail tanggal terpilih (muncul saat tanggal bertitik diklik) -->
+                    <div id="calDetail" class="card-green relative rounded-2xl p-5 hidden">
                         <div id="calDetailBody" class="relative z-10"></div>
                     </div>
 
-                    <!-- Agenda Hari Ini -->
-                    <div class="card-green relative rounded-2xl p-6">
+                    <!-- AGENDA HARI INI — versi minimalis -->
+                    <div class="card-green relative rounded-2xl p-5">
                         <div class="relative z-10">
-                            <div class="flex items-center gap-3 mb-5">
-                                <div class="w-10 h-10 rounded-lg bg-gold-400/15 border border-gold-400/40 flex items-center justify-center"><i class="fas fa-calendar-day text-gold-light"></i></div>
-                                <div>
-                                    <h3 class="font-serif font-bold text-white">Hari Ini</h3>
-                                    <p class="text-emerald-100/60 text-xs">Senin, 14 September 2026</p>
+                            <div class="flex items-center gap-2.5 mb-3.5 pb-3 border-b border-white/10">
+                                <div class="w-8 h-8 rounded-lg bg-gold-400/15 border border-gold-400/40 flex items-center justify-center shrink-0"><i class="fas fa-calendar-day text-gold-light text-xs"></i></div>
+                                <div class="min-w-0">
+                                    <h3 class="font-serif font-bold text-white text-sm leading-none">Hari Ini</h3>
+                                    <p class="text-emerald-100/60 text-[10px] mt-1">Senin, 14 September 2026</p>
                                 </div>
                             </div>
-                            <div class="space-y-4">
-                                <div class="flex gap-3">
-                                    <span class="text-gold-light text-xs font-bold w-12 shrink-0 pt-0.5">04.00</span>
-                                    <div class="border-l border-gold-400/30 pl-3"><p class="text-white text-sm font-semibold">Qiyamul Lail & Tahajud</p><p class="text-emerald-100/60 text-xs">Masjid Agung Al-Izzah</p></div>
+                            <div class="space-y-2.5">
+                                <div class="flex items-center gap-3">
+                                    <span class="shrink-0 w-9 text-[10px] font-bold text-gold-light">04.00</span>
+                                    <span class="w-px self-stretch bg-gold-400/25"></span>
+                                    <div class="min-w-0">
+                                        <p class="text-white text-xs font-semibold truncate">Qiyamul Lail & Tahajud</p>
+                                        <p class="text-emerald-100/55 text-[10px] truncate">Masjid Agung Al-Izzah</p>
+                                    </div>
                                 </div>
-                                <div class="flex gap-3">
-                                    <span class="text-gold-light text-xs font-bold w-12 shrink-0 pt-0.5">05.00</span>
-                                    <div class="border-l border-gold-400/30 pl-3"><p class="text-white text-sm font-semibold">Halaqah Tahfidz Ba'da Subuh</p><p class="text-emerald-100/60 text-xs">Serambi Masjid & Asrama</p></div>
+                                <div class="flex items-center gap-3">
+                                    <span class="shrink-0 w-9 text-[10px] font-bold text-gold-light">05.00</span>
+                                    <span class="w-px self-stretch bg-gold-400/25"></span>
+                                    <div class="min-w-0">
+                                        <p class="text-white text-xs font-semibold truncate">Halaqah Tahfidz Ba'da Subuh</p>
+                                        <p class="text-emerald-100/55 text-[10px] truncate">Serambi Masjid & Asrama</p>
+                                    </div>
                                 </div>
-                                <div class="flex gap-3">
-                                    <span class="text-gold-light text-xs font-bold w-12 shrink-0 pt-0.5">07.00</span>
-                                    <div class="border-l border-gold-400/30 pl-3"><p class="text-white text-sm font-semibold">KBM Cambridge & Nasional</p><p class="text-emerald-100/60 text-xs">Gedung Akademik A & B</p></div>
+                                <div class="flex items-center gap-3">
+                                    <span class="shrink-0 w-9 text-[10px] font-bold text-gold-light">07.00</span>
+                                    <span class="w-px self-stretch bg-gold-400/25"></span>
+                                    <div class="min-w-0">
+                                        <p class="text-white text-xs font-semibold truncate">KBM Cambridge & Nasional</p>
+                                        <p class="text-emerald-100/55 text-[10px] truncate">Gedung Akademik A & B</p>
+                                    </div>
                                 </div>
-                                <div class="flex gap-3">
-                                    <span class="text-gold-light text-xs font-bold w-12 shrink-0 pt-0.5">16.00</span>
-                                    <div class="border-l border-gold-400/30 pl-3"><p class="text-white text-sm font-semibold">Ekstrakurikuler & Olahraga</p><p class="text-emerald-100/60 text-xs">Lapangan & Aula Serbaguna</p></div>
+                                <div class="flex items-center gap-3">
+                                    <span class="shrink-0 w-9 text-[10px] font-bold text-gold-light">16.00</span>
+                                    <span class="w-px self-stretch bg-gold-400/25"></span>
+                                    <div class="min-w-0">
+                                        <p class="text-white text-xs font-semibold truncate">Ekstrakurikuler & Olahraga</p>
+                                        <p class="text-emerald-100/55 text-[10px] truncate">Lapangan & Aula Serbaguna</p>
+                                    </div>
                                 </div>
-                                <div class="flex gap-3">
-                                    <span class="text-gold-light text-xs font-bold w-12 shrink-0 pt-0.5">20.00</span>
-                                    <div class="border-l border-gold-400/30 pl-3"><p class="text-white text-sm font-semibold">Muhadatsah Bilingual</p><p class="text-emerald-100/60 text-xs">Area Asrama</p></div>
+                                <div class="flex items-center gap-3">
+                                    <span class="shrink-0 w-9 text-[10px] font-bold text-gold-light">20.00</span>
+                                    <span class="w-px self-stretch bg-gold-400/25"></span>
+                                    <div class="min-w-0">
+                                        <p class="text-white text-xs font-semibold truncate">Muhadatsah Bilingual</p>
+                                        <p class="text-emerald-100/55 text-[10px] truncate">Area Asrama</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Pengingat wali santri -->
-                    <div class="card-green relative rounded-2xl p-6 border-gold-400/30">
-                        <div class="relative z-10">
-                            <h4 class="font-serif font-bold text-white mb-2"><i class="fas fa-bell text-gold-light mr-2"></i> Pengingat Wali Santri</h4>
-                            <p class="text-emerald-100/80 text-sm leading-relaxed">Kunjungan wali santri (ziarah) dibuka setiap Ahad pekan ke-2 dan ke-4, pukul 08.00–16.00 WIB.</p>
+                    <!-- PENGINGAT WALI SANTRI — versi minimalis -->
+                    <div class="card-green relative rounded-2xl p-5 border-gold-400/30">
+                        <div class="relative z-10 flex items-start gap-2.5">
+                            <div class="w-8 h-8 shrink-0 rounded-lg bg-gold-400/15 border border-gold-400/40 flex items-center justify-center"><i class="fas fa-bell text-gold-light text-xs"></i></div>
+                            <div class="min-w-0">
+                                <h4 class="font-serif font-bold text-white text-sm leading-none mb-1.5">Pengingat Wali Santri</h4>
+                                <p class="text-emerald-100/70 text-[11px] leading-relaxed">Ziarah dibuka setiap Ahad pekan ke-2 & ke-4, pukul 08.00–16.00 WIB.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -494,8 +518,7 @@
     </script>
 
     <!-- ============================================================
-         MINI KALENDER INTERAKTIF — semua event dipasang via JS
-         (addEventListener, bukan onclick inline → dijamin jalan)
+         MINI KALENDER INTERAKTIF — event listener via JS (dijamin jalan)
          ============================================================ -->
     <script>
     (function() {
@@ -503,7 +526,7 @@
 
         /* Data kegiatan — key: YYYY-MM-DD (mudah ditambah nanti) */
         const EVENTS = {
-            '2026-09-01': [{ t: "Upacara Pembukaan Tahun Ajaran Baru", k: 'Kegiatan', j: '07.00 WIB · Lapangan Utama' }],
+            '2026-09-01': [{ t: 'Upacara Pembukaan Tahun Ajaran Baru', k: 'Kegiatan', j: '07.00 WIB · Lapangan Utama' }],
             '2026-09-05': [{ t: 'Milad ke-16 Pesantren Al-Izzah', k: 'Kegiatan', j: '08.00 WIB · Aula Serbaguna' }],
             '2026-09-09': [{ t: 'Parenting Day — Seminar Wali Santri', k: 'Kegiatan', j: '08.00 WIB · Aula Serbaguna' }],
             '2026-09-17': [{ t: 'Penilaian Tengah Semester (PTS) Ganjil', k: 'Akademik', j: '07.00 – 12.00 WIB · Gedung Akademik' }],
@@ -567,17 +590,21 @@
             elGrid.classList.add('cal-fade');
         }
 
+        /* Panel detail — gaya minimalis serasi dengan kartu kanan */
         function showDetail(k) {
             const evs = EVENTS[k];
             if (!evs) { elDetail.classList.add('hidden'); return; }
             const p = k.split('-');
-            let html = '<p class="text-gold-light text-[10px] font-bold uppercase tracking-[0.2em] mb-3"><i class="fas fa-calendar-check mr-1"></i> Agenda ' + Number(p[2]) + ' ' + BULAN[Number(p[1]) - 1] + ' ' + p[0] + '</p>';
-            html += '<div class="space-y-3">';
+            let html = '<div class="flex items-center gap-2.5 mb-3.5 pb-3 border-b border-white/10">' +
+                '<div class="w-8 h-8 rounded-lg bg-gold-400/15 border border-gold-400/40 flex items-center justify-center shrink-0"><i class="fas fa-calendar-check text-gold-light text-xs"></i></div>' +
+                '<div class="min-w-0"><h3 class="font-serif font-bold text-white text-sm leading-none">Agenda Tanggal</h3>' +
+                '<p class="text-emerald-100/60 text-[10px] mt-1">' + Number(p[2]) + ' ' + BULAN[Number(p[1]) - 1] + ' ' + p[0] + '</p></div></div>';
+            html += '<div class="space-y-2.5">';
             evs.forEach(function(e) {
-                html += '<div class="flex items-start gap-3">' +
-                    '<span class="shrink-0 text-[9px] font-bold uppercase tracking-widest text-slate-900 bg-gold-400 rounded-full px-2.5 py-1 mt-0.5">' + e.k + '</span>' +
-                    '<div><p class="text-white text-sm font-semibold leading-snug">' + e.t + '</p>' +
-                    '<p class="text-emerald-100/60 text-xs mt-0.5"><i class="far fa-clock mr-1"></i>' + e.j + '</p></div></div>';
+                html += '<div class="flex items-start gap-2.5">' +
+                    '<span class="shrink-0 text-[8px] font-bold uppercase tracking-widest text-slate-900 bg-gold-400 rounded-full px-2 py-0.5 mt-0.5">' + e.k + '</span>' +
+                    '<div class="min-w-0"><p class="text-white text-xs font-semibold leading-snug">' + e.t + '</p>' +
+                    '<p class="text-emerald-100/55 text-[10px] mt-0.5"><i class="far fa-clock mr-1"></i>' + e.j + '</p></div></div>';
             });
             html += '</div>';
             elBody.innerHTML = html;
