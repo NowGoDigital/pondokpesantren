@@ -1,1 +1,647 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Struktur Organisasi | Pesantren Modern Al-Izzah</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: { 900: '#064E3B', 800: '#065F46' },
+                        gold: { 400: '#D97706', 500: '#B45309', light: '#FCD34D' },
+                        slate: { 900: '#0f172a' },
+                        mint: { 50: '#E8F5EC', 100: '#DCEFE2', 200: '#C2E0CC', 300: '#A3CDB1' }
+                    },
+                    fontFamily: {
+                        serif: ['Cinzel', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #DCEFE2; }
+        ::-webkit-scrollbar-thumb { background: #064E3B; border-radius: 4px; }
+        .glass-nav { background: rgba(232, 245, 236, 0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(6, 95, 70, 0.12); box-shadow: 0 4px 20px rgba(6, 78, 59, 0.1); }
+        #navbar.glass-nav .nav-link { color: #334155; }
+        #navbar.glass-nav .nav-link:hover { color: #D97706; }
+        #navbar.glass-nav .logo-title { color: #064E3B; }
+        #navbar.glass-nav .logo-sub { color: #475569; }
+        #navbar.glass-nav .menu-toggle { color: #064E3B; }
+        .text-gold-gradient {
+            background: linear-gradient(to right, #D97706, #FCD34D, #D97706);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-size: 200% auto; animation: shine 5s linear infinite;
+        }
+        /* Versi emas untuk teks di atas latar hijau/gelap */
+        .text-gold-gradient-em {
+            background: linear-gradient(to right, #D97706, #FCD34D, #D97706);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-size: 200% auto; animation: shine 5s linear infinite;
+        }
+        @keyframes shine { to { background-position: 200% center; } }
+        .group:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+        .dropdown-menu { opacity: 0; visibility: hidden; transform: translateY(10px); transition: all .3s ease-in-out; }
+        .pattern-islamic { background-image: radial-gradient(rgba(217,119,6,0.10) 1px, transparent 1px); background-size: 28px 28px; }
+        /* ====== KARTU HIJAU ELEGAN (sama dengan index.html) ====== */
+        .card-green {
+            background: linear-gradient(135deg, #065F46 0%, #064E3B 55%, #053B2C 100%);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            box-shadow: 0 10px 30px rgba(6, 78, 59, 0.25);
+            transition: all .4s ease;
+        }
+        .card-green:hover {
+            border-color: rgba(217, 119, 6, 0.55);
+            box-shadow: 0 15px 40px rgba(6, 78, 59, 0.4), 0 0 25px rgba(217, 119, 6, 0.12);
+        }
+        .card-green::before {
+            content: '';
+            position: absolute; inset: 0;
+            border-radius: inherit;
+            background: radial-gradient(circle at top left, rgba(252,211,77,0.08), transparent 45%);
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="bg-mint-50 text-gray-800 font-sans antialiased overflow-x-hidden">
+
+    <!-- ============ NAVBAR ============ -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-5">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-3 group">
+                <div class="w-11 h-11 bg-emerald-900/80 rounded-full flex items-center justify-center border border-gold-400 shadow-[0_0_15px_rgba(217,119,6,0.3)] backdrop-blur-sm">
+                    <i class="fas fa-mosque text-gold-400 text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="logo-title font-serif text-xl font-bold text-white tracking-wider group-hover:text-gold-400 transition">AL-IZZAH</h1>
+                    <p class="logo-sub text-[9px] uppercase tracking-[0.25em] text-gray-300 font-medium">International Boarding School</p>
+                </div>
+            </a>
+
+            <div class="hidden lg:flex items-center gap-5 xl:gap-7">
+                <a href="index.html" class="nav-link text-sm font-medium text-gray-200 hover:text-gold-400 transition">Beranda</a>
+                
+                <div class="relative group">
+                    <button class="nav-link text-sm font-medium text-gold-400 transition flex items-center gap-1 py-2">
+                        Profil <i class="fas fa-chevron-down text-[10px] mt-0.5"></i>
+                    </button>
+                    <div class="dropdown-menu absolute top-full left-0 w-64 bg-white/95 backdrop-blur-xl border border-mint-200 rounded-xl shadow-2xl overflow-hidden py-2">
+                        <a href="profil.html" class="block px-5 py-3 text-sm text-gray-700 hover:bg-mint-100 hover:text-gold-500 hover:pl-6 transition-all border-l-2 border-transparent hover:border-gold-400">
+                            <i class="fas fa-school w-5 text-gold-400/70 mr-2"></i> Profil Sekolah
+                            <span class="block text-[10px] text-gray-400 mt-0.5 pl-7">Visi, Misi & Sejarah</span>
+                        </a>
+                        <a href="struktur.html" class="block px-5 py-3 text-sm bg-mint-100 text-gold-500 border-l-2 border-gold-400 font-semibold">
+                            <i class="fas fa-sitemap w-5 text-gold-400/70 mr-2"></i> Struktur Organisasi
+                        </a>
+                        <a href="index.html#facilities" class="block px-5 py-3 text-sm text-gray-700 hover:bg-mint-100 hover:text-gold-500 hover:pl-6 transition-all border-l-2 border-transparent hover:border-gold-400">
+                            <i class="fas fa-building w-5 text-gold-400/70 mr-2"></i> Fasilitas & Infrastruktur
+                        </a>
+                        <a href="galeri.html" class="block px-5 py-3 text-sm text-gray-700 hover:bg-mint-100 hover:text-gold-500 hover:pl-6 transition-all border-l-2 border-transparent hover:border-gold-400">
+                            <i class="fas fa-images w-5 text-gold-400/70 mr-2"></i> Galeri Foto & Video
+                        </a>
+                    </div>
+                </div>
+
+                <div class="relative group">
+                    <button class="nav-link text-sm font-medium text-gray-200 hover:text-gold-400 transition flex items-center gap-1 py-2">
+                        Kabar Berita <i class="fas fa-chevron-down text-[10px] mt-0.5"></i>
+                    </button>
+                    <div class="dropdown-menu absolute top-full left-0 w-64 bg-white/95 backdrop-blur-xl border border-mint-200 rounded-xl shadow-2xl overflow-hidden py-2">
+                        <a href="berita.html" class="block px-5 py-3 text-sm text-gray-700 hover:bg-mint-100 hover:text-gold-500 hover:pl-6 transition-all border-l-2 border-transparent hover:border-gold-400">
+                            <i class="fas fa-newspaper w-5 text-gold-400/70 mr-2"></i> Berita & Artikel
+                        </a>
+                        <a href="agenda.html" class="block px-5 py-3 text-sm text-gray-700 hover:bg-mint-100 hover:text-gold-500 hover:pl-6 transition-all border-l-2 border-transparent hover:border-gold-400">
+                            <i class="fas fa-calendar-alt w-5 text-gold-400/70 mr-2"></i> Agenda & Kalender
+                        </a>
+                        <a href="prestasi.html" class="block px-5 py-3 text-sm text-gray-700 hover:bg-mint-100 hover:text-gold-500 hover:pl-6 transition-all border-l-2 border-transparent hover:border-gold-400">
+                            <i class="fas fa-trophy w-5 text-gold-400/70 mr-2"></i> Prestasi & Penghargaan
+                        </a>
+                    </div>
+                </div>
+
+                <div class="relative group">
+                    <button class="text-sm font-medium text-gold-400 hover:text-gold-light transition flex items-center gap-1.5 py-2">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-gold-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-gold-400"></span>
+                        </span>
+                        SPMB Online <i class="fas fa-chevron-down text-[10px] mt-0.5"></i>
+                    </button>
+                    <div class="dropdown-menu absolute top-full left-0 w-72 bg-white/95 backdrop-blur-xl border border-gold-400/30 rounded-xl shadow-2xl overflow-hidden py-2">
+                        <a href="index.html#spmb-info" class="block px-5 py-3 text-sm text-gray-700 hover:bg-mint-100 hover:text-gold-500 hover:pl-6 transition-all border-l-2 border-transparent hover:border-gold-400">
+                            <i class="fas fa-circle-info w-5 text-gold-400/70 mr-2"></i> Halaman Informasi SPMB
+                        </a>
+                        <a href="index.html#spmb-result" class="block px-5 py-3 text-sm text-gray-700 hover:bg-mint-100 hover:text-gold-500 hover:pl-6 transition-all border-l-2 border-transparent hover:border-gold-400">
+                            <i class="fas fa-bullhorn w-5 text-gold-400/70 mr-2"></i> Pengumuman Hasil Seleksi
+                        </a>
+                    </div>
+                </div>
+
+                <a href="index.html#kurikulum" class="nav-link text-sm font-medium text-gray-200 hover:text-gold-400 transition">Kurikulum</a>
+                <a href="index.html#testimoni" class="nav-link text-sm font-medium text-gray-200 hover:text-gold-400 transition">Kontak</a>
+            </div>
+
+            <div class="hidden lg:block">
+                <a href="dashboard.html" class="px-6 py-2.5 bg-gradient-to-r from-emerald-900 to-emerald-800 border border-emerald-700/50 text-white text-sm font-semibold rounded-full hover:shadow-[0_0_20px_rgba(6,78,59,0.6)] transition transform hover:-translate-y-0.5 flex items-center gap-2">
+                    <i class="fas fa-user-lock text-gold-400"></i> Portal PSB & Login
+                </a>
+            </div>
+
+            <button class="menu-toggle lg:hidden text-white text-2xl" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
+        </div>
+        
+        <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-mint-50/95 backdrop-blur-xl border-t border-mint-200 p-6 flex-col gap-4 shadow-2xl max-h-[85vh] overflow-y-auto">
+            <a href="index.html" class="block text-gray-700 hover:text-gold-500 py-2 font-medium">Beranda</a>
+            <div class="border-l-2 border-gold-400 pl-4 space-y-3 bg-gold-400/5 rounded-r-lg py-3 pr-3">
+                <p class="text-xs text-gold-500 uppercase tracking-widest font-bold mb-1">Profil</p>
+                <a href="profil.html" class="block text-sm text-gray-600 hover:text-emerald-900">Profil Sekolah (Visi, Misi, Sejarah)</a>
+                <a href="struktur.html" class="block text-sm text-gold-500 font-semibold">Struktur Organisasi</a>
+                <a href="index.html#facilities" class="block text-sm text-gray-600 hover:text-emerald-900">Fasilitas & Infrastruktur</a>
+                <a href="galeri.html" class="block text-sm text-gray-600 hover:text-emerald-900">Galeri Foto & Video</a>
+            </div>
+            <div class="border-l-2 border-emerald-800 pl-4 space-y-3">
+                <p class="text-xs text-gold-500 uppercase tracking-widest font-bold mb-1">Kabar Berita</p>
+                <a href="berita.html" class="block text-sm text-gray-600 hover:text-emerald-900">Berita & Artikel Sekolah</a>
+                <a href="agenda.html" class="block text-sm text-gray-600 hover:text-emerald-900">Agenda & Kalender Kegiatan</a>
+                <a href="prestasi.html" class="block text-sm text-gray-600 hover:text-emerald-900">Prestasi & Penghargaan</a>
+            </div>
+            <div class="border-l-2 border-emerald-800 pl-4 space-y-3">
+                <p class="text-xs text-gold-500 uppercase tracking-widest font-bold mb-1"><i class="fas fa-bolt mr-1"></i> SPMB Online</p>
+                <a href="index.html#spmb-info" class="block text-sm text-gray-600 hover:text-emerald-900">Halaman Informasi SPMB</a>
+                <a href="index.html#spmb-result" class="block text-sm text-gray-600 hover:text-emerald-900">Pengumuman Hasil Seleksi</a>
+            </div>
+            <a href="index.html#kurikulum" class="block text-gray-700 hover:text-gold-500 py-2 font-medium">Kurikulum</a>
+            <a href="index.html#testimoni" class="block text-gray-700 hover:text-gold-500 py-2 font-medium">Kontak</a>
+            <a href="dashboard.html" class="block text-center bg-emerald-900 text-white py-3 rounded-lg font-bold mt-2 border border-emerald-700">Portal PSB & Login</a>
+        </div>
+    </nav>
+
+    <!-- ============ PAGE HERO ============ -->
+    <header class="relative pt-44 pb-24 overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="pichero.jpg" alt="Kampus Pesantren Al-Izzah" class="w-full h-full object-cover object-center opacity-30">
+            <div class="absolute inset-0 bg-gradient-to-b from-slate-900/90 via-emerald-900/70 to-slate-900"></div>
+        </div>
+        <div class="container mx-auto px-6 relative z-10 text-center">
+            <nav class="flex items-center justify-center gap-2 text-xs text-gray-400 mb-6" data-aos="fade-down">
+                <a href="index.html" class="hover:text-gold-400 transition">Beranda</a>
+                <i class="fas fa-chevron-right text-[8px] text-gold-400"></i>
+                <a href="profil.html" class="hover:text-gold-400 transition">Profil</a>
+                <i class="fas fa-chevron-right text-[8px] text-gold-400"></i>
+                <span class="text-gold-400 font-semibold">Struktur Organisasi</span>
+            </nav>
+            <p class="text-gold-400 text-xs font-bold tracking-[0.35em] uppercase mb-4" data-aos="fade-up">Tata Kelola Pesantren</p>
+            <h1 class="font-serif text-4xl md:text-6xl font-bold text-white mb-6 drop-shadow-2xl" data-aos="fade-up" data-aos-delay="100">
+                Struktur <span class="text-gold-gradient italic">Organisasi</span>
+            </h1>
+            <div class="flex items-center justify-center gap-4 mb-6" data-aos="fade-up" data-aos-delay="200">
+                <span class="h-px w-16 md:w-24 bg-gradient-to-r from-transparent to-gold-400"></span>
+                <i class="fas fa-star-and-crescent text-gold-400 text-lg"></i>
+                <span class="h-px w-16 md:w-24 bg-gradient-to-l from-transparent to-gold-400"></span>
+            </div>
+            <p class="text-gray-300 max-w-2xl mx-auto font-light leading-relaxed" data-aos="fade-up" data-aos-delay="300">
+                Sistem kepemimpinan yang memadukan khittah pesantren salaf dengan manajemen modern — setiap amanah dijalankan secara syura, transparan, dan profesional.
+            </p>
+        </div>
+    </header>
+
+    <!-- ============ BAGAN STRUKTUR ============ -->
+    <section id="bagan" class="py-16 bg-mint-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <p class="text-gold-500 text-xs font-bold tracking-[0.3em] uppercase mb-3" data-aos="fade-up">Bagan Kepemimpinan</p>
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-slate-900 mb-4" data-aos="fade-up">Hierarki Organisasi</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-transparent via-gold-400 to-transparent mx-auto rounded-full"></div>
+            </div>
+
+            <!-- Level 1: Pengasuh & Yayasan -->
+            <div class="max-w-md mx-auto" data-aos="fade-up">
+                <div class="card-green relative rounded-2xl p-6 text-center">
+                    <div class="relative z-10">
+                        <div class="w-14 h-14 mx-auto rounded-full bg-gold-400/15 border border-gold-400/50 flex items-center justify-center mb-4">
+                            <i class="fas fa-mosque text-gold-light text-xl"></i>
+                        </div>
+                        <h3 class="font-serif text-lg font-bold text-white">Majelis Pengasuh & Yayasan</h3>
+                        <p class="text-gold-light text-xs mt-1 uppercase tracking-widest">KH. Abdullah Izzah, Lc., M.A.</p>
+                        <p class="text-emerald-100/70 text-xs mt-2">Penanggung jawab tertinggi arah dakwah, kurikulum pesantren, dan sanad keilmuan.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="h-10 w-px bg-gradient-to-b from-gold-500/60 to-gold-500/20 mx-auto"></div>
+
+            <!-- Level 2: Kepala Pesantren -->
+            <div class="max-w-md mx-auto" data-aos="fade-up">
+                <div class="card-green relative rounded-2xl p-6 text-center">
+                    <div class="relative z-10">
+                        <div class="w-12 h-12 mx-auto rounded-full bg-gold-400/15 border border-gold-400/40 flex items-center justify-center mb-4">
+                            <i class="fas fa-user-tie text-gold-light"></i>
+                        </div>
+                        <h3 class="font-serif text-lg font-bold text-white">Kepala Pesantren (Direktur)</h3>
+                        <p class="text-gold-light text-xs mt-1 uppercase tracking-widest">Dr. H. Muhammad Fauzi, M.Ed.</p>
+                        <p class="text-emerald-100/70 text-xs mt-2">Pemimpin eksekutif penyelenggaraan pendidikan dan operasional kampus.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Connector 3 cabang (desktop) -->
+            <div class="hidden md:block relative h-12 max-w-4xl mx-auto">
+                <div class="absolute left-1/2 top-0 h-1/2 w-px bg-gold-500/40 -translate-x-1/2"></div>
+                <div class="absolute top-1/2 left-[16.66%] right-[16.66%] h-px bg-gold-500/40"></div>
+                <div class="absolute top-1/2 left-[16.66%] bottom-0 w-px bg-gold-500/40"></div>
+                <div class="absolute top-1/2 left-1/2 bottom-0 w-px bg-gold-500/40 -translate-x-1/2"></div>
+                <div class="absolute top-1/2 right-[16.66%] bottom-0 w-px bg-gold-500/40"></div>
+            </div>
+            <div class="md:hidden h-10 w-px bg-gold-500/40 mx-auto"></div>
+
+            <!-- Level 3: Tiga Wakil -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                <div class="card-green relative rounded-2xl p-6 text-center hover:-translate-y-1" data-aos="fade-up">
+                    <div class="relative z-10">
+                        <div class="w-12 h-12 mx-auto rounded-xl bg-gold-400/10 border border-gold-400/30 flex items-center justify-center mb-4">
+                            <i class="fas fa-graduation-cap text-gold-light"></i>
+                        </div>
+                        <h4 class="font-serif font-bold text-white">Wakil I — Akademik</h4>
+                        <p class="text-gold-light text-[11px] mt-1 uppercase tracking-widest">Ustadzah Dr. Maryam Yusuf, M.Pd.</p>
+                        <p class="text-emerald-100/70 text-xs mt-2 leading-relaxed">Kurikulum Cambridge & pesantren, tahfidz, bahasa, dan penilaian hasil belajar.</p>
+                    </div>
+                </div>
+                <div class="card-green relative rounded-2xl p-6 text-center hover:-translate-y-1" data-aos="fade-up" data-aos-delay="100">
+                    <div class="relative z-10">
+                        <div class="w-12 h-12 mx-auto rounded-xl bg-gold-400/10 border border-gold-400/30 flex items-center justify-center mb-4">
+                            <i class="fas fa-hands-holding-child text-gold-light"></i>
+                        </div>
+                        <h4 class="font-serif font-bold text-white">Wakil II — Kesantrian</h4>
+                        <p class="text-gold-light text-[11px] mt-1 uppercase tracking-widest">Ustadz Bilal Hakim, S.Ag.</p>
+                        <p class="text-emerald-100/70 text-xs mt-2 leading-relaxed">Pembinaan akhlak, asrama, kedisiplinan, organisasi santri, dan kesehatan.</p>
+                    </div>
+                </div>
+                <div class="card-green relative rounded-2xl p-6 text-center hover:-translate-y-1" data-aos="fade-up" data-aos-delay="200">
+                    <div class="relative z-10">
+                        <div class="w-12 h-12 mx-auto rounded-xl bg-gold-400/10 border border-gold-400/30 flex items-center justify-center mb-4">
+                            <i class="fas fa-gears text-gold-light"></i>
+                        </div>
+                        <h4 class="font-serif font-bold text-white">Wakil III — Operasional</h4>
+                        <p class="text-gold-light text-[11px] mt-1 uppercase tracking-widest">H. Salman Alfarisi, S.E., M.M.</p>
+                        <p class="text-emerald-100/70 text-xs mt-2 leading-relaxed">Keuangan, sarana prasarana, SDM, humas, dan kemitraan global.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Departemen & Unit -->
+            <div class="mt-20">
+                <h3 class="font-serif text-2xl font-bold text-slate-900 text-center mb-10" data-aos="fade-up">Departemen & Unit Kerja</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                    <div class="card-green relative rounded-xl p-5 hover:-translate-y-1" data-aos="fade-up">
+                        <div class="relative z-10">
+                            <span class="text-[10px] bg-gold-400/15 text-gold-light border border-gold-400/40 rounded-full px-2 py-0.5">Wakil I</span>
+                            <h5 class="text-white font-bold text-sm mt-3 mb-1"><i class="fas fa-quran text-gold-light mr-2"></i>Bagian Tahfidz & Al-Qur'an</h5>
+                            <p class="text-emerald-100/65 text-xs">Halaqah harian, setoran hafalan, dan musabaqah.</p>
+                        </div>
+                    </div>
+                    <div class="card-green relative rounded-xl p-5 hover:-translate-y-1" data-aos="fade-up" data-aos-delay="50">
+                        <div class="relative z-10">
+                            <span class="text-[10px] bg-gold-400/15 text-gold-light border border-gold-400/40 rounded-full px-2 py-0.5">Wakil I</span>
+                            <h5 class="text-white font-bold text-sm mt-3 mb-1"><i class="fas fa-globe text-gold-light mr-2"></i>Bagian Akademik Cambridge</h5>
+                            <p class="text-emerald-100/65 text-xs">IGCSE, A-Level, dan laboratorium sains.</p>
+                        </div>
+                    </div>
+                    <div class="card-green relative rounded-xl p-5 hover:-translate-y-1" data-aos="fade-up" data-aos-delay="100">
+                        <div class="relative z-10">
+                            <span class="text-[10px] bg-gold-400/15 text-gold-light border border-gold-400/40 rounded-full px-2 py-0.5">Wakil I</span>
+                            <h5 class="text-white font-bold text-sm mt-3 mb-1"><i class="fas fa-language text-gold-light mr-2"></i>Bagian Bahasa & Komunikasi</h5>
+                            <p class="text-emerald-100/65 text-xs">Arabic & English area, speech club, jurnalistik.</p>
+                        </div>
+                    </div>
+                    <div class="card-green relative rounded-xl p-5 hover:-translate-y-1" data-aos="fade-up" data-aos-delay="150">
+                        <div class="relative z-10">
+                            <span class="text-[10px] bg-gold-400/15 text-gold-light border border-gold-400/40 rounded-full px-2 py-0.5">Wakil I</span>
+                            <h5 class="text-white font-bold text-sm mt-3 mb-1"><i class="fas fa-robot text-gold-light mr-2"></i>Bagian IT, Robotika & Digital</h5>
+                            <p class="text-emerald-100/65 text-xs">Coding class, AI lab, dan media center.</p>
+                        </div>
+                    </div>
+                    <div class="card-green relative rounded-xl p-5 hover:-translate-y-1" data-aos="fade-up">
+                        <div class="relative z-10">
+                            <span class="text-[10px] bg-gold-400/15 text-gold-light border border-gold-400/40 rounded-full px-2 py-0.5">Wakil II</span>
+                            <h5 class="text-white font-bold text-sm mt-3 mb-1"><i class="fas fa-bed text-gold-light mr-2"></i>Bagian Kesantrian & Asrama</h5>
+                            <p class="text-emerald-100/65 text-xs">Mudabbir asrama, mentoring, dan konseling.</p>
+                        </div>
+                    </div>
+                    <div class="card-green relative rounded-xl p-5 hover:-translate-y-1" data-aos="fade-up" data-aos-delay="50">
+                        <div class="relative z-10">
+                            <span class="text-[10px] bg-gold-400/15 text-gold-light border border-gold-400/40 rounded-full px-2 py-0.5">Wakil II</span>
+                            <h5 class="text-white font-bold text-sm mt-3 mb-1"><i class="fas fa-futbol text-gold-light mr-2"></i>Bagian Bakat, Minat & Olahraga</h5>
+                            <p class="text-emerald-100/65 text-xs">Ekstrakurikuler, panahan, bela diri, dan seni.</p>
+                        </div>
+                    </div>
+                    <div class="card-green relative rounded-xl p-5 hover:-translate-y-1" data-aos="fade-up" data-aos-delay="100">
+                        <div class="relative z-10">
+                            <span class="text-[10px] bg-gold-400/15 text-gold-light border border-gold-400/40 rounded-full px-2 py-0.5">Wakil III</span>
+                            <h5 class="text-white font-bold text-sm mt-3 mb-1"><i class="fas fa-bullhorn text-gold-light mr-2"></i>Bagian SPMB & Humas</h5>
+                            <p class="text-emerald-100/65 text-xs">Penerimaan santri baru dan kemitraan global.</p>
+                        </div>
+                    </div>
+                    <div class="card-green relative rounded-xl p-5 hover:-translate-y-1" data-aos="fade-up" data-aos-delay="150">
+                        <div class="relative z-10">
+                            <span class="text-[10px] bg-gold-400/15 text-gold-light border border-gold-400/40 rounded-full px-2 py-0.5">Wakil III</span>
+                            <h5 class="text-white font-bold text-sm mt-3 mb-1"><i class="fas fa-coins text-gold-light mr-2"></i>Bagian Keuangan & Sarpras</h5>
+                            <p class="text-emerald-100/65 text-xs">Treasury, wakaf produktif, dan fasilitas kampus.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ PROFIL PIMPINAN ============ -->
+    <section id="pengurus" class="py-16 bg-mint-100 pattern-islamic">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <p class="text-gold-500 text-xs font-bold tracking-[0.3em] uppercase mb-3" data-aos="fade-up">Amanah & Khidmat</p>
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-slate-900 mb-4" data-aos="fade-up">Pimpinan Pesantren</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-transparent via-gold-400 to-transparent mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="group card-green relative rounded-2xl p-6 text-center hover:-translate-y-2" data-aos="fade-up">
+                    <div class="relative z-10">
+                        <div class="relative w-24 h-24 mx-auto mb-5">
+                            <div class="absolute inset-0 rounded-full border-2 border-gold-400/60 group-hover:rotate-180 transition duration-700"></div>
+                            <img onerror="imgFallback(this,'kyai')" src="https://randomuser.me/api/portraits/men/61.jpg" class="w-24 h-24 rounded-full object-cover border-4 border-emerald-900" alt="Pengasuh">
+                        </div>
+                        <h4 class="font-serif font-bold text-white">KH. Abdullah Izzah, Lc., M.A.</h4>
+                        <p class="text-gold-light text-xs uppercase tracking-widest mt-1 mb-3">Pengasuh & Pendiri</p>
+                        <p class="text-emerald-100/65 text-xs italic">"Pesantren adalah rumah; ilmu adalah cahaya; akhlak adalah buahnya."</p>
+                    </div>
+                </div>
+                <div class="group card-green relative rounded-2xl p-6 text-center hover:-translate-y-2" data-aos="fade-up" data-aos-delay="100">
+                    <div class="relative z-10">
+                        <div class="relative w-24 h-24 mx-auto mb-5">
+                            <div class="absolute inset-0 rounded-full border-2 border-gold-400/60 group-hover:rotate-180 transition duration-700"></div>
+                            <img onerror="imgFallback(this,'direktur')" src="https://randomuser.me/api/portraits/men/62.jpg" class="w-24 h-24 rounded-full object-cover border-4 border-emerald-900" alt="Kepala Pesantren">
+                        </div>
+                        <h4 class="font-serif font-bold text-white">Dr. H. Muhammad Fauzi, M.Ed.</h4>
+                        <p class="text-gold-light text-xs uppercase tracking-widest mt-1 mb-3">Kepala Pesantren</p>
+                        <p class="text-emerald-100/65 text-xs italic">"Manajemen modern adalah alat; niat khidmat tetaplah jiwa."</p>
+                    </div>
+                </div>
+                <div class="group card-green relative rounded-2xl p-6 text-center hover:-translate-y-2" data-aos="fade-up" data-aos-delay="200">
+                    <div class="relative z-10">
+                        <div class="relative w-24 h-24 mx-auto mb-5">
+                            <div class="absolute inset-0 rounded-full border-2 border-gold-400/60 group-hover:rotate-180 transition duration-700"></div>
+                            <img onerror="imgFallback(this,'maryam')" src="https://randomuser.me/api/portraits/women/65.jpg" class="w-24 h-24 rounded-full object-cover border-4 border-emerald-900" alt="Wakil Akademik">
+                        </div>
+                        <h4 class="font-serif font-bold text-white">Dr. Maryam Yusuf, M.Pd.</h4>
+                        <p class="text-gold-light text-xs uppercase tracking-widest mt-1 mb-3">Wakil I — Akademik</p>
+                        <p class="text-emerald-100/65 text-xs italic">"Kurikulum terbaik adalah yang menuntun santri mencintai belajar."</p>
+                    </div>
+                </div>
+                <div class="group card-green relative rounded-2xl p-6 text-center hover:-translate-y-2" data-aos="fade-up" data-aos-delay="300">
+                    <div class="relative z-10">
+                        <div class="relative w-24 h-24 mx-auto mb-5">
+                            <div class="absolute inset-0 rounded-full border-2 border-gold-400/60 group-hover:rotate-180 transition duration-700"></div>
+                            <img onerror="imgFallback(this,'bilal')" src="https://randomuser.me/api/portraits/men/64.jpg" class="w-24 h-24 rounded-full object-cover border-4 border-emerald-900" alt="Wakil Kesantrian">
+                        </div>
+                        <h4 class="font-serif font-bold text-white">Ustadz Bilal Hakim, S.Ag.</h4>
+                        <p class="text-gold-light text-xs uppercase tracking-widest mt-1 mb-3">Wakil II — Kesantrian</p>
+                        <p class="text-emerald-100/65 text-xs italic">"Disiplin yang lahir dari kasih sayang akan bertahan seumur hidup."</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Statistik SDM -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-20 max-w-4xl mx-auto" data-aos="fade-up">
+                <div class="card-green relative text-center rounded-2xl py-8">
+                    <div class="relative z-10">
+                        <h3 class="text-3xl font-serif font-bold text-gold-light">85</h3>
+                        <p class="text-xs text-emerald-100/70 uppercase tracking-widest mt-1">Asatidz & Ustadzah</p>
+                    </div>
+                </div>
+                <div class="card-green relative text-center rounded-2xl py-8">
+                    <div class="relative z-10">
+                        <h3 class="text-3xl font-serif font-bold text-gold-light">40</h3>
+                        <p class="text-xs text-emerald-100/70 uppercase tracking-widest mt-1">Guru Mapel Internasional</p>
+                    </div>
+                </div>
+                <div class="card-green relative text-center rounded-2xl py-8">
+                    <div class="relative z-10">
+                        <h3 class="text-3xl font-serif font-bold text-gold-light">25</h3>
+                        <p class="text-xs text-emerald-100/70 uppercase tracking-widest mt-1">Pembina Asrama</p>
+                    </div>
+                </div>
+                <div class="card-green relative text-center rounded-2xl py-8">
+                    <div class="relative z-10">
+                        <h3 class="text-3xl font-serif font-bold text-gold-light">30</h3>
+                        <p class="text-xs text-emerald-100/70 uppercase tracking-widest mt-1">Tenaga Kependidikan</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ PRINSIP TATA KELOLA ============ -->
+    <section class="py-16 bg-emerald-900 relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-full opacity-10" style="background-image: radial-gradient(#D97706 1px, transparent 1px); background-size: 30px 30px;"></div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-white" data-aos="fade-up">Prinsip Tata Kelola</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-8 hover:border-gold-400/40 hover:-translate-y-2 transition duration-300 text-center" data-aos="fade-up">
+                    <div class="w-16 h-16 mx-auto rounded-full bg-gold-400/15 border border-gold-400/40 flex items-center justify-center mb-5">
+                        <i class="fas fa-people-group text-gold-400 text-xl"></i>
+                    </div>
+                    <h4 class="font-serif text-lg font-bold text-white mb-2">Syura</h4>
+                    <p class="text-sm text-emerald-100/70 leading-relaxed">Setiap keputusan besar diambil melalui musyawarah dewan asatidz dan yayasan.</p>
+                </div>
+                <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-8 hover:border-gold-400/40 hover:-translate-y-2 transition duration-300 text-center" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-16 h-16 mx-auto rounded-full bg-gold-400/15 border border-gold-400/40 flex items-center justify-center mb-5">
+                        <i class="fas fa-scale-balanced text-gold-400 text-xl"></i>
+                    </div>
+                    <h4 class="font-serif text-lg font-bold text-white mb-2">Amanah & Transparan</h4>
+                    <p class="text-sm text-emerald-100/70 leading-relaxed">Laporan keuangan dan akademik diaudit internal serta terbuka bagi wali santri.</p>
+                </div>
+                <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-8 hover:border-gold-400/40 hover:-translate-y-2 transition duration-300 text-center" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-16 h-16 mx-auto rounded-full bg-gold-400/15 border border-gold-400/40 flex items-center justify-center mb-5">
+                        <i class="fas fa-arrow-trend-up text-gold-400 text-xl"></i>
+                    </div>
+                    <h4 class="font-serif text-lg font-bold text-white mb-2">Profesional & Itqan</h4>
+                    <p class="text-sm text-emerald-100/70 leading-relaxed">Pengembangan SDM berkelanjutan dengan standar mutu internasional.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ CTA ============ -->
+    <section class="py-16 bg-gradient-to-r from-emerald-900 via-emerald-800 to-emerald-900 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#FCD34D 1px, transparent 1px); background-size: 24px 24px;"></div>
+        <div class="container mx-auto px-6 text-center relative z-10">
+            <h2 class="font-serif text-3xl md:text-4xl font-bold text-white mb-4" data-aos="fade-up">Bergabung dengan Keluarga Besar Al-Izzah</h2>
+            <p class="text-emerald-100/80 max-w-xl mx-auto mb-8" data-aos="fade-up" data-aos-delay="100">Struktur yang rapi adalah janji kami untuk mendampingi putra-putri Anda dengan sepenuh amanah.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center" data-aos="fade-up" data-aos-delay="200">
+                <a href="index.html#spmb-form" class="px-8 py-4 bg-gold-400 hover:bg-gold-500 text-slate-900 font-bold rounded-lg shadow-[0_10px_40px_rgba(217,119,6,0.35)] transition transform hover:-translate-y-1">
+                    Daftar Santri Baru <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+                <a href="galeri.html" class="px-8 py-4 border border-white/30 hover:bg-white/10 text-white font-semibold rounded-lg transition">
+                    Lihat Galeri Kegiatan
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="bg-mint-100 pt-20 pb-10 border-t border-mint-200">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+                <div>
+                    <div class="flex items-center gap-2 mb-6">
+                        <i class="fas fa-mosque text-gold-500 text-2xl"></i>
+                        <h2 class="font-serif text-2xl font-bold text-slate-900">AL-IZZAH</h2>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-6">Lembaga pendidikan Islam modern yang mencetak generasi Qur'ani, berwawasan global, dan siap memimpin masa depan.</p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-mint-200 flex items-center justify-center text-emerald-900 hover:bg-gold-400 hover:text-white transition"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-mint-200 flex items-center justify-center text-emerald-900 hover:bg-gold-400 hover:text-white transition"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-mint-200 flex items-center justify-center text-emerald-900 hover:bg-gold-400 hover:text-white transition"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-slate-900 font-bold mb-6">Navigasi</h3>
+                    <ul class="space-y-3 text-sm text-gray-600">
+                        <li><a href="index.html" class="hover:text-gold-500 transition">Beranda</a></li>
+                        <li><a href="profil.html" class="hover:text-gold-500 transition">Profil Sekolah</a></li>
+                        <li><a href="struktur.html" class="hover:text-gold-500 transition">Struktur Organisasi</a></li>
+                        <li><a href="galeri.html" class="hover:text-gold-500 transition">Galeri Foto & Video</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-slate-900 font-bold mb-6">Halaman Profil</h3>
+                    <ul class="space-y-3 text-sm text-gray-600">
+                        <li><a href="profil.html#visi-misi" class="hover:text-gold-500 transition">Visi & Misi</a></li>
+                        <li><a href="profil.html#sejarah" class="hover:text-gold-500 transition">Sejarah Berdiri</a></li>
+                        <li><a href="#bagan" class="hover:text-gold-500 transition">Bagan Organisasi</a></li>
+                        <li><a href="#pengurus" class="hover:text-gold-500 transition">Pimpinan Pesantren</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-slate-900 font-bold mb-6">Hubungi Kami</h3>
+                    <ul class="space-y-4 text-sm text-gray-600">
+                        <li class="flex items-start gap-3"><i class="fas fa-map-marker-alt text-gold-500 mt-1"></i><span>Jl. Pendidikan Islam No. 99, Kota Baru, Indonesia 40123</span></li>
+                        <li class="flex items-center gap-3"><i class="fas fa-phone text-gold-500"></i><span>+62 812-3456-7890</span></li>
+                        <li class="flex items-center gap-3"><i class="fas fa-envelope text-gold-500"></i><span>info@alizzah.sch.id</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-mint-200 pt-8 text-center text-sm text-gray-500">&copy; 2026 Pesantren Modern Al-Izzah. All Rights Reserved.</div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: true, offset: 80 });
+
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) { navbar.classList.add('glass-nav', 'py-2'); navbar.classList.remove('py-5'); }
+            else { navbar.classList.remove('glass-nav', 'py-2'); navbar.classList.add('py-5'); }
+        });
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden'); menu.classList.toggle('flex');
+        }
+
+        /* Fallback foto: coba picsum, lalu sembunyikan (ikon latar muncul) */
+        function imgFallback(img, seed) {
+            if (!img.dataset.fb1) { img.dataset.fb1 = 1; img.src = 'https://picsum.photos/seed/' + seed + '/300/300'; }
+            else { img.style.display = 'none'; }
+        }
+    </script>
+
+<script src="cms-public.js"></script>
+
+<!-- ============================================================ -->
+    <!-- 🔒 Proteksi Konten (TETAP SAMA)                              -->
+    <!-- ============================================================ -->
+    <script>
+    (function() {
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            showToastCustom('🔒 Konten dilindungi. Klik kanan dinonaktifkan.');
+            return false;
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'u') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.key === 's') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.key === 'c') { e.preventDefault(); return false; }
+            if ((e.ctrlKey && e.shiftKey && e.key === 'I') || e.key === 'F12') { 
+                e.preventDefault(); 
+                showToastCustom('🔒 Developer Tools dinonaktifkan.');
+                return false; 
+            }
+            if (e.ctrlKey && e.shiftKey && e.key === 'J') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.key === 'p') { e.preventDefault(); return false; }
+        });
+
+        document.addEventListener('selectstart', function(e) {
+            if (!['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        document.addEventListener('dragstart', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        function showToastCustom(message) {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed; top: 20px; right: 20px; z-index: 99999;
+                background: linear-gradient(135deg, #064e3b, #059669);
+                color: white; padding: 14px 20px; border-radius: 10px;
+                font-weight: 600; font-size: 0.9rem; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                animation: slideInToast 0.3s ease-out;
+            `;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.3s';
+                setTimeout(() => toast.remove(), 300);
+            }, 2500);
+        }
+
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInToast {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            body { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
+            input, textarea, select { -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text; }
+        `;
+        document.head.appendChild(style);
+
+        console.log('%c🔒 Proteksi Konten Aktif', 'color: #059669; font-size: 14px; font-weight: bold;');
+    })();
+    </script>
+    
+</body>
+</html>
