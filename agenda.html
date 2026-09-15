@@ -48,12 +48,45 @@
             background: radial-gradient(circle at top left, rgba(252,211,77,0.08), transparent 45%);
             pointer-events: none;
         }
-        /* Sel kalender */
-        .cal-day { transition: all .2s ease; }
-        .cal-day:hover { background: rgba(217,119,6,0.12); }
-        .cal-active { background: linear-gradient(135deg, #D97706, #B45309); color: #0f172a !important; font-weight: 700; box-shadow: 0 4px 15px rgba(217,119,6,0.4); }
-        .cal-event { position: relative; }
-        .cal-event::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; border-radius: 50%; background: #FCD34D; }
+
+        /* ================= MINI CALENDAR (BARU — COMPACT & CANTIK) ================= */
+        .mini-cal { width: 100%; max-width: 340px; }
+        .mini-cal-head {
+            background: linear-gradient(135deg, #D97706 0%, #B45309 100%);
+            position: relative; overflow: hidden;
+        }
+        .mini-cal-head::after {
+            content: ''; position: absolute; top: 0; bottom: 0; left: -40%; width: 40%;
+            background: linear-gradient(100deg, transparent, rgba(255,255,255,0.35), transparent);
+            animation: calShine 4s linear infinite; pointer-events: none;
+        }
+        @keyframes calShine { 0% { left: -40%; } 100% { left: 120%; } }
+        .cal-nav-btn {
+            width: 26px; height: 26px; border-radius: 8px;
+            background: rgba(15,23,42,0.25); border: 1px solid rgba(255,255,255,0.25);
+            color: #fff; display: inline-flex; align-items: center; justify-content: center;
+            font-size: 10px; cursor: pointer; transition: all .2s ease;
+        }
+        .cal-nav-btn:hover { background: #0f172a; transform: scale(1.1); }
+        .cal-nav-btn:active { transform: scale(0.95); }
+        .mcal-cell {
+            height: 34px; border-radius: 9px; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; font-size: 12px;
+            color: #fff; cursor: pointer; position: relative; transition: all .15s ease;
+            user-select: none;
+        }
+        .mcal-cell:hover:not(.mcal-empty) { background: rgba(252,211,77,0.18); color: #FCD34D; }
+        .mcal-empty { cursor: default; }
+        .mcal-today { border: 1.5px solid #FCD34D; color: #FCD34D; font-weight: 700; }
+        .mcal-selected {
+            background: linear-gradient(135deg, #D97706, #B45309) !important;
+            color: #fff !important; font-weight: 700;
+            box-shadow: 0 3px 10px rgba(217,119,6,0.5);
+        }
+        .mcal-dot { position: absolute; bottom: 4px; width: 4px; height: 4px; border-radius: 50%; background: #FCD34D; }
+        .mcal-selected .mcal-dot { background: #fff; }
+        .cal-fade { animation: calFadeIn .3s ease; }
+        @keyframes calFadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body class="bg-mint-50 text-gray-800 font-sans antialiased overflow-x-hidden">
@@ -154,82 +187,60 @@
         </div>
     </header>
 
-    <!-- ============ KALENDER BULANAN ============ -->
+    <!-- ============ KALENDER MINI + AGENDA HARI INI ============ -->
     <section class="py-16 bg-mint-50">
         <div class="container mx-auto px-6">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start max-w-5xl mx-auto">
 
-                <!-- KALENDER -->
-                <div class="lg:col-span-2 card-green relative rounded-2xl p-6 md:p-8" data-aos="fade-right">
-                    <div class="relative z-10">
-                        <div class="flex items-center justify-between mb-6">
-                            <div>
-                                <h2 class="font-serif text-xl font-bold text-white">September 2026</h2>
-                                <p class="text-emerald-100/60 text-xs mt-1">Rabiul Awal — Rabiul Akhir 1448 H</p>
+                <!-- KOLOM KIRI: MINI KALENDER (compact, max 340px) -->
+                <div class="lg:col-span-5 flex justify-center lg:justify-start" data-aos="fade-right">
+                    <div class="mini-cal card-green relative rounded-2xl overflow-hidden">
+                        <!-- Pita header emas -->
+                        <div class="mini-cal-head px-4 py-3 flex items-center justify-between relative z-10">
+                            <button id="btnPrev" class="cal-nav-btn" aria-label="Bulan sebelumnya"><i class="fas fa-chevron-left"></i></button>
+                            <div class="text-center">
+                                <p id="calTitle" class="font-serif text-white font-bold text-sm leading-tight drop-shadow">Memuat...</p>
+                                <p id="calSub" class="text-white/70 text-[9px] uppercase tracking-[0.2em]">Kalender Kegiatan</p>
                             </div>
-                            <div class="flex gap-2">
-                                <button class="w-9 h-9 rounded-lg bg-white/5 border border-white/10 text-emerald-100 hover:bg-gold-400 hover:text-slate-900 transition text-sm"><i class="fas fa-chevron-left"></i></button>
-                                <button class="w-9 h-9 rounded-lg bg-white/5 border border-white/10 text-emerald-100 hover:bg-gold-400 hover:text-slate-900 transition text-sm"><i class="fas fa-chevron-right"></i></button>
+                            <button id="btnNext" class="cal-nav-btn" aria-label="Bulan berikutnya"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+
+                        <div class="relative z-10 p-4">
+                            <!-- Nama hari -->
+                            <div class="grid grid-cols-7 gap-0.5 mb-1 text-center">
+                                <div class="text-[8px] font-bold uppercase tracking-wider text-gold-light py-1">Min</div>
+                                <div class="text-[8px] font-bold uppercase tracking-wider text-emerald-100/50 py-1">Sen</div>
+                                <div class="text-[8px] font-bold uppercase tracking-wider text-emerald-100/50 py-1">Sel</div>
+                                <div class="text-[8px] font-bold uppercase tracking-wider text-emerald-100/50 py-1">Rab</div>
+                                <div class="text-[8px] font-bold uppercase tracking-wider text-emerald-100/50 py-1">Kam</div>
+                                <div class="text-[8px] font-bold uppercase tracking-wider text-emerald-100/50 py-1">Jum</div>
+                                <div class="text-[8px] font-bold uppercase tracking-wider text-emerald-100/50 py-1">Sab</div>
                             </div>
-                        </div>
-                        <div class="grid grid-cols-7 gap-1 md:gap-2 text-center">
-                            <div class="text-[10px] font-bold uppercase tracking-widest text-gold-light py-2">Min</div>
-                            <div class="text-[10px] font-bold uppercase tracking-widest text-emerald-100/60 py-2">Sen</div>
-                            <div class="text-[10px] font-bold uppercase tracking-widest text-emerald-100/60 py-2">Sel</div>
-                            <div class="text-[10px] font-bold uppercase tracking-widest text-emerald-100/60 py-2">Rab</div>
-                            <div class="text-[10px] font-bold uppercase tracking-widest text-emerald-100/60 py-2">Kam</div>
-                            <div class="text-[10px] font-bold uppercase tracking-widest text-emerald-100/60 py-2">Jum</div>
-                            <div class="text-[10px] font-bold uppercase tracking-widest text-emerald-100/60 py-2">Sab</div>
-                            <!-- Baris 1 -->
-                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-emerald-100/30">30</div>
-                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">1</div>
-                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">2</div>
-                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">3</div>
-                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">4</div>
-                            <div class="cal-day cal-event aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">5</div>
-                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">6</div>
-                            <!-- Baris 2 -->
-                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">7</div>
-                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">8</div>
-                            <div class="cal-day cal-event aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">9</div>
-                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">10</div>
-                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">11</div>
-                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">12</div>
-                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">13</div>
-                            <!-- Baris 3 -->
-                            <div class="cal-day cal-active aspect-square rounded-lg flex items-center justify-center text-sm cursor-pointer">14</div>
-                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">15</div>
-                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">16</div>
-                            <div class="cal-day cal-event aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">17</div>
-                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">18</div>
-                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">19</div>
-                            <div class="cal-day cal-event aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">20</div>
-                            <!-- Baris 4 -->
-                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">21</div>
-                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">22</div>
-                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">23</div>
-                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">24</div>
-                            <div class="cal-day cal-event aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">25</div>
-                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">26</div>
-                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">27</div>
-                            <!-- Baris 5 -->
-                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">28</div>
-                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">29</div>
-                            <div class="cal-day cal-event aspect-square rounded-lg flex items-center justify-center text-sm text-white cursor-pointer">30</div>
-                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-emerald-100/30">1</div>
-                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-emerald-100/30">2</div>
-                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-emerald-100/30">3</div>
-                            <div class="cal-day aspect-square rounded-lg flex items-center justify-center text-sm text-emerald-100/30">4</div>
-                        </div>
-                        <div class="flex flex-wrap items-center gap-5 mt-6 pt-5 border-t border-white/10 text-xs text-emerald-100/70">
-                            <span class="flex items-center gap-2"><span class="w-3 h-3 rounded bg-gradient-to-br from-gold-400 to-gold-500"></span> Hari ini</span>
-                            <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-gold-light"></span> Ada kegiatan</span>
+                            <!-- Grid tanggal (dirender JS) -->
+                            <div id="calGrid" class="grid grid-cols-7 gap-0.5"></div>
+
+                            <!-- Tombol hari ini -->
+                            <button id="btnToday" class="mt-3 w-full py-2 rounded-lg bg-white/5 border border-gold-400/30 text-gold-light text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-gold-400 hover:text-slate-900 transition">
+                                <i class="fas fa-calendar-day mr-1"></i> Ke Hari Ini
+                            </button>
+
+                            <!-- Legenda mini -->
+                            <div class="flex items-center justify-center gap-4 mt-3 pt-3 border-t border-white/10 text-[9px] text-emerald-100/60">
+                                <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded border border-gold-light"></span> Hari ini</span>
+                                <span class="flex items-center gap-1"><span class="w-1 h-1 rounded-full bg-gold-light"></span> Ada kegiatan</span>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- AGENDA HARI INI -->
-                <div class="space-y-4" data-aos="fade-left">
+                <!-- KOLOM KANAN: DETAIL TANGGAL + AGENDA HARI INI -->
+                <div class="lg:col-span-7 space-y-4" data-aos="fade-left">
+                    <!-- Panel detail tanggal terpilih -->
+                    <div id="calDetail" class="card-green relative rounded-2xl p-6 hidden">
+                        <div id="calDetailBody" class="relative z-10"></div>
+                    </div>
+
+                    <!-- Agenda Hari Ini -->
                     <div class="card-green relative rounded-2xl p-6">
                         <div class="relative z-10">
                             <div class="flex items-center gap-3 mb-5">
@@ -263,6 +274,8 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Pengingat wali santri -->
                     <div class="card-green relative rounded-2xl p-6 border-gold-400/30">
                         <div class="relative z-10">
                             <h4 class="font-serif font-bold text-white mb-2"><i class="fas fa-bell text-gold-light mr-2"></i> Pengingat Wali Santri</h4>
@@ -479,8 +492,123 @@
         });
         function toggleMobileMenu() { const m = document.getElementById('mobile-menu'); m.classList.toggle('hidden'); m.classList.toggle('flex'); }
     </script>
+
+    <!-- ============================================================
+         MINI KALENDER INTERAKTIF — semua event dipasang via JS
+         (addEventListener, bukan onclick inline → dijamin jalan)
+         ============================================================ -->
+    <script>
+    (function() {
+        const BULAN = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+        /* Data kegiatan — key: YYYY-MM-DD (mudah ditambah nanti) */
+        const EVENTS = {
+            '2026-09-01': [{ t: "Upacara Pembukaan Tahun Ajaran Baru", k: 'Kegiatan', j: '07.00 WIB · Lapangan Utama' }],
+            '2026-09-05': [{ t: 'Milad ke-16 Pesantren Al-Izzah', k: 'Kegiatan', j: '08.00 WIB · Aula Serbaguna' }],
+            '2026-09-09': [{ t: 'Parenting Day — Seminar Wali Santri', k: 'Kegiatan', j: '08.00 WIB · Aula Serbaguna' }],
+            '2026-09-17': [{ t: 'Penilaian Tengah Semester (PTS) Ganjil', k: 'Akademik', j: '07.00 – 12.00 WIB · Gedung Akademik' }],
+            '2026-09-20': [{ t: 'Peringatan Maulid Nabi Muhammad SAW', k: 'Keagamaan', j: '19.30 WIB · Masjid Agung Al-Izzah' }],
+            '2026-09-25': [{ t: 'Wisuda Tahfidz Angkatan XII', k: 'Tahfidz', j: '08.00 – 15.00 WIB · Aula Serbaguna' }],
+            '2026-09-30': [{ t: 'Batas Akhir Pendaftaran SPMB Gelombang 1', k: 'SPMB', j: '23.59 WIB · Online' }],
+            '2026-10-05': [{ t: 'Ujian Praktik Tahsin Bersanad', k: 'Tahfidz', j: '05.30 WIB · Serambi Masjid' }],
+            '2026-10-17': [{ t: 'Lomba Antar Kelas (Class Meeting)', k: 'Kegiatan', j: '07.30 WIB · Area Kampus' }],
+            '2026-10-22': [{ t: 'Peringatan Hari Santri Nasional', k: 'Keagamaan', j: '07.00 WIB · Lapangan Utama' }],
+            '2026-11-10': [{ t: 'Open House & Campus Expo', k: 'SPMB', j: '08.00 WIB · Aula Serbaguna' }],
+            '2026-12-01': [{ t: 'Pendaftaran SPMB Gelombang 2 Dibuka', k: 'SPMB', j: 'Sepanjang hari · Online' }],
+            '2026-12-18': [{ t: 'Pembagian Rapor Semester Ganjil', k: 'Akademik', j: '08.00 WIB · Gedung Akademik' }]
+        };
+
+        const today = new Date();
+        let view = new Date(today.getFullYear(), today.getMonth(), 1);
+        let selected = null;
+
+        const elGrid   = document.getElementById('calGrid');
+        const elTitle  = document.getElementById('calTitle');
+        const elDetail = document.getElementById('calDetail');
+        const elBody   = document.getElementById('calDetailBody');
+
+        function key(y, m, d) { return y + '-' + String(m + 1).padStart(2,'0') + '-' + String(d).padStart(2,'0'); }
+
+        function render() {
+            const y = view.getFullYear(), m = view.getMonth();
+            elTitle.textContent = BULAN[m] + ' ' + y;
+            elGrid.innerHTML = '';
+
+            const first = new Date(y, m, 1).getDay();
+            const total = new Date(y, m + 1, 0).getDate();
+            const todayKey = key(today.getFullYear(), today.getMonth(), today.getDate());
+
+            for (let i = 0; i < first; i++) {
+                const s = document.createElement('div');
+                s.className = 'mcal-cell mcal-empty';
+                elGrid.appendChild(s);
+            }
+            for (let d = 1; d <= total; d++) {
+                const k = key(y, m, d);
+                const cell = document.createElement('div');
+                cell.className = 'mcal-cell';
+                cell.textContent = d;
+                if (k === selected) cell.classList.add('mcal-selected');
+                else if (k === todayKey) cell.classList.add('mcal-today');
+                if (EVENTS[k]) {
+                    const dot = document.createElement('span');
+                    dot.className = 'mcal-dot';
+                    cell.appendChild(dot);
+                }
+                cell.addEventListener('click', function() {
+                    selected = k;
+                    render();
+                    showDetail(k);
+                });
+                elGrid.appendChild(cell);
+            }
+            elGrid.classList.remove('cal-fade');
+            void elGrid.offsetWidth;
+            elGrid.classList.add('cal-fade');
+        }
+
+        function showDetail(k) {
+            const evs = EVENTS[k];
+            if (!evs) { elDetail.classList.add('hidden'); return; }
+            const p = k.split('-');
+            let html = '<p class="text-gold-light text-[10px] font-bold uppercase tracking-[0.2em] mb-3"><i class="fas fa-calendar-check mr-1"></i> Agenda ' + Number(p[2]) + ' ' + BULAN[Number(p[1]) - 1] + ' ' + p[0] + '</p>';
+            html += '<div class="space-y-3">';
+            evs.forEach(function(e) {
+                html += '<div class="flex items-start gap-3">' +
+                    '<span class="shrink-0 text-[9px] font-bold uppercase tracking-widest text-slate-900 bg-gold-400 rounded-full px-2.5 py-1 mt-0.5">' + e.k + '</span>' +
+                    '<div><p class="text-white text-sm font-semibold leading-snug">' + e.t + '</p>' +
+                    '<p class="text-emerald-100/60 text-xs mt-0.5"><i class="far fa-clock mr-1"></i>' + e.j + '</p></div></div>';
+            });
+            html += '</div>';
+            elBody.innerHTML = html;
+            elDetail.classList.remove('hidden');
+            elDetail.classList.remove('cal-fade');
+            void elDetail.offsetWidth;
+            elDetail.classList.add('cal-fade');
+        }
+
+        document.getElementById('btnPrev').addEventListener('click', function() {
+            view = new Date(view.getFullYear(), view.getMonth() - 1, 1);
+            selected = null; elDetail.classList.add('hidden'); render();
+        });
+        document.getElementById('btnNext').addEventListener('click', function() {
+            view = new Date(view.getFullYear(), view.getMonth() + 1, 1);
+            selected = null; elDetail.classList.add('hidden'); render();
+        });
+        document.getElementById('btnToday').addEventListener('click', function() {
+            view = new Date(today.getFullYear(), today.getMonth(), 1);
+            selected = key(today.getFullYear(), today.getMonth(), today.getDate());
+            render(); showDetail(selected);
+        });
+
+        render();
+        console.log('%c📅 Mini Kalender Aktif', 'color:#059669;font-size:12px;font-weight:bold;');
+    })();
+    </script>
+
     <!-- Jembatan CMS dashboard → halaman publik (INTEGRASI) -->
     <script src="cms-public.js"></script>
+
 <!-- ============================================================ -->
     <!-- 🔒 Proteksi Konten (TETAP SAMA)                              -->
     <!-- ============================================================ -->
@@ -550,5 +678,6 @@
         console.log('%c🔒 Proteksi Konten Aktif', 'color: #059669; font-size: 14px; font-weight: bold;');
     })();
     </script>
+
 </body>
 </html>
