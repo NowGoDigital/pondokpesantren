@@ -33,7 +33,6 @@
         ::-webkit-scrollbar-track { background: #DCEFE2; }
         ::-webkit-scrollbar-thumb { background: #064E3B; border-radius: 4px; }
 
-        /* ====== KARTU HIJAU ELEGAN (sama dengan halaman publik) ====== */
         .card-green {
             background: linear-gradient(135deg, #065F46 0%, #064E3B 55%, #053B2C 100%);
             border: 1px solid rgba(16, 185, 129, 0.25);
@@ -52,16 +51,12 @@
             pointer-events: none;
         }
 
-        /* ====== KARTU TABEL PUTIH BERSIH ====== */
         .tbl-wrap { background: #fff; border: 1px solid #C2E0CC; border-radius: 1rem; box-shadow: 0 10px 30px rgba(6, 78, 59, 0.10); overflow: hidden; }
-
         .pattern-islamic { background-image: radial-gradient(rgba(217, 119, 6, 0.12) 1px, transparent 1px); background-size: 28px 28px; }
 
-        /* ====== WORDPRESS-STYLE: tombol aksi mengambang di kartu konten ====== */
         .wp-act { opacity: .85; transition: all .2s ease; }
         .wp-card:hover .wp-act { opacity: 1; transform: translateY(-1px); }
 
-        /* ====== Panel editor geser (WP Customizer style) ====== */
         #editorPanel { transition: transform .35s cubic-bezier(.4,0,.2,1); }
     </style>
 </head>
@@ -140,12 +135,10 @@
 
         <!-- ===== MAIN CONTENT ===== -->
         <main class="flex-1 p-6 lg:p-8 overflow-y-auto bg-mint-50">
-            <!-- Header Mobile -->
             <div class="md:hidden flex justify-between items-center mb-4">
                 <h1 class="font-serif font-bold text-xl text-slate-900">Dashboard</h1>
                 <button onclick="logout()" class="text-red-500"><i class="fas fa-sign-out-alt"></i></button>
             </div>
-            <!-- Switcher Tab Mobile -->
             <div class="md:hidden flex gap-2 overflow-x-auto pb-3 mb-6">
                 <button onclick="switchTab('overview')" class="shrink-0 px-4 py-2 rounded-full text-xs border border-mint-300 bg-white text-gray-600 hover:border-gold-400 hover:text-gold-500 transition">Ringkasan</button>
                 <button onclick="switchTab('news')" class="shrink-0 px-4 py-2 rounded-full text-xs border border-mint-300 bg-white text-gray-600 hover:border-gold-400 hover:text-gold-500 transition">Berita</button>
@@ -265,7 +258,7 @@
                 <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-4 gap-3">
                     <div>
                         <h2 class="font-serif text-2xl md:text-3xl font-bold text-slate-900">Berita & Pengumuman</h2>
-                        <p class="text-gray-500 text-sm mt-1"><i class="fas fa-eye text-gold-500 mr-1"></i> Tampilan langsung halaman <b>berita.html</b> — klik <i class="fas fa-pencil text-gold-500 text-xs"></i> untuk mengedit dengan pratinjau实时.</p>
+                        <p class="text-gray-500 text-sm mt-1"><i class="fas fa-eye text-gold-500 mr-1"></i> Tampilan langsung halaman <b>berita.html</b> — klik <i class="fas fa-pencil text-gold-500 text-xs"></i> untuk mengedit dengan pratinjau langsung.</p>
                     </div>
                     <button onclick="openEditor('news')" class="shrink-0 bg-gold-400 hover:bg-gold-500 text-slate-900 px-4 py-2 rounded-lg font-bold text-sm transition">
                         <i class="fas fa-plus mr-2"></i> Tambah Berita
@@ -350,7 +343,7 @@
                             <tbody id="psbDynBody" class="divide-y divide-mint-200"></tbody>
                         </table>
                     </div>
-                    <p class="text-xs text-gray-500 mt-4"><i class="fas fa-circle-info text-gold-500 mr-1"></i> Mengubah status di sini langsung terbaca oleh fitur <b>"Pengumuman Hasil Seleksi"</b> di beranda website.</p>
+                    <p class="text-xs text-gray-500 mt-4"><i class="fas fa-circle-info text-gold-500 mr-1"></i> Mengubah status di sini langsung terbaca oleh fitur <b>"Pengumuman Hasil Seleksi"</b> di beranda website setelah dipublikasikan.</p>
                 </div>
             </div>
 
@@ -408,7 +401,7 @@
             <!-- ============ TAB: PENGATURAN ============ -->
             <div id="tab-settings" class="hidden">
                 <h2 class="font-serif text-2xl md:text-3xl font-bold text-slate-900 mb-8">Pengaturan Sistem</h2>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-5xl">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-6xl">
                     <div class="tbl-wrap p-8">
                         <h3 class="font-bold text-slate-900 mb-6"><i class="fas fa-user-shield text-gold-500 mr-2"></i>Keamanan Akun</h3>
                         <form onsubmit="changePassword(event)" class="space-y-4">
@@ -445,15 +438,86 @@
                             <button type="submit" class="bg-gold-400 hover:bg-gold-500 text-slate-900 px-6 py-3 rounded-lg font-bold transition">Simpan Pengaturan</button>
                         </form>
                     </div>
+
+                    <!-- ===== PUBLIKASI UNIVERSAL (BARU) ===== -->
+                    <div class="lg:col-span-2 tbl-wrap p-8 border-gold-400/40">
+                        <h3 class="font-bold text-slate-900 mb-2"><i class="fas fa-rocket text-gold-500 mr-2"></i>Publikasi Konten ke Website</h3>
+                        <p class="text-sm text-gray-500 mb-6">Kirim seluruh konten CMS (berita, agenda, galeri, prestasi, profil, pengaturan, status pendaftar) menjadi satu file <code class="bg-mint-100 px-1.5 py-0.5 rounded text-emerald-800 text-xs">cms-data.json</code> agar terlihat di <b>semua browser & perangkat</b> — sekarang via GitHub, nanti via Hostinger tanpa ubah kode.</p>
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm text-gray-600 mb-2">Mode Publikasi</label>
+                                    <select id="pubMode" onchange="pubModeChanged()" class="w-full bg-mint-50 border border-mint-300 rounded-lg px-4 py-3 text-slate-900 focus:border-gold-400 focus:bg-white outline-none transition">
+                                        <option value="local">Lokal — localStorage saja (preview pribadi)</option>
+                                        <option value="github">GitHub Pages — commit cms-data.json via API</option>
+                                        <option value="hostinger">Hostinger / Server PHP — cms-save.php</option>
+                                    </select>
+                                </div>
+                                <div id="pubGithubFields" class="hidden space-y-3">
+                                    <div class="grid grid-cols-2 gap-3">
+                                        <div>
+                                            <label class="block text-xs text-gray-500 mb-1">Owner GitHub</label>
+                                            <input type="text" id="pubOwner" class="w-full bg-mint-50 border border-mint-300 rounded-lg px-3 py-2 text-sm text-slate-900 focus:border-gold-400 outline-none transition" placeholder="nowgodigital">
+                                        </div>
+                                        <div>
+                                            <label class="block text-xs text-gray-500 mb-1">Nama Repository</label>
+                                            <input type="text" id="pubRepo" class="w-full bg-mint-50 border border-mint-300 rounded-lg px-3 py-2 text-sm text-slate-900 focus:border-gold-400 outline-none transition" placeholder="sekolah">
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-3">
+                                        <div>
+                                            <label class="block text-xs text-gray-500 mb-1">Branch</label>
+                                            <input type="text" id="pubBranch" value="main" class="w-full bg-mint-50 border border-mint-300 rounded-lg px-3 py-2 text-sm text-slate-900 focus:border-gold-400 outline-none transition">
+                                        </div>
+                                        <div>
+                                            <label class="block text-xs text-gray-500 mb-1">Path File</label>
+                                            <input type="text" id="pubPath" value="cms-data.json" class="w-full bg-mint-50 border border-mint-300 rounded-lg px-3 py-2 text-sm text-slate-900 focus:border-gold-400 outline-none transition">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs text-gray-500 mb-1">Personal Access Token</label>
+                                        <input type="password" id="pubToken" class="w-full bg-mint-50 border border-mint-300 rounded-lg px-3 py-2 text-sm text-slate-900 focus:border-gold-400 outline-none transition" placeholder="ghp_...">
+                                        <p class="text-[10px] text-gray-400 mt-1">Buat di GitHub → Settings → Developer settings → Personal access tokens. Scope: <b>repo</b> (atau Contents: Read & write).</p>
+                                    </div>
+                                </div>
+                                <div id="pubHostFields" class="hidden space-y-3">
+                                    <div>
+                                        <label class="block text-xs text-gray-500 mb-1">URL Endpoint cms-save.php</label>
+                                        <input type="text" id="pubEndpoint" value="cms-save.php" class="w-full bg-mint-50 border border-mint-300 rounded-lg px-3 py-2 text-sm text-slate-900 focus:border-gold-400 outline-none transition" placeholder="https://domainanda.com/cms-save.php">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs text-gray-500 mb-1">Token Rahasia (samakan dengan di cms-save.php)</label>
+                                        <input type="password" id="pubSecret" class="w-full bg-mint-50 border border-mint-300 rounded-lg px-3 py-2 text-sm text-slate-900 focus:border-gold-400 outline-none transition" placeholder="token-rahasia-anda">
+                                    </div>
+                                </div>
+                                <button onclick="savePublishSettings()" class="w-full bg-emerald-900 hover:bg-emerald-800 text-white px-6 py-3 rounded-lg font-bold transition">
+                                    <i class="fas fa-floppy-disk mr-2"></i> Simpan Konfigurasi Publikasi
+                                </button>
+                            </div>
+                            <div class="space-y-4">
+                                <div class="bg-mint-50 border border-mint-200 rounded-xl p-5">
+                                    <p class="text-xs uppercase tracking-widest font-bold text-gray-500 mb-2">Status Publikasi Terakhir</p>
+                                    <p id="pubStatus" class="text-sm text-gray-700">Belum pernah publikasi.</p>
+                                </div>
+                                <button id="btnPublish" onclick="publishNow()" class="w-full bg-gold-400 hover:bg-gold-500 text-slate-900 font-bold py-3.5 rounded-lg transition transform hover:-translate-y-0.5 shadow-[0_8px_25px_rgba(217,119,6,0.3)]">
+                                    <i class="fas fa-rocket mr-2"></i> Publikasikan ke Website
+                                </button>
+                                <button onclick="exportJson()" class="w-full border border-emerald-900 text-emerald-900 hover:bg-emerald-900 hover:text-white font-bold py-3 rounded-lg transition">
+                                    <i class="fas fa-download mr-2"></i> Export cms-data.json (manual)
+                                </button>
+                                <p class="text-[11px] text-gray-500 leading-relaxed"><i class="fas fa-circle-info text-gold-500 mr-1"></i> Setelah publikasi sukses, tunggu ±1 menit (GitHub Pages rebuild), lalu buka website di browser/perangkat mana pun — konten baru sudah tampil.</p>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="lg:col-span-2 bg-red-50 p-8 rounded-xl border border-red-200">
                         <h3 class="font-bold text-red-600 mb-3"><i class="fas fa-triangle-exclamation mr-2"></i>Zona Berbahaya</h3>
-                        <p class="text-sm text-gray-600 mb-4">Menghapus seluruh data CMS (berita, agenda, galeri, prestasi, profil, pendaftar) dari penyimpanan browser.</p>
+                        <p class="text-sm text-gray-600 mb-4">Menghapus seluruh data CMS (berita, agenda, galeri, prestasi, profil, pendaftar, konfigurasi publikasi) dari penyimpanan browser.</p>
                         <button onclick="resetAllData()" class="bg-red-100 hover:bg-red-200 border border-red-300 text-red-700 px-6 py-3 rounded-lg font-bold transition">Reset Semua Data CMS</button>
                     </div>
                 </div>
             </div>
 
-            <!-- ===== FOOTER STRIP ADMIN ===== -->
             <footer class="mt-12 border-t border-mint-200 pt-4 pb-2 text-center text-xs text-gray-500">
                 &copy; 2026 Pesantren Modern Al-Izzah — Admin Panel. All Rights Reserved.
             </footer>
@@ -481,12 +545,10 @@
         </div>
     </div>
 
-    <!-- Pill status pratinjau -->
     <div id="previewPill" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[66] items-center gap-2 bg-slate-900/90 backdrop-blur-md border border-gold-400/50 text-white text-xs font-bold px-5 py-2.5 rounded-full shadow-2xl">
         <span class="w-2 h-2 rounded-full bg-gold-light animate-pulse"></span> Mode Pratinjau — perubahan belum disimpan
     </div>
 
-    <!-- Toast -->
     <div id="toast" class="hidden fixed bottom-6 right-6 z-[100] max-w-sm bg-emerald-900 border border-gold-400/50 text-white text-sm rounded-xl px-5 py-4 shadow-2xl"></div>
 
     <script>
@@ -535,7 +597,6 @@
             return 'https://wa.me/' + d;
         }
         const esc = s => String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-        const MONTHS = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
         const MONTHS_ABBR = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
         const todayStr = () => new Date().toISOString().split('T')[0];
 
@@ -552,7 +613,7 @@
             profil: store.get('profilData', {})
         };
         let draft = copy(saved);
-        let editing = null;   // { type, id, section, isNew, target }
+        let editing = null;
 
         // ============ NAVIGASI TAB ============
         const TABS = ['overview','news','psb','agenda','galeri','prestasi','profil','settings'];
@@ -639,7 +700,7 @@
                             <div>
                                 <span class="inline-block bg-gold-400 text-slate-900 text-[9px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full mb-2">${esc(a.category || 'Kegiatan')}</span>
                                 <h3 class="font-serif font-bold text-white mb-1 leading-snug">${esc(a.title)}</h3>
-                                <p class="text-emerald-100/70 text-xs"><i class="far fa-clock mr-1"></i>${esc(a.time || '-') } · <i class="fas fa-location-dot mx-1"></i>${esc(a.location || '-')}</p>
+                                <p class="text-emerald-100/70 text-xs"><i class="far fa-clock mr-1"></i>${esc(a.time || '-')} · <i class="fas fa-location-dot mx-1"></i>${esc(a.location || '-')}</p>
                             </div>
                         </div>
                     </article>`; }).join('')}</div>` : emptyState('Belum ada agenda. Klik "Tambah Agenda" untuk menjadwalkan kegiatan.');
@@ -793,7 +854,7 @@
                     editing = { type, id, section: null, isNew: false, target };
                 } else {
                     target = defaultItem(type);
-                    target.id = Date.now();           // id sementara untuk pratinjau
+                    target.id = Date.now();
                     draft[type].push(target);
                     title = 'Tambah Item Baru';
                     editing = { type, id: target.id, section: null, isNew: true, target };
@@ -820,7 +881,6 @@
             renderView(type);
         }
 
-        /* Setiap ketikan → update draft → live view langsung berubah (PREVIEW) */
         function edInput(k, v) {
             if (!editing) return;
             editing.target[k] = v;
@@ -836,7 +896,7 @@
 
         function cancelEdit() {
             if (!editing) return closeEditorUI();
-            draft = copy(saved);                 // buang semua perubahan pratinjau
+            draft = copy(saved);
             const t = editing.type;
             editing = null;
             closeEditorUI();
@@ -864,7 +924,7 @@
             editing = null;
             closeEditorUI();
             renderView(type);
-            toast('Perubahan disimpan & langsung tampil di halaman publik.', 'success');
+            toast('Perubahan disimpan. Jangan lupa klik "Publikasikan ke Website" agar terlihat di semua perangkat.', 'success');
         }
 
         function delItem(type, id) {
@@ -873,7 +933,133 @@
             saved[type] = copy(draft[type]);
             store.set(KEY[type], saved[type]);
             renderView(type);
-            toast('Item dihapus dari halaman publik.', 'error');
+            toast('Item dihapus. Publikasikan ulang untuk menerapkan di website.', 'error');
+        }
+
+        // ============ PUBLIKASI UNIVERSAL (BARU) ============
+        function pubModeChanged() {
+            const m = document.getElementById('pubMode').value;
+            document.getElementById('pubGithubFields').classList.toggle('hidden', m !== 'github');
+            document.getElementById('pubHostFields').classList.toggle('hidden', m !== 'hostinger');
+        }
+        function loadPublishSettings() {
+            const s = store.get('publishSettings', {});
+            document.getElementById('pubMode').value = s.mode || 'local';
+            document.getElementById('pubOwner').value = s.owner || '';
+            document.getElementById('pubRepo').value = s.repo || '';
+            document.getElementById('pubBranch').value = s.branch || 'main';
+            document.getElementById('pubPath').value = s.path || 'cms-data.json';
+            document.getElementById('pubToken').value = s.token || '';
+            document.getElementById('pubEndpoint').value = s.endpoint || 'cms-save.php';
+            document.getElementById('pubSecret').value = s.secret || '';
+            pubModeChanged();
+            updatePubStatus();
+        }
+        function savePublishSettings() {
+            store.set('publishSettings', {
+                mode: document.getElementById('pubMode').value,
+                owner: document.getElementById('pubOwner').value.trim(),
+                repo: document.getElementById('pubRepo').value.trim(),
+                branch: document.getElementById('pubBranch').value.trim() || 'main',
+                path: document.getElementById('pubPath').value.trim() || 'cms-data.json',
+                token: document.getElementById('pubToken').value.trim(),
+                endpoint: document.getElementById('pubEndpoint').value.trim() || 'cms-save.php',
+                secret: document.getElementById('pubSecret').value.trim()
+            });
+            toast('Konfigurasi publikasi tersimpan.', 'success');
+        }
+        function buildPayload() {
+            return {
+                publishedAt: new Date().toISOString(),
+                news: saved.news,
+                agenda: saved.agenda,
+                galeri: saved.galeri,
+                prestasi: saved.prestasi,
+                profil: saved.profil,
+                siteSettings: store.get('siteSettings', {}),
+                psbRegistrations: store.get('psbRegistrations', [])
+            };
+        }
+        function updatePubStatus(info) {
+            const el = document.getElementById('pubStatus');
+            const last = info || store.get('cmsPublishInfo', null);
+            if (!last) { el.textContent = 'Belum pernah publikasi.'; return; }
+            const labels = { local: 'Lokal', github: 'GitHub Pages', hostinger: 'Hostinger/PHP' };
+            el.innerHTML = `<span class="inline-block bg-emerald-100 text-emerald-700 border border-emerald-300 rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest mr-2">${labels[last.mode] || last.mode}</span>` +
+                new Date(last.at).toLocaleString('id-ID') + `<span class="block text-xs text-gray-500 mt-1">${esc(last.msg || '')}</span>`;
+        }
+        async function githubPublish(payload) {
+            const owner = document.getElementById('pubOwner').value.trim();
+            const repo = document.getElementById('pubRepo').value.trim();
+            const branch = document.getElementById('pubBranch').value.trim() || 'main';
+            const path = document.getElementById('pubPath').value.trim() || 'cms-data.json';
+            const token = document.getElementById('pubToken').value.trim();
+            if (!owner || !repo || !token) throw new Error('Lengkapi owner, repo, dan token GitHub.');
+            const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+            const headers = { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json', 'Accept': 'application/vnd.github+json' };
+            let sha = null;
+            try {
+                const g = await fetch(url + '?ref=' + branch, { headers });
+                if (g.ok) sha = (await g.json()).sha;
+            } catch (e) {}
+            const body = {
+                message: 'CMS publish ' + new Date().toISOString(),
+                content: btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 2)))),
+                branch
+            };
+            if (sha) body.sha = sha;
+            const r = await fetch(url, { method: 'PUT', headers, body: JSON.stringify(body) });
+            if (!r.ok) { const err = await r.json().catch(() => ({})); throw new Error(err.message || ('HTTP ' + r.status)); }
+            return await r.json();
+        }
+        async function hostingerPublish(payload) {
+            const endpoint = document.getElementById('pubEndpoint').value.trim() || 'cms-save.php';
+            const secret = document.getElementById('pubSecret').value.trim();
+            if (!secret) throw new Error('Isi token rahasia cms-save.php.');
+            const r = await fetch(endpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'X-CMS-Token': secret },
+                body: JSON.stringify(payload)
+            });
+            const res = await r.json().catch(() => ({}));
+            if (!r.ok || !res.ok) throw new Error(res.error || ('HTTP ' + r.status));
+            return res;
+        }
+        async function publishNow() {
+            savePublishSettings();
+            const mode = document.getElementById('pubMode').value;
+            const payload = buildPayload();
+            const btn = document.getElementById('btnPublish');
+            btn.disabled = true; btn.classList.add('opacity-60');
+            try {
+                if (mode === 'local') {
+                    store.set('cmsPublished', payload);
+                    updatePubStatus({ mode, at: new Date().toISOString(), msg: 'Snapshot lokal tersimpan (tidak dikirim ke server).' });
+                    toast('Mode Lokal: snapshot publikasi tersimpan di browser ini.', 'success');
+                } else if (mode === 'github') {
+                    await githubPublish(payload);
+                    updatePubStatus({ mode, at: new Date().toISOString(), msg: 'Commit cms-data.json berhasil. Tunggu ±1 menit rebuild GitHub Pages.' });
+                    toast('🚀 Terpublikasi ke GitHub! Tunggu ±1 menit lalu cek website di browser mana pun.', 'success');
+                } else {
+                    await hostingerPublish(payload);
+                    updatePubStatus({ mode, at: new Date().toISOString(), msg: 'cms-data.json ditulis ulang di server Hostinger.' });
+                    toast('🚀 Terpublikasi ke server Hostinger! Konten langsung live.', 'success');
+                }
+            } catch (err) {
+                updatePubStatus({ mode, at: new Date().toISOString(), msg: 'GAGAL: ' + err.message });
+                toast('Publikasi gagal: ' + err.message, 'error');
+            } finally {
+                btn.disabled = false; btn.classList.remove('opacity-60');
+            }
+        }
+        function exportJson() {
+            const payload = buildPayload();
+            const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'cms-data.json';
+            a.click();
+            toast('cms-data.json diunduh. Upload manual ke root repository/hosting bila diperlukan.', 'success');
         }
 
         // ============ OVERVIEW ============
@@ -935,7 +1121,7 @@
             const psb = store.get('psbRegistrations', []);
             psb[i].status = v;
             store.set('psbRegistrations', psb);
-            toast(`Status "${psb[i].nama}" diubah menjadi ${v} — tersync ke halaman pengumuman website.`, 'success');
+            toast(`Status "${psb[i].nama}" diubah menjadi ${v}. Publikasikan agar terbaca halaman pengumuman.`, 'success');
             renderPsbDynamic();
         }
         function deletePsb(i) {
@@ -966,6 +1152,7 @@
             document.getElementById('stTopbar').checked = s.topbarVisible !== false;
             document.getElementById('stText').value = s.topbarText || '';
             document.getElementById('stWa').value = s.waClaim || '';
+            loadPublishSettings();
         }
         function saveSiteSettings(e) {
             e.preventDefault();
@@ -974,7 +1161,7 @@
                 topbarText: document.getElementById('stText').value,
                 waClaim: document.getElementById('stWa').value
             });
-            toast('Pengaturan situs tersimpan & diterapkan di beranda.', 'success');
+            toast('Pengaturan situs tersimpan. Publikasikan agar diterapkan di beranda.', 'success');
         }
         function changePassword(e) {
             e.preventDefault();
@@ -990,7 +1177,7 @@
         }
         function resetAllData() {
             if (confirm('PERHATIAN: Seluruh data CMS akan dihapus permanen dari browser ini. Lanjutkan?')) {
-                ['newsData','psbRegistrations','agendaData','galeriData','prestasiData','profilData','siteSettings'].forEach(k => localStorage.removeItem(k));
+                ['newsData','psbRegistrations','agendaData','galeriData','prestasiData','profilData','siteSettings','publishSettings','cmsPublishInfo','cmsPublished'].forEach(k => localStorage.removeItem(k));
                 location.reload();
             }
         }
@@ -998,8 +1185,6 @@
         // Init
         checkAuth();
     </script>
-
-<script src="cms-public.js"></script>
 
 <!-- ============================================================ -->
     <!-- 🔒 Proteksi Konten (TETAP SAMA)                              -->
