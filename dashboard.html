@@ -5,123 +5,158 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard | Pesantren Al-Izzah</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        emerald: { 900: '#064E3B', 800: '#065F46' },
-                        gold: { 400: '#D97706' },
-                        slate: { 900: '#0f172a', 800: '#1e293b' }
+                        emerald: { 900: '#064E3B', 800: '#065F46', 950: '#053B2C' },
+                        gold: { 400: '#D97706', 500: '#B45309', light: '#FCD34D' },
+                        slate: { 900: '#0f172a', 800: '#1e293b' },
+                        mint: { 50: '#E8F5EC', 100: '#DCEFE2', 200: '#C2E0CC', 300: '#A3CDB1' }
                     },
-                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] }
+                    fontFamily: {
+                        serif: ['Cinzel', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif']
+                    }
                 }
             }
         }
     </script>
     <style>
         ::-webkit-scrollbar { width: 8px; height: 8px; }
-        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-track { background: #DCEFE2; }
         ::-webkit-scrollbar-thumb { background: #064E3B; border-radius: 4px; }
+
+        /* ====== KARTU HIJAU ELEGAN (sama dengan halaman publik) ====== */
+        .card-green {
+            background: linear-gradient(135deg, #065F46 0%, #064E3B 55%, #053B2C 100%);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            box-shadow: 0 10px 30px rgba(6, 78, 59, 0.25);
+            transition: all .4s ease;
+        }
+        .card-green:hover {
+            border-color: rgba(217, 119, 6, 0.55);
+            box-shadow: 0 15px 40px rgba(6, 78, 59, 0.4), 0 0 25px rgba(217, 119, 6, 0.12);
+        }
+        .card-green::before {
+            content: '';
+            position: absolute; inset: 0;
+            border-radius: inherit;
+            background: radial-gradient(circle at top left, rgba(252,211,77,0.08), transparent 45%);
+            pointer-events: none;
+        }
+
+        /* ====== KARTU TABEL PUTIH BERSIH (khas admin, tetap serasi) ====== */
+        .tbl-wrap { background: #fff; border: 1px solid #C2E0CC; border-radius: 1rem; box-shadow: 0 10px 30px rgba(6, 78, 59, 0.10); overflow: hidden; }
+
+        /* Pola titik emas untuk latar login */
+        .pattern-islamic { background-image: radial-gradient(rgba(217, 119, 6, 0.12) 1px, transparent 1px); background-size: 28px 28px; }
     </style>
 </head>
-<body class="bg-slate-900 text-gray-100 font-sans">
+<body class="bg-mint-50 text-gray-800 font-sans antialiased">
 
-    <!-- Login Modal Overlay -->
-    <div id="loginOverlay" class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm">
-        <div class="bg-slate-800 p-8 rounded-2xl border border-white/10 w-full max-w-md shadow-2xl">
+    <!-- ============ LOGIN OVERLAY ============ -->
+    <div id="loginOverlay" class="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-emerald-950 via-emerald-900 to-emerald-950 pattern-islamic">
+        <div class="bg-white p-8 rounded-2xl border border-mint-200 w-full max-w-md shadow-2xl relative overflow-hidden">
+            <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-gold-400 via-gold-light to-gold-400"></div>
             <div class="text-center mb-8">
-                <i class="fas fa-lock text-4xl text-gold-400 mb-4"></i>
-                <h2 class="text-2xl font-bold text-white">Admin Access</h2>
-                <p class="text-gray-400 text-sm">Silakan login untuk mengelola konten.</p>
+                <div class="w-16 h-16 mx-auto rounded-full bg-emerald-900 border border-gold-400/60 flex items-center justify-center shadow-[0_0_25px_rgba(217,119,6,0.35)] mb-4">
+                    <i class="fas fa-lock text-gold-400 text-xl"></i>
+                </div>
+                <h2 class="font-serif text-2xl font-bold text-slate-900">Admin Access</h2>
+                <p class="text-gray-500 text-sm mt-1">Silakan login untuk mengelola konten.</p>
             </div>
             <form id="loginForm" onsubmit="handleLogin(event)">
                 <div class="mb-4">
-                    <label class="block text-sm text-gray-400 mb-2">Username</label>
-                    <input type="text" id="username" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold-400 transition" placeholder="admin">
+                    <label class="block text-sm text-gray-600 mb-2">Username</label>
+                    <input type="text" id="username" class="w-full bg-mint-50 border border-mint-300 rounded-lg px-4 py-3 text-slate-900 focus:outline-none focus:border-gold-400 focus:bg-white transition" placeholder="admin">
                 </div>
                 <div class="mb-6">
-                    <label class="block text-sm text-gray-400 mb-2">Password</label>
-                    <input type="password" id="password" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold-400 transition" placeholder="pesantren2026">
+                    <label class="block text-sm text-gray-600 mb-2">Password</label>
+                    <input type="password" id="password" class="w-full bg-mint-50 border border-mint-300 rounded-lg px-4 py-3 text-slate-900 focus:outline-none focus:border-gold-400 focus:bg-white transition" placeholder="pesantren2026">
                 </div>
-                <button type="submit" class="w-full bg-emerald-900 hover:bg-emerald-800 text-white font-bold py-3 rounded-lg transition">MASUK DASHBOARD</button>
-                <p id="errorMsg" class="text-red-500 text-xs text-center mt-4 hidden">Username atau password salah!</p>
+                <button type="submit" class="w-full bg-gold-400 hover:bg-gold-500 text-slate-900 font-bold py-3 rounded-lg transition transform hover:-translate-y-0.5 shadow-[0_10px_30px_rgba(217,119,6,0.3)]">MASUK DASHBOARD</button>
+                <p id="errorMsg" class="text-red-600 text-xs text-center mt-4 hidden">Username atau password salah!</p>
             </form>
         </div>
     </div>
 
-    <!-- Main Dashboard Content (Hidden by default) -->
+    <!-- ============ MAIN DASHBOARD CONTENT (Hidden by default) ============ -->
     <div id="dashboardContent" class="hidden min-h-screen flex">
-        
-        <!-- Sidebar -->
-        <aside class="w-64 bg-slate-950 border-r border-white/5 hidden md:flex flex-col">
-            <div class="p-6 border-b border-white/5">
-                <h1 class="font-serif text-xl font-bold text-white">AL-IZZAH <span class="text-gold-400 text-xs block font-sans font-normal">ADMIN PANEL</span></h1>
+
+        <!-- ===== SIDEBAR ===== -->
+        <aside class="w-64 bg-gradient-to-b from-emerald-900 via-emerald-950 to-emerald-950 border-r border-emerald-800/60 hidden md:flex flex-col">
+            <div class="p-6 border-b border-white/10 flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-emerald-900/80 border border-gold-400 flex items-center justify-center shadow-[0_0_15px_rgba(217,119,6,0.3)]"><i class="fas fa-mosque text-gold-400"></i></div>
+                <h1 class="font-serif text-lg font-bold text-white leading-tight">AL-IZZAH <span class="text-gold-light text-[9px] block font-sans font-bold uppercase tracking-[0.25em]">Admin Panel</span></h1>
             </div>
             <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
-                <a href="#" data-tablink="overview" onclick="switchTab('overview')" class="flex items-center gap-3 px-4 py-3 bg-emerald-900/20 text-emerald-400 rounded-lg border border-emerald-900/50">
+                <a href="#" data-tablink="overview" onclick="switchTab('overview')" class="flex items-center gap-3 px-4 py-3 bg-gold-400/15 text-gold-light rounded-lg border border-gold-400/40 font-semibold">
                     <i class="fas fa-gauge-high w-5"></i> Ringkasan
                 </a>
-                <a href="#" data-tablink="news" onclick="switchTab('news')" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-slate-900 hover:text-white rounded-lg transition">
+                <a href="#" data-tablink="news" onclick="switchTab('news')" class="flex items-center gap-3 px-4 py-3 text-emerald-100/70 hover:bg-white/5 hover:text-white rounded-lg transition">
                     <i class="fas fa-newspaper w-5"></i> Berita & Pengumuman
                 </a>
-                <a href="#" data-tablink="psb" onclick="switchTab('psb')" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-slate-900 hover:text-white rounded-lg transition">
+                <a href="#" data-tablink="psb" onclick="switchTab('psb')" class="flex items-center gap-3 px-4 py-3 text-emerald-100/70 hover:bg-white/5 hover:text-white rounded-lg transition">
                     <i class="fas fa-users w-5"></i> Data Pendaftar (PSB)
                 </a>
-                <a href="#" data-tablink="agenda" onclick="switchTab('agenda')" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-slate-900 hover:text-white rounded-lg transition">
+                <a href="#" data-tablink="agenda" onclick="switchTab('agenda')" class="flex items-center gap-3 px-4 py-3 text-emerald-100/70 hover:bg-white/5 hover:text-white rounded-lg transition">
                     <i class="fas fa-calendar-alt w-5"></i> Agenda & Kalender
                 </a>
-                <a href="#" data-tablink="galeri" onclick="switchTab('galeri')" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-slate-900 hover:text-white rounded-lg transition">
+                <a href="#" data-tablink="galeri" onclick="switchTab('galeri')" class="flex items-center gap-3 px-4 py-3 text-emerald-100/70 hover:bg-white/5 hover:text-white rounded-lg transition">
                     <i class="fas fa-images w-5"></i> Galeri Foto & Video
                 </a>
-                <a href="#" data-tablink="prestasi" onclick="switchTab('prestasi')" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-slate-900 hover:text-white rounded-lg transition">
+                <a href="#" data-tablink="prestasi" onclick="switchTab('prestasi')" class="flex items-center gap-3 px-4 py-3 text-emerald-100/70 hover:bg-white/5 hover:text-white rounded-lg transition">
                     <i class="fas fa-trophy w-5"></i> Prestasi & Penghargaan
                 </a>
-                <a href="#" data-tablink="profil" onclick="switchTab('profil')" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-slate-900 hover:text-white rounded-lg transition">
+                <a href="#" data-tablink="profil" onclick="switchTab('profil')" class="flex items-center gap-3 px-4 py-3 text-emerald-100/70 hover:bg-white/5 hover:text-white rounded-lg transition">
                     <i class="fas fa-id-card w-5"></i> Profil & Konten Web
                 </a>
-                <a href="#" data-tablink="settings" onclick="switchTab('settings')" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-slate-900 hover:text-white rounded-lg transition">
+                <a href="#" data-tablink="settings" onclick="switchTab('settings')" class="flex items-center gap-3 px-4 py-3 text-emerald-100/70 hover:bg-white/5 hover:text-white rounded-lg transition">
                     <i class="fas fa-cog w-5"></i> Pengaturan
                 </a>
             </nav>
-            <div class="p-4 border-t border-white/5">
-                <a href="index.html" target="_blank" class="flex items-center gap-3 text-emerald-400 hover:text-emerald-300 text-sm w-full px-4 py-2">
+            <div class="p-4 border-t border-white/10">
+                <a href="index.html" target="_blank" class="flex items-center gap-3 text-emerald-200 hover:text-gold-light text-sm w-full px-4 py-2 transition">
                     <i class="fas fa-globe"></i> Lihat Website
                 </a>
-                <button onclick="logout()" class="flex items-center gap-3 text-red-400 hover:text-red-300 text-sm w-full px-4 py-2">
+                <button onclick="logout()" class="flex items-center gap-3 text-red-300 hover:text-red-200 text-sm w-full px-4 py-2 transition">
                     <i class="fas fa-sign-out-alt"></i> Keluar
                 </button>
             </div>
         </aside>
 
-        <!-- Main Content -->
-        <main class="flex-1 p-8 overflow-y-auto">
+        <!-- ===== MAIN CONTENT ===== -->
+        <main class="flex-1 p-6 lg:p-8 overflow-y-auto bg-mint-50">
             <!-- Header Mobile -->
             <div class="md:hidden flex justify-between items-center mb-4">
-                <h1 class="font-bold text-xl">Dashboard</h1>
-                <button onclick="logout()" class="text-red-400"><i class="fas fa-sign-out-alt"></i></button>
+                <h1 class="font-serif font-bold text-xl text-slate-900">Dashboard</h1>
+                <button onclick="logout()" class="text-red-500"><i class="fas fa-sign-out-alt"></i></button>
             </div>
-            <!-- Switcher Tab Mobile (BARU) -->
+            <!-- Switcher Tab Mobile -->
             <div class="md:hidden flex gap-2 overflow-x-auto pb-3 mb-6">
-                <button onclick="switchTab('overview')" class="shrink-0 px-4 py-2 rounded-full text-xs border border-white/15 text-gray-300">Ringkasan</button>
-                <button onclick="switchTab('news')" class="shrink-0 px-4 py-2 rounded-full text-xs border border-white/15 text-gray-300">Berita</button>
-                <button onclick="switchTab('psb')" class="shrink-0 px-4 py-2 rounded-full text-xs border border-white/15 text-gray-300">PSB</button>
-                <button onclick="switchTab('agenda')" class="shrink-0 px-4 py-2 rounded-full text-xs border border-white/15 text-gray-300">Agenda</button>
-                <button onclick="switchTab('galeri')" class="shrink-0 px-4 py-2 rounded-full text-xs border border-white/15 text-gray-300">Galeri</button>
-                <button onclick="switchTab('prestasi')" class="shrink-0 px-4 py-2 rounded-full text-xs border border-white/15 text-gray-300">Prestasi</button>
-                <button onclick="switchTab('profil')" class="shrink-0 px-4 py-2 rounded-full text-xs border border-white/15 text-gray-300">Profil</button>
-                <button onclick="switchTab('settings')" class="shrink-0 px-4 py-2 rounded-full text-xs border border-white/15 text-gray-300">Pengaturan</button>
+                <button onclick="switchTab('overview')" class="shrink-0 px-4 py-2 rounded-full text-xs border border-mint-300 bg-white text-gray-600 hover:border-gold-400 hover:text-gold-500 transition">Ringkasan</button>
+                <button onclick="switchTab('news')" class="shrink-0 px-4 py-2 rounded-full text-xs border border-mint-300 bg-white text-gray-600 hover:border-gold-400 hover:text-gold-500 transition">Berita</button>
+                <button onclick="switchTab('psb')" class="shrink-0 px-4 py-2 rounded-full text-xs border border-mint-300 bg-white text-gray-600 hover:border-gold-400 hover:text-gold-500 transition">PSB</button>
+                <button onclick="switchTab('agenda')" class="shrink-0 px-4 py-2 rounded-full text-xs border border-mint-300 bg-white text-gray-600 hover:border-gold-400 hover:text-gold-500 transition">Agenda</button>
+                <button onclick="switchTab('galeri')" class="shrink-0 px-4 py-2 rounded-full text-xs border border-mint-300 bg-white text-gray-600 hover:border-gold-400 hover:text-gold-500 transition">Galeri</button>
+                <button onclick="switchTab('prestasi')" class="shrink-0 px-4 py-2 rounded-full text-xs border border-mint-300 bg-white text-gray-600 hover:border-gold-400 hover:text-gold-500 transition">Prestasi</button>
+                <button onclick="switchTab('profil')" class="shrink-0 px-4 py-2 rounded-full text-xs border border-mint-300 bg-white text-gray-600 hover:border-gold-400 hover:text-gold-500 transition">Profil</button>
+                <button onclick="switchTab('settings')" class="shrink-0 px-4 py-2 rounded-full text-xs border border-mint-300 bg-white text-gray-600 hover:border-gold-400 hover:text-gold-500 transition">Pengaturan</button>
             </div>
 
-            <!-- ============ TAB: RINGKASAN (BARU) ============ -->
+            <!-- ============ TAB: RINGKASAN ============ -->
             <div id="tab-overview" class="hidden">
                 <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-8 gap-3">
                     <div>
-                        <h2 class="text-2xl font-bold text-white">Ringkasan Dashboard</h2>
-                        <p class="text-gray-400 text-sm mt-1" id="ovDate"></p>
+                        <h2 class="font-serif text-2xl md:text-3xl font-bold text-slate-900">Ringkasan Dashboard</h2>
+                        <p class="text-gray-500 text-sm mt-1" id="ovDate"></p>
                     </div>
                     <a href="index.html" target="_blank" class="inline-flex items-center gap-2 bg-emerald-900 hover:bg-emerald-800 text-white px-4 py-2 rounded-lg text-sm font-bold transition">
                         <i class="fas fa-globe"></i> Kunjungi Website
@@ -130,116 +165,126 @@
 
                 <!-- Stats -->
                 <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                    <div class="bg-slate-800 p-6 rounded-xl border border-white/5">
-                        <div class="flex items-center justify-between">
-                            <p class="text-gray-400 text-sm">Total Berita</p>
-                            <i class="fas fa-newspaper text-gold-400"></i>
+                    <div class="card-green relative p-6 rounded-2xl">
+                        <div class="relative z-10">
+                            <div class="flex items-center justify-between">
+                                <p class="text-emerald-100/70 text-sm">Total Berita</p>
+                                <i class="fas fa-newspaper text-gold-light"></i>
+                            </div>
+                            <h3 class="font-serif text-3xl font-bold text-white mt-2" id="ovNews">0</h3>
                         </div>
-                        <h3 class="text-3xl font-bold text-white mt-2" id="ovNews">0</h3>
                     </div>
-                    <div class="bg-slate-800 p-6 rounded-xl border border-white/5">
-                        <div class="flex items-center justify-between">
-                            <p class="text-gray-400 text-sm">Pendaftar Website</p>
-                            <i class="fas fa-users text-emerald-400"></i>
+                    <div class="card-green relative p-6 rounded-2xl">
+                        <div class="relative z-10">
+                            <div class="flex items-center justify-between">
+                                <p class="text-emerald-100/70 text-sm">Pendaftar Website</p>
+                                <i class="fas fa-users text-gold-light"></i>
+                            </div>
+                            <h3 class="font-serif text-3xl font-bold text-gold-light mt-2" id="ovPsb">0</h3>
                         </div>
-                        <h3 class="text-3xl font-bold text-emerald-400 mt-2" id="ovPsb">0</h3>
                     </div>
-                    <div class="bg-slate-800 p-6 rounded-xl border border-white/5">
-                        <div class="flex items-center justify-between">
-                            <p class="text-gray-400 text-sm">Agenda Tersimpan</p>
-                            <i class="fas fa-calendar-alt text-gold-400"></i>
+                    <div class="card-green relative p-6 rounded-2xl">
+                        <div class="relative z-10">
+                            <div class="flex items-center justify-between">
+                                <p class="text-emerald-100/70 text-sm">Agenda Tersimpan</p>
+                                <i class="fas fa-calendar-alt text-gold-light"></i>
+                            </div>
+                            <h3 class="font-serif text-3xl font-bold text-white mt-2" id="ovAgenda">0</h3>
                         </div>
-                        <h3 class="text-3xl font-bold text-white mt-2" id="ovAgenda">0</h3>
                     </div>
-                    <div class="bg-slate-800 p-6 rounded-xl border border-white/5">
-                        <div class="flex items-center justify-between">
-                            <p class="text-gray-400 text-sm">Item Galeri</p>
-                            <i class="fas fa-images text-gold-400"></i>
+                    <div class="card-green relative p-6 rounded-2xl">
+                        <div class="relative z-10">
+                            <div class="flex items-center justify-between">
+                                <p class="text-emerald-100/70 text-sm">Item Galeri</p>
+                                <i class="fas fa-images text-gold-light"></i>
+                            </div>
+                            <h3 class="font-serif text-3xl font-bold text-white mt-2" id="ovGaleri">0</h3>
                         </div>
-                        <h3 class="text-3xl font-bold text-white mt-2" id="ovGaleri">0</h3>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
                     <!-- Grafik pendaftar per program -->
-                    <div class="bg-slate-800 p-6 rounded-xl border border-white/5">
-                        <h3 class="font-bold text-white mb-5"><i class="fas fa-chart-simple text-gold-400 mr-2"></i>Pendaftar per Program</h3>
+                    <div class="tbl-wrap p-6">
+                        <h3 class="font-bold text-slate-900 mb-5"><i class="fas fa-chart-simple text-gold-500 mr-2"></i>Pendaftar per Program</h3>
                         <div id="ovChart"></div>
                     </div>
                     <!-- Quick actions -->
-                    <div class="bg-slate-800 p-6 rounded-xl border border-white/5">
-                        <h3 class="font-bold text-white mb-5"><i class="fas fa-bolt text-gold-400 mr-2"></i>Aksi Cepat</h3>
+                    <div class="tbl-wrap p-6">
+                        <h3 class="font-bold text-slate-900 mb-5"><i class="fas fa-bolt text-gold-500 mr-2"></i>Aksi Cepat</h3>
                         <div class="grid grid-cols-2 gap-3">
-                            <button onclick="switchTab('news'); openModal();" class="text-left bg-slate-900/60 hover:bg-emerald-900/40 border border-white/5 hover:border-gold-400/40 rounded-lg p-4 transition">
-                                <i class="fas fa-pen-to-square text-gold-400 mb-2"></i>
-                                <p class="text-sm font-bold text-white">Tulis Berita</p>
+                            <button onclick="switchTab('news'); openModal();" class="group text-left bg-mint-50 hover:bg-emerald-900 border border-mint-200 hover:border-emerald-900 rounded-lg p-4 transition">
+                                <i class="fas fa-pen-to-square text-gold-500 group-hover:text-gold-light mb-2"></i>
+                                <p class="text-sm font-bold text-slate-900 group-hover:text-white transition">Tulis Berita</p>
                             </button>
-                            <button onclick="switchTab('psb')" class="text-left bg-slate-900/60 hover:bg-emerald-900/40 border border-white/5 hover:border-gold-400/40 rounded-lg p-4 transition">
-                                <i class="fas fa-user-check text-gold-400 mb-2"></i>
-                                <p class="text-sm font-bold text-white">Seleksi Pendaftar</p>
+                            <button onclick="switchTab('psb')" class="group text-left bg-mint-50 hover:bg-emerald-900 border border-mint-200 hover:border-emerald-900 rounded-lg p-4 transition">
+                                <i class="fas fa-user-check text-gold-500 group-hover:text-gold-light mb-2"></i>
+                                <p class="text-sm font-bold text-slate-900 group-hover:text-white transition">Seleksi Pendaftar</p>
                             </button>
-                            <button onclick="switchTab('agenda'); openAgendaModal();" class="text-left bg-slate-900/60 hover:bg-emerald-900/40 border border-white/5 hover:border-gold-400/40 rounded-lg p-4 transition">
-                                <i class="fas fa-calendar-plus text-gold-400 mb-2"></i>
-                                <p class="text-sm font-bold text-white">Tambah Agenda</p>
+                            <button onclick="switchTab('agenda'); openAgendaModal();" class="group text-left bg-mint-50 hover:bg-emerald-900 border border-mint-200 hover:border-emerald-900 rounded-lg p-4 transition">
+                                <i class="fas fa-calendar-plus text-gold-500 group-hover:text-gold-light mb-2"></i>
+                                <p class="text-sm font-bold text-slate-900 group-hover:text-white transition">Tambah Agenda</p>
                             </button>
-                            <button onclick="switchTab('galeri'); openGaleriModal();" class="text-left bg-slate-900/60 hover:bg-emerald-900/40 border border-white/5 hover:border-gold-400/40 rounded-lg p-4 transition">
-                                <i class="fas fa-photo-film text-gold-400 mb-2"></i>
-                                <p class="text-sm font-bold text-white">Unggah Galeri</p>
+                            <button onclick="switchTab('galeri'); openGaleriModal();" class="group text-left bg-mint-50 hover:bg-emerald-900 border border-mint-200 hover:border-emerald-900 rounded-lg p-4 transition">
+                                <i class="fas fa-photo-film text-gold-500 group-hover:text-gold-light mb-2"></i>
+                                <p class="text-sm font-bold text-slate-900 group-hover:text-white transition">Unggah Galeri</p>
                             </button>
                         </div>
                         <h4 class="text-xs text-gray-500 uppercase tracking-widest font-bold mt-6 mb-3">Tautan Halaman Publik</h4>
                         <div class="flex flex-wrap gap-2">
-                            <a href="index.html" target="_blank" class="text-[11px] px-3 py-1.5 rounded-full border border-white/10 text-gray-300 hover:border-gold-400 hover:text-gold-400 transition">Beranda</a>
-                            <a href="profil.html" target="_blank" class="text-[11px] px-3 py-1.5 rounded-full border border-white/10 text-gray-300 hover:border-gold-400 hover:text-gold-400 transition">Profil</a>
-                            <a href="struktur.html" target="_blank" class="text-[11px] px-3 py-1.5 rounded-full border border-white/10 text-gray-300 hover:border-gold-400 hover:text-gold-400 transition">Struktur</a>
-                            <a href="berita.html" target="_blank" class="text-[11px] px-3 py-1.5 rounded-full border border-white/10 text-gray-300 hover:border-gold-400 hover:text-gold-400 transition">Berita</a>
-                            <a href="agenda.html" target="_blank" class="text-[11px] px-3 py-1.5 rounded-full border border-white/10 text-gray-300 hover:border-gold-400 hover:text-gold-400 transition">Agenda</a>
-                            <a href="prestasi.html" target="_blank" class="text-[11px] px-3 py-1.5 rounded-full border border-white/10 text-gray-300 hover:border-gold-400 hover:text-gold-400 transition">Prestasi</a>
-                            <a href="galeri.html" target="_blank" class="text-[11px] px-3 py-1.5 rounded-full border border-white/10 text-gray-300 hover:border-gold-400 hover:text-gold-400 transition">Galeri</a>
+                            <a href="index.html" target="_blank" class="text-[11px] px-3 py-1.5 rounded-full border border-mint-300 bg-white text-gray-600 hover:border-gold-400 hover:text-gold-500 transition">Beranda</a>
+                            <a href="profil.html" target="_blank" class="text-[11px] px-3 py-1.5 rounded-full border border-mint-300 bg-white text-gray-600 hover:border-gold-400 hover:text-gold-500 transition">Profil</a>
+                            <a href="struktur.html" target="_blank" class="text-[11px] px-3 py-1.5 rounded-full border border-mint-300 bg-white text-gray-600 hover:border-gold-400 hover:text-gold-500 transition">Struktur</a>
+                            <a href="berita.html" target="_blank" class="text-[11px] px-3 py-1.5 rounded-full border border-mint-300 bg-white text-gray-600 hover:border-gold-400 hover:text-gold-500 transition">Berita</a>
+                            <a href="agenda.html" target="_blank" class="text-[11px] px-3 py-1.5 rounded-full border border-mint-300 bg-white text-gray-600 hover:border-gold-400 hover:text-gold-500 transition">Agenda</a>
+                            <a href="prestasi.html" target="_blank" class="text-[11px] px-3 py-1.5 rounded-full border border-mint-300 bg-white text-gray-600 hover:border-gold-400 hover:text-gold-500 transition">Prestasi</a>
+                            <a href="galeri.html" target="_blank" class="text-[11px] px-3 py-1.5 rounded-full border border-mint-300 bg-white text-gray-600 hover:border-gold-400 hover:text-gold-500 transition">Galeri</a>
                         </div>
                     </div>
                 </div>
 
                 <!-- Pendaftar terbaru -->
-                <div class="bg-slate-800 rounded-xl border border-white/5 overflow-hidden">
-                    <div class="px-6 py-4 border-b border-white/5 flex justify-between items-center">
-                        <h3 class="font-bold text-white"><i class="fas fa-clock-rotate-left text-gold-400 mr-2"></i>Pendaftar Terbaru dari Website</h3>
-                        <button onclick="switchTab('psb')" class="text-xs text-gold-400 hover:text-gold-300 font-bold">Lihat Semua →</button>
+                <div class="tbl-wrap">
+                    <div class="px-6 py-4 border-b border-mint-200 flex justify-between items-center bg-mint-50">
+                        <h3 class="font-bold text-slate-900"><i class="fas fa-clock-rotate-left text-gold-500 mr-2"></i>Pendaftar Terbaru dari Website</h3>
+                        <button onclick="switchTab('psb')" class="text-xs text-gold-500 hover:text-gold-400 font-bold">Lihat Semua →</button>
                     </div>
-                    <table class="w-full text-left text-sm text-gray-400">
-                        <thead class="bg-slate-900 text-gray-200 uppercase text-xs">
+                    <table class="w-full text-left text-sm text-gray-600">
+                        <thead class="bg-emerald-900 text-emerald-50 uppercase text-xs">
                             <tr><th class="px-6 py-3">Nama</th><th class="px-6 py-3">Program</th><th class="px-6 py-3">Tanggal</th><th class="px-6 py-3">Status</th></tr>
                         </thead>
-                        <tbody id="ovRecent" class="divide-y divide-white/5"></tbody>
+                        <tbody id="ovRecent" class="divide-y divide-mint-200"></tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- Tab: News Management -->
+            <!-- ============ TAB: NEWS ============ -->
             <div id="tab-news" class="hidden">
                 <div class="flex justify-between items-center mb-8">
-                    <h2 class="text-2xl font-bold text-white">Manajemen Berita</h2>
+                    <h2 class="font-serif text-2xl md:text-3xl font-bold text-slate-900">Manajemen Berita</h2>
                     <button onclick="openModal()" class="bg-gold-400 hover:bg-gold-500 text-slate-900 px-4 py-2 rounded-lg font-bold text-sm transition">
                         <i class="fas fa-plus mr-2"></i> Tambah Berita
                     </button>
                 </div>
 
-                <!-- Stats Cards -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    <div class="bg-slate-800 p-6 rounded-xl border border-white/5">
-                        <p class="text-gray-400 text-sm">Total Berita</p>
-                        <h3 class="text-3xl font-bold text-white mt-2" id="totalNews">0</h3>
+                    <div class="card-green relative p-6 rounded-2xl">
+                        <div class="relative z-10">
+                            <p class="text-emerald-100/70 text-sm">Total Berita</p>
+                            <h3 class="font-serif text-3xl font-bold text-white mt-2" id="totalNews">0</h3>
+                        </div>
                     </div>
-                    <div class="bg-slate-800 p-6 rounded-xl border border-white/5">
-                        <p class="text-gray-400 text-sm">Pendaftar Baru Hari Ini</p>
-                        <h3 class="text-3xl font-bold text-emerald-400 mt-2">12</h3>
+                    <div class="card-green relative p-6 rounded-2xl">
+                        <div class="relative z-10">
+                            <p class="text-emerald-100/70 text-sm">Pendaftar Baru Hari Ini</p>
+                            <h3 class="font-serif text-3xl font-bold text-gold-light mt-2">12</h3>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Table -->
-                <div class="bg-slate-800 rounded-xl border border-white/5 overflow-hidden">
-                    <table class="w-full text-left text-sm text-gray-400">
-                        <thead class="bg-slate-900 text-gray-200 uppercase text-xs">
+                <div class="tbl-wrap overflow-x-auto">
+                    <table class="w-full text-left text-sm text-gray-600">
+                        <thead class="bg-emerald-900 text-emerald-50 uppercase text-xs">
                             <tr>
                                 <th class="px-6 py-4">Judul</th>
                                 <th class="px-6 py-4">Tanggal</th>
@@ -247,20 +292,18 @@
                                 <th class="px-6 py-4 text-right">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody id="newsTableBody" class="divide-y divide-white/5">
-                            <!-- Data will be injected here via JS -->
-                        </tbody>
+                        <tbody id="newsTableBody" class="divide-y divide-mint-200"></tbody>
                     </table>
                 </div>
-                <p class="text-xs text-gray-500 mt-4"><i class="fas fa-circle-info text-gold-400 mr-1"></i> Berita yang disimpan di sini otomatis tampil di halaman <b>berita.html</b> setelah halaman publik memuat <b>cms-public.js</b>.</p>
+                <p class="text-xs text-gray-500 mt-4"><i class="fas fa-circle-info text-gold-500 mr-1"></i> Berita yang disimpan di sini otomatis tampil di halaman <b>berita.html</b> setelah halaman publik memuat <b>cms-public.js</b>.</p>
             </div>
 
-            <!-- Tab: PSB Data (Simple View) -->
+            <!-- ============ TAB: PSB ============ -->
             <div id="tab-psb" class="hidden">
-                <h2 class="text-2xl font-bold text-white mb-8">Data Pendaftar Masuk (Simulasi)</h2>
-                <div class="bg-slate-800 rounded-xl border border-white/5 overflow-hidden">
-                    <table class="w-full text-left text-sm text-gray-400">
-                        <thead class="bg-slate-900 text-gray-200 uppercase text-xs">
+                <h2 class="font-serif text-2xl md:text-3xl font-bold text-slate-900 mb-8">Data Pendaftar Masuk (Simulasi)</h2>
+                <div class="tbl-wrap overflow-x-auto">
+                    <table class="w-full text-left text-sm text-gray-600">
+                        <thead class="bg-emerald-900 text-emerald-50 uppercase text-xs">
                             <tr>
                                 <th class="px-6 py-4">Nama Calon Santri</th>
                                 <th class="px-6 py-4">Asal Sekolah</th>
@@ -268,50 +311,56 @@
                                 <th class="px-6 py-4">Status</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-white/5">
-                            <tr class="hover:bg-slate-700/50 transition">
-                                <td class="px-6 py-4 font-medium text-white">Muhammad Fatih</td>
+                        <tbody class="divide-y divide-mint-200">
+                            <tr class="hover:bg-mint-50 transition">
+                                <td class="px-6 py-4 font-medium text-slate-900">Muhammad Fatih</td>
                                 <td class="px-6 py-4">SDIT Al-Azhar</td>
                                 <td class="px-6 py-4">SMP Tahfidz</td>
-                                <td class="px-6 py-4"><span class="bg-green-900 text-green-300 px-2 py-1 rounded text-xs">Verifikasi Berkas</span></td>
+                                <td class="px-6 py-4"><span class="bg-emerald-100 text-emerald-700 border border-emerald-300 px-2 py-1 rounded text-xs">Verifikasi Berkas</span></td>
                             </tr>
-                            <tr class="hover:bg-slate-700/50 transition">
-                                <td class="px-6 py-4 font-medium text-white">Aisyah Humaira</td>
+                            <tr class="hover:bg-mint-50 transition">
+                                <td class="px-6 py-4 font-medium text-slate-900">Aisyah Humaira</td>
                                 <td class="px-6 py-4">MI Nurul Huda</td>
                                 <td class="px-6 py-4">SMA Science</td>
-                                <td class="px-6 py-4"><span class="bg-yellow-900 text-yellow-300 px-2 py-1 rounded text-xs">Menunggu Tes</span></td>
+                                <td class="px-6 py-4"><span class="bg-amber-100 text-amber-700 border border-amber-300 px-2 py-1 rounded text-xs">Menunggu Tes</span></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
-                <!-- ============ PSB REAL-TIME DARI WEBSITE (BARU) ============ -->
+                <!-- PSB REAL-TIME DARI WEBSITE -->
                 <div class="mt-12">
                     <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-6 gap-3">
-                        <h3 class="text-xl font-bold text-white"><i class="fas fa-satellite-dish text-gold-400 mr-2"></i>Pendaftar Real-Time dari Formulir Website</h3>
+                        <h3 class="font-serif text-xl font-bold text-slate-900"><i class="fas fa-satellite-dish text-gold-500 mr-2"></i>Pendaftar Real-Time dari Formulir Website</h3>
                         <button onclick="exportPsbCsv()" class="inline-flex items-center gap-2 bg-emerald-900 hover:bg-emerald-800 text-white px-4 py-2 rounded-lg text-sm font-bold transition">
                             <i class="fas fa-file-csv"></i> Export CSV
                         </button>
                     </div>
 
                     <div class="grid grid-cols-3 gap-4 mb-6">
-                        <div class="bg-slate-800 p-4 rounded-xl border border-white/5 text-center">
-                            <h4 class="text-2xl font-bold text-white" id="psbTotal">0</h4>
-                            <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-1">Total Masuk</p>
+                        <div class="card-green relative p-4 rounded-xl text-center">
+                            <div class="relative z-10">
+                                <h4 class="font-serif text-2xl font-bold text-white" id="psbTotal">0</h4>
+                                <p class="text-[10px] text-emerald-100/70 uppercase tracking-widest mt-1">Total Masuk</p>
+                            </div>
                         </div>
-                        <div class="bg-slate-800 p-4 rounded-xl border border-white/5 text-center">
-                            <h4 class="text-2xl font-bold text-emerald-400" id="psbLulus">0</h4>
-                            <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-1">Dinyatakan Lulus</p>
+                        <div class="card-green relative p-4 rounded-xl text-center">
+                            <div class="relative z-10">
+                                <h4 class="font-serif text-2xl font-bold text-gold-light" id="psbLulus">0</h4>
+                                <p class="text-[10px] text-emerald-100/70 uppercase tracking-widest mt-1">Dinyatakan Lulus</p>
+                            </div>
                         </div>
-                        <div class="bg-slate-800 p-4 rounded-xl border border-white/5 text-center">
-                            <h4 class="text-2xl font-bold text-yellow-400" id="psbProses">0</h4>
-                            <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-1">Dalam Proses</p>
+                        <div class="card-green relative p-4 rounded-xl text-center">
+                            <div class="relative z-10">
+                                <h4 class="font-serif text-2xl font-bold text-gold-light" id="psbProses">0</h4>
+                                <p class="text-[10px] text-emerald-100/70 uppercase tracking-widest mt-1">Dalam Proses</p>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="bg-slate-800 rounded-xl border border-white/5 overflow-x-auto">
-                        <table class="w-full text-left text-sm text-gray-400">
-                            <thead class="bg-slate-900 text-gray-200 uppercase text-xs">
+                    <div class="tbl-wrap overflow-x-auto">
+                        <table class="w-full text-left text-sm text-gray-600">
+                            <thead class="bg-emerald-900 text-emerald-50 uppercase text-xs">
                                 <tr>
                                     <th class="px-6 py-4">No. Daftar</th>
                                     <th class="px-6 py-4">Nama / Asal</th>
@@ -323,103 +372,103 @@
                                     <th class="px-6 py-4 text-right">Aksi</th>
                                 </tr>
                             </thead>
-                            <tbody id="psbDynBody" class="divide-y divide-white/5"></tbody>
+                            <tbody id="psbDynBody" class="divide-y divide-mint-200"></tbody>
                         </table>
                     </div>
-                    <p class="text-xs text-gray-500 mt-4"><i class="fas fa-circle-info text-gold-400 mr-1"></i> Mengubah status di sini langsung terbaca oleh fitur <b>"Pengumuman Hasil Seleksi"</b> di beranda website.</p>
+                    <p class="text-xs text-gray-500 mt-4"><i class="fas fa-circle-info text-gold-500 mr-1"></i> Mengubah status di sini langsung terbaca oleh fitur <b>"Pengumuman Hasil Seleksi"</b> di beranda website.</p>
                 </div>
             </div>
 
-            <!-- ============ TAB: AGENDA (BARU) ============ -->
+            <!-- ============ TAB: AGENDA ============ -->
             <div id="tab-agenda" class="hidden">
                 <div class="flex justify-between items-center mb-8">
-                    <h2 class="text-2xl font-bold text-white">Manajemen Agenda & Kalender</h2>
+                    <h2 class="font-serif text-2xl md:text-3xl font-bold text-slate-900">Manajemen Agenda & Kalender</h2>
                     <button onclick="openAgendaModal()" class="bg-gold-400 hover:bg-gold-500 text-slate-900 px-4 py-2 rounded-lg font-bold text-sm transition">
                         <i class="fas fa-plus mr-2"></i> Tambah Agenda
                     </button>
                 </div>
-                <div class="bg-slate-800 rounded-xl border border-white/5 overflow-x-auto">
-                    <table class="w-full text-left text-sm text-gray-400">
-                        <thead class="bg-slate-900 text-gray-200 uppercase text-xs">
+                <div class="tbl-wrap overflow-x-auto">
+                    <table class="w-full text-left text-sm text-gray-600">
+                        <thead class="bg-emerald-900 text-emerald-50 uppercase text-xs">
                             <tr><th class="px-6 py-4">Tanggal</th><th class="px-6 py-4">Judul Kegiatan</th><th class="px-6 py-4">Waktu</th><th class="px-6 py-4">Lokasi</th><th class="px-6 py-4">Kategori</th><th class="px-6 py-4 text-right">Aksi</th></tr>
                         </thead>
-                        <tbody id="agendaBody" class="divide-y divide-white/5"></tbody>
+                        <tbody id="agendaBody" class="divide-y divide-mint-200"></tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- ============ TAB: GALERI (BARU) ============ -->
+            <!-- ============ TAB: GALERI ============ -->
             <div id="tab-galeri" class="hidden">
                 <div class="flex justify-between items-center mb-8">
-                    <h2 class="text-2xl font-bold text-white">Manajemen Galeri Foto & Video</h2>
+                    <h2 class="font-serif text-2xl md:text-3xl font-bold text-slate-900">Manajemen Galeri Foto & Video</h2>
                     <button onclick="openGaleriModal()" class="bg-gold-400 hover:bg-gold-500 text-slate-900 px-4 py-2 rounded-lg font-bold text-sm transition">
                         <i class="fas fa-plus mr-2"></i> Tambah Item
                     </button>
                 </div>
-                <div class="bg-slate-800 rounded-xl border border-white/5 overflow-x-auto">
-                    <table class="w-full text-left text-sm text-gray-400">
-                        <thead class="bg-slate-900 text-gray-200 uppercase text-xs">
+                <div class="tbl-wrap overflow-x-auto">
+                    <table class="w-full text-left text-sm text-gray-600">
+                        <thead class="bg-emerald-900 text-emerald-50 uppercase text-xs">
                             <tr><th class="px-6 py-4">Pratinjau</th><th class="px-6 py-4">Keterangan</th><th class="px-6 py-4">Kategori</th><th class="px-6 py-4 text-right">Aksi</th></tr>
                         </thead>
-                        <tbody id="galeriBody" class="divide-y divide-white/5"></tbody>
+                        <tbody id="galeriBody" class="divide-y divide-mint-200"></tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- ============ TAB: PRESTASI (BARU) ============ -->
+            <!-- ============ TAB: PRESTASI ============ -->
             <div id="tab-prestasi" class="hidden">
                 <div class="flex justify-between items-center mb-8">
-                    <h2 class="text-2xl font-bold text-white">Manajemen Prestasi & Penghargaan</h2>
+                    <h2 class="font-serif text-2xl md:text-3xl font-bold text-slate-900">Manajemen Prestasi & Penghargaan</h2>
                     <button onclick="openPrestasiModal()" class="bg-gold-400 hover:bg-gold-500 text-slate-900 px-4 py-2 rounded-lg font-bold text-sm transition">
                         <i class="fas fa-plus mr-2"></i> Tambah Prestasi
                     </button>
                 </div>
-                <div class="bg-slate-800 rounded-xl border border-white/5 overflow-x-auto">
-                    <table class="w-full text-left text-sm text-gray-400">
-                        <thead class="bg-slate-900 text-gray-200 uppercase text-xs">
+                <div class="tbl-wrap overflow-x-auto">
+                    <table class="w-full text-left text-sm text-gray-600">
+                        <thead class="bg-emerald-900 text-emerald-50 uppercase text-xs">
                             <tr><th class="px-6 py-4">Judul Prestasi</th><th class="px-6 py-4">Level</th><th class="px-6 py-4">Medali</th><th class="px-6 py-4">Tahun</th><th class="px-6 py-4 text-right">Aksi</th></tr>
                         </thead>
-                        <tbody id="prestasiBody" class="divide-y divide-white/5"></tbody>
+                        <tbody id="prestasiBody" class="divide-y divide-mint-200"></tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- ============ TAB: PROFIL & KONTEN (BARU) ============ -->
+            <!-- ============ TAB: PROFIL & KONTEN ============ -->
             <div id="tab-profil" class="hidden">
-                <h2 class="text-2xl font-bold text-white mb-8">Profil & Konten Website</h2>
-                <form onsubmit="saveProfil(event)" class="bg-slate-800 p-8 rounded-xl border border-white/5 space-y-6 max-w-4xl">
+                <h2 class="font-serif text-2xl md:text-3xl font-bold text-slate-900 mb-8">Profil & Konten Website</h2>
+                <form onsubmit="saveProfil(event)" class="tbl-wrap p-8 space-y-6 max-w-4xl">
                     <div>
-                        <label class="block text-sm text-gray-400 mb-2">Visi Pesantren</label>
-                        <textarea id="pfVisi" rows="3" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:border-gold-400 outline-none"></textarea>
+                        <label class="block text-sm text-gray-600 mb-2">Visi Pesantren</label>
+                        <textarea id="pfVisi" rows="3" class="w-full bg-mint-50 border border-mint-300 rounded-lg px-4 py-3 text-slate-900 focus:border-gold-400 focus:bg-white outline-none transition"></textarea>
                     </div>
                     <div>
-                        <label class="block text-sm text-gray-400 mb-2">Misi (pisahkan tiap poin dengan baris baru)</label>
-                        <textarea id="pfMisi" rows="5" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:border-gold-400 outline-none"></textarea>
+                        <label class="block text-sm text-gray-600 mb-2">Misi (pisahkan tiap poin dengan baris baru)</label>
+                        <textarea id="pfMisi" rows="5" class="w-full bg-mint-50 border border-mint-300 rounded-lg px-4 py-3 text-slate-900 focus:border-gold-400 focus:bg-white outline-none transition"></textarea>
                     </div>
                     <div>
-                        <label class="block text-sm text-gray-400 mb-2">Ringkasan Sejarah</label>
-                        <textarea id="pfSejarah" rows="4" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:border-gold-400 outline-none"></textarea>
+                        <label class="block text-sm text-gray-600 mb-2">Ringkasan Sejarah</label>
+                        <textarea id="pfSejarah" rows="4" class="w-full bg-mint-50 border border-mint-300 rounded-lg px-4 py-3 text-slate-900 focus:border-gold-400 focus:bg-white outline-none transition"></textarea>
                     </div>
                     <div>
-                        <label class="block text-sm text-gray-400 mb-2">Sambutan Pimpinan (kutipan utama)</label>
-                        <textarea id="pfSambutan" rows="3" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:border-gold-400 outline-none"></textarea>
+                        <label class="block text-sm text-gray-600 mb-2">Sambutan Pimpinan (kutipan utama)</label>
+                        <textarea id="pfSambutan" rows="3" class="w-full bg-mint-50 border border-mint-300 rounded-lg px-4 py-3 text-slate-900 focus:border-gold-400 focus:bg-white outline-none transition"></textarea>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label class="block text-sm text-gray-400 mb-2">Alamat</label>
-                            <input type="text" id="pfAddr" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:border-gold-400 outline-none">
+                            <label class="block text-sm text-gray-600 mb-2">Alamat</label>
+                            <input type="text" id="pfAddr" class="w-full bg-mint-50 border border-mint-300 rounded-lg px-4 py-3 text-slate-900 focus:border-gold-400 focus:bg-white outline-none transition">
                         </div>
                         <div>
-                            <label class="block text-sm text-gray-400 mb-2">Telepon</label>
-                            <input type="text" id="pfPhone" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:border-gold-400 outline-none">
+                            <label class="block text-sm text-gray-600 mb-2">Telepon</label>
+                            <input type="text" id="pfPhone" class="w-full bg-mint-50 border border-mint-300 rounded-lg px-4 py-3 text-slate-900 focus:border-gold-400 focus:bg-white outline-none transition">
                         </div>
                         <div>
-                            <label class="block text-sm text-gray-400 mb-2">Email</label>
-                            <input type="email" id="pfEmail" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:border-gold-400 outline-none">
+                            <label class="block text-sm text-gray-600 mb-2">Email</label>
+                            <input type="email" id="pfEmail" class="w-full bg-mint-50 border border-mint-300 rounded-lg px-4 py-3 text-slate-900 focus:border-gold-400 focus:bg-white outline-none transition">
                         </div>
                         <div>
-                            <label class="block text-sm text-gray-400 mb-2">WhatsApp SPMB</label>
-                            <input type="text" id="pfWa" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:border-gold-400 outline-none">
+                            <label class="block text-sm text-gray-600 mb-2">WhatsApp SPMB</label>
+                            <input type="text" id="pfWa" class="w-full bg-mint-50 border border-mint-300 rounded-lg px-4 py-3 text-slate-900 focus:border-gold-400 focus:bg-white outline-none transition">
                         </div>
                     </div>
                     <button type="submit" class="bg-gold-400 hover:bg-gold-500 text-slate-900 px-6 py-3 rounded-lg font-bold transition">
@@ -428,76 +477,81 @@
                 </form>
             </div>
 
-            <!-- ============ TAB: PENGATURAN (BARU, kini berfungsi) ============ -->
+            <!-- ============ TAB: PENGATURAN ============ -->
             <div id="tab-settings" class="hidden">
-                <h2 class="text-2xl font-bold text-white mb-8">Pengaturan Sistem</h2>
+                <h2 class="font-serif text-2xl md:text-3xl font-bold text-slate-900 mb-8">Pengaturan Sistem</h2>
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-5xl">
                     <!-- Akun -->
-                    <div class="bg-slate-800 p-8 rounded-xl border border-white/5">
-                        <h3 class="font-bold text-white mb-6"><i class="fas fa-user-shield text-gold-400 mr-2"></i>Keamanan Akun</h3>
+                    <div class="tbl-wrap p-8">
+                        <h3 class="font-bold text-slate-900 mb-6"><i class="fas fa-user-shield text-gold-500 mr-2"></i>Keamanan Akun</h3>
                         <form onsubmit="changePassword(event)" class="space-y-4">
                             <div>
-                                <label class="block text-sm text-gray-400 mb-2">Password Saat Ini</label>
-                                <input type="password" id="setCurPass" required class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:border-gold-400 outline-none">
+                                <label class="block text-sm text-gray-600 mb-2">Password Saat Ini</label>
+                                <input type="password" id="setCurPass" required class="w-full bg-mint-50 border border-mint-300 rounded-lg px-4 py-3 text-slate-900 focus:border-gold-400 focus:bg-white outline-none transition">
                             </div>
                             <div>
-                                <label class="block text-sm text-gray-400 mb-2">Password Baru</label>
-                                <input type="password" id="setNewPass" required minlength="6" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:border-gold-400 outline-none">
+                                <label class="block text-sm text-gray-600 mb-2">Password Baru</label>
+                                <input type="password" id="setNewPass" required minlength="6" class="w-full bg-mint-50 border border-mint-300 rounded-lg px-4 py-3 text-slate-900 focus:border-gold-400 focus:bg-white outline-none transition">
                             </div>
                             <div>
-                                <label class="block text-sm text-gray-400 mb-2">Ulangi Password Baru</label>
-                                <input type="password" id="setConfPass" required class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:border-gold-400 outline-none">
+                                <label class="block text-sm text-gray-600 mb-2">Ulangi Password Baru</label>
+                                <input type="password" id="setConfPass" required class="w-full bg-mint-50 border border-mint-300 rounded-lg px-4 py-3 text-slate-900 focus:border-gold-400 focus:bg-white outline-none transition">
                             </div>
                             <button type="submit" class="bg-emerald-900 hover:bg-emerald-800 text-white px-6 py-3 rounded-lg font-bold transition">Ganti Password</button>
                         </form>
                     </div>
                     <!-- Tampilan situs -->
-                    <div class="bg-slate-800 p-8 rounded-xl border border-white/5">
-                        <h3 class="font-bold text-white mb-6"><i class="fas fa-sliders text-gold-400 mr-2"></i>Topbar & Kontak Website</h3>
+                    <div class="tbl-wrap p-8">
+                        <h3 class="font-bold text-slate-900 mb-6"><i class="fas fa-sliders text-gold-500 mr-2"></i>Topbar & Kontak Website</h3>
                         <form onsubmit="saveSiteSettings(event)" class="space-y-4">
-                            <label class="flex items-center gap-3 text-sm text-gray-300 cursor-pointer">
+                            <label class="flex items-center gap-3 text-sm text-gray-700 cursor-pointer">
                                 <input type="checkbox" id="stTopbar" class="w-4 h-4 accent-amber-600">
                                 Tampilkan topbar penawaran di beranda
                             </label>
                             <div>
-                                <label class="block text-sm text-gray-400 mb-2">Teks Pesan Topbar</label>
-                                <input type="text" id="stText" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:border-gold-400 outline-none" placeholder="cth: Desain website premium ini dibuka hanya untuk 1 slot!">
+                                <label class="block text-sm text-gray-600 mb-2">Teks Pesan Topbar</label>
+                                <input type="text" id="stText" class="w-full bg-mint-50 border border-mint-300 rounded-lg px-4 py-3 text-slate-900 focus:border-gold-400 focus:bg-white outline-none transition" placeholder="cth: Desain website premium ini dibuka hanya untuk 1 slot!">
                             </div>
                             <div>
-                                <label class="block text-sm text-gray-400 mb-2">Link WhatsApp Tombol "Klaim Sekarang"</label>
-                                <input type="text" id="stWa" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:border-gold-400 outline-none" placeholder="https://wa.me/62812xxxxxxx">
+                                <label class="block text-sm text-gray-600 mb-2">Link WhatsApp Tombol "Klaim Sekarang"</label>
+                                <input type="text" id="stWa" class="w-full bg-mint-50 border border-mint-300 rounded-lg px-4 py-3 text-slate-900 focus:border-gold-400 focus:bg-white outline-none transition" placeholder="https://wa.me/62812xxxxxxx">
                             </div>
                             <button type="submit" class="bg-gold-400 hover:bg-gold-500 text-slate-900 px-6 py-3 rounded-lg font-bold transition">Simpan Pengaturan</button>
                         </form>
                     </div>
                     <!-- Zona berbahaya -->
-                    <div class="lg:col-span-2 bg-red-950/30 p-8 rounded-xl border border-red-900/50">
-                        <h3 class="font-bold text-red-300 mb-3"><i class="fas fa-triangle-exclamation mr-2"></i>Zona Berbahaya</h3>
-                        <p class="text-sm text-gray-400 mb-4">Menghapus seluruh data CMS (berita, agenda, galeri, prestasi, profil, pendaftar) dari penyimpanan browser.</p>
-                        <button onclick="resetAllData()" class="bg-red-900/60 hover:bg-red-800 border border-red-700 text-red-200 px-6 py-3 rounded-lg font-bold transition">Reset Semua Data CMS</button>
+                    <div class="lg:col-span-2 bg-red-50 p-8 rounded-xl border border-red-200">
+                        <h3 class="font-bold text-red-600 mb-3"><i class="fas fa-triangle-exclamation mr-2"></i>Zona Berbahaya</h3>
+                        <p class="text-sm text-gray-600 mb-4">Menghapus seluruh data CMS (berita, agenda, galeri, prestasi, profil, pendaftar) dari penyimpanan browser.</p>
+                        <button onclick="resetAllData()" class="bg-red-100 hover:bg-red-200 border border-red-300 text-red-700 px-6 py-3 rounded-lg font-bold transition">Reset Semua Data CMS</button>
                     </div>
                 </div>
             </div>
+
+            <!-- ===== FOOTER STRIP ADMIN (ramping, serasi footer publik) ===== -->
+            <footer class="mt-12 border-t border-mint-200 pt-4 pb-2 text-center text-xs text-gray-500">
+                &copy; 2026 Pesantren Modern Al-Izzah — Admin Panel. All Rights Reserved.
+            </footer>
         </main>
     </div>
 
-    <!-- Add/Edit News Modal -->
-    <div id="newsModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
-        <div class="bg-slate-800 p-6 rounded-xl border border-white/10 w-full max-w-lg m-4">
-            <h3 class="text-xl font-bold text-white mb-4" id="modalTitle">Tambah Berita Baru</h3>
+    <!-- ============ MODAL: ADD/EDIT NEWS ============ -->
+    <div id="newsModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm">
+        <div class="bg-white p-6 rounded-2xl border border-mint-200 w-full max-w-lg m-4 shadow-2xl">
+            <h3 class="font-serif text-xl font-bold text-slate-900 mb-4" id="modalTitle">Tambah Berita Baru</h3>
             <form id="newsForm" onsubmit="saveNews(event)">
                 <input type="hidden" id="newsId">
                 <div class="mb-4">
-                    <label class="block text-sm text-gray-400 mb-2">Judul Berita</label>
-                    <input type="text" id="newsTitle" required class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:border-gold-400 outline-none">
+                    <label class="block text-sm text-gray-600 mb-2">Judul Berita</label>
+                    <input type="text" id="newsTitle" required class="w-full bg-mint-50 border border-mint-300 rounded-lg px-4 py-2 text-slate-900 focus:border-gold-400 focus:bg-white outline-none transition">
                 </div>
                 <div class="mb-4">
-                    <label class="block text-sm text-gray-400 mb-2">Isi Konten</label>
-                    <textarea id="newsContent" rows="4" required class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:border-gold-400 outline-none"></textarea>
+                    <label class="block text-sm text-gray-600 mb-2">Isi Konten</label>
+                    <textarea id="newsContent" rows="4" required class="w-full bg-mint-50 border border-mint-300 rounded-lg px-4 py-2 text-slate-900 focus:border-gold-400 focus:bg-white outline-none transition"></textarea>
                 </div>
                 <div class="mb-4">
-                    <label class="block text-sm text-gray-400 mb-2">Kategori (untuk filter di berita.html)</label>
-                    <select id="newsCat" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:border-gold-400 outline-none">
+                    <label class="block text-sm text-gray-600 mb-2">Kategori (untuk filter di berita.html)</label>
+                    <select id="newsCat" class="w-full bg-mint-50 border border-mint-300 rounded-lg px-4 py-2 text-slate-900 focus:border-gold-400 focus:bg-white outline-none transition">
                         <option value="kegiatan">Kegiatan</option>
                         <option value="akademik">Akademik</option>
                         <option value="tahfidz">Tahfidz</option>
@@ -505,64 +559,64 @@
                     </select>
                 </div>
                 <div class="flex justify-end gap-3 mt-6">
-                    <button type="button" onclick="closeModal()" class="px-4 py-2 text-gray-400 hover:text-white">Batal</button>
-                    <button type="submit" class="px-6 py-2 bg-emerald-900 hover:bg-emerald-800 text-white rounded-lg font-bold">Simpan</button>
+                    <button type="button" onclick="closeModal()" class="px-4 py-2 text-gray-500 hover:text-slate-900 transition">Batal</button>
+                    <button type="submit" class="px-6 py-2 bg-emerald-900 hover:bg-emerald-800 text-white rounded-lg font-bold transition">Simpan</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Modal Agenda (BARU) -->
-    <div id="agendaModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
-        <div class="bg-slate-800 p-6 rounded-xl border border-white/10 w-full max-w-lg m-4">
-            <h3 class="text-xl font-bold text-white mb-4" id="agendaModalTitle">Tambah Agenda</h3>
+    <!-- ============ MODAL: AGENDA ============ -->
+    <div id="agendaModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm">
+        <div class="bg-white p-6 rounded-2xl border border-mint-200 w-full max-w-lg m-4 shadow-2xl">
+            <h3 class="font-serif text-xl font-bold text-slate-900 mb-4" id="agendaModalTitle">Tambah Agenda</h3>
             <form id="agendaForm" onsubmit="saveAgenda(event)">
                 <input type="hidden" id="agId">
                 <div class="mb-4">
-                    <label class="block text-sm text-gray-400 mb-2">Judul Kegiatan</label>
-                    <input type="text" id="agTitle" required class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:border-gold-400 outline-none">
+                    <label class="block text-sm text-gray-600 mb-2">Judul Kegiatan</label>
+                    <input type="text" id="agTitle" required class="w-full bg-mint-50 border border-mint-300 rounded-lg px-4 py-2 text-slate-900 focus:border-gold-400 focus:bg-white outline-none transition">
                 </div>
                 <div class="grid grid-cols-2 gap-4 mb-4">
                     <div>
-                        <label class="block text-sm text-gray-400 mb-2">Tanggal</label>
-                        <input type="date" id="agDate" required class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:border-gold-400 outline-none">
+                        <label class="block text-sm text-gray-600 mb-2">Tanggal</label>
+                        <input type="date" id="agDate" required class="w-full bg-mint-50 border border-mint-300 rounded-lg px-4 py-2 text-slate-900 focus:border-gold-400 focus:bg-white outline-none transition">
                     </div>
                     <div>
-                        <label class="block text-sm text-gray-400 mb-2">Waktu</label>
-                        <input type="text" id="agTime" placeholder="08.00 WIB" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:border-gold-400 outline-none">
+                        <label class="block text-sm text-gray-600 mb-2">Waktu</label>
+                        <input type="text" id="agTime" placeholder="08.00 WIB" class="w-full bg-mint-50 border border-mint-300 rounded-lg px-4 py-2 text-slate-900 focus:border-gold-400 focus:bg-white outline-none transition">
                     </div>
                 </div>
                 <div class="mb-4">
-                    <label class="block text-sm text-gray-400 mb-2">Lokasi</label>
-                    <input type="text" id="agLoc" placeholder="cth: Aula Utama" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:border-gold-400 outline-none">
+                    <label class="block text-sm text-gray-600 mb-2">Lokasi</label>
+                    <input type="text" id="agLoc" placeholder="cth: Aula Utama" class="w-full bg-mint-50 border border-mint-300 rounded-lg px-4 py-2 text-slate-900 focus:border-gold-400 focus:bg-white outline-none transition">
                 </div>
                 <div class="mb-4">
-                    <label class="block text-sm text-gray-400 mb-2">Kategori</label>
-                    <select id="agCat" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:border-gold-400 outline-none">
+                    <label class="block text-sm text-gray-600 mb-2">Kategori</label>
+                    <select id="agCat" class="w-full bg-mint-50 border border-mint-300 rounded-lg px-4 py-2 text-slate-900 focus:border-gold-400 focus:bg-white outline-none transition">
                         <option>Akademik</option><option>Tahfidz</option><option>Seremonial</option><option>Sosial</option><option>Keluarga</option>
                     </select>
                 </div>
                 <div class="flex justify-end gap-3 mt-6">
-                    <button type="button" onclick="closeAgendaModal()" class="px-4 py-2 text-gray-400 hover:text-white">Batal</button>
-                    <button type="submit" class="px-6 py-2 bg-emerald-900 hover:bg-emerald-800 text-white rounded-lg font-bold">Simpan</button>
+                    <button type="button" onclick="closeAgendaModal()" class="px-4 py-2 text-gray-500 hover:text-slate-900 transition">Batal</button>
+                    <button type="submit" class="px-6 py-2 bg-emerald-900 hover:bg-emerald-800 text-white rounded-lg font-bold transition">Simpan</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Modal Galeri (BARU) -->
-    <div id="galeriModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
-        <div class="bg-slate-800 p-6 rounded-xl border border-white/10 w-full max-w-lg m-4">
-            <h3 class="text-xl font-bold text-white mb-4" id="galeriModalTitle">Tambah Item Galeri</h3>
+    <!-- ============ MODAL: GALERI ============ -->
+    <div id="galeriModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm">
+        <div class="bg-white p-6 rounded-2xl border border-mint-200 w-full max-w-lg m-4 shadow-2xl">
+            <h3 class="font-serif text-xl font-bold text-slate-900 mb-4" id="galeriModalTitle">Tambah Item Galeri</h3>
             <form id="galeriForm" onsubmit="saveGaleri(event)">
                 <input type="hidden" id="gId">
                 <div class="mb-4">
-                    <label class="block text-sm text-gray-400 mb-2">Keterangan / Caption</label>
-                    <input type="text" id="gCaption" required class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:border-gold-400 outline-none">
+                    <label class="block text-sm text-gray-600 mb-2">Keterangan / Caption</label>
+                    <input type="text" id="gCaption" required class="w-full bg-mint-50 border border-mint-300 rounded-lg px-4 py-2 text-slate-900 focus:border-gold-400 focus:bg-white outline-none transition">
                 </div>
                 <div class="mb-4">
-                    <label class="block text-sm text-gray-400 mb-2">Kategori</label>
-                    <select id="gCat" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:border-gold-400 outline-none">
+                    <label class="block text-sm text-gray-600 mb-2">Kategori</label>
+                    <select id="gCat" class="w-full bg-mint-50 border border-mint-300 rounded-lg px-4 py-2 text-slate-900 focus:border-gold-400 focus:bg-white outline-none transition">
                         <option value="kegiatan">Kegiatan Kampus</option>
                         <option value="ibadah">Tahfidz & Ibadah</option>
                         <option value="fasilitas">Fasilitas</option>
@@ -570,60 +624,60 @@
                     </select>
                 </div>
                 <div class="mb-4">
-                    <label class="block text-sm text-gray-400 mb-2">URL Gambar / Nama File Lokal</label>
-                    <input type="text" id="gImg" required placeholder="cth: img/kegiatan1.jpg" oninput="document.getElementById('gPreview').src=this.value" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:border-gold-400 outline-none">
-                    <img id="gPreview" src="" class="mt-3 h-28 rounded-lg border border-white/10 object-cover hidden" onerror="this.classList.add('hidden')" onload="this.classList.remove('hidden')">
+                    <label class="block text-sm text-gray-600 mb-2">URL Gambar / Nama File Lokal</label>
+                    <input type="text" id="gImg" required placeholder="cth: img/kegiatan1.jpg" oninput="document.getElementById('gPreview').src=this.value" class="w-full bg-mint-50 border border-mint-300 rounded-lg px-4 py-2 text-slate-900 focus:border-gold-400 focus:bg-white outline-none transition">
+                    <img id="gPreview" src="" class="mt-3 h-28 rounded-lg border border-mint-200 object-cover hidden" onerror="this.classList.add('hidden')" onload="this.classList.remove('hidden')">
                 </div>
                 <div class="flex justify-end gap-3 mt-6">
-                    <button type="button" onclick="closeGaleriModal()" class="px-4 py-2 text-gray-400 hover:text-white">Batal</button>
-                    <button type="submit" class="px-6 py-2 bg-emerald-900 hover:bg-emerald-800 text-white rounded-lg font-bold">Simpan</button>
+                    <button type="button" onclick="closeGaleriModal()" class="px-4 py-2 text-gray-500 hover:text-slate-900 transition">Batal</button>
+                    <button type="submit" class="px-6 py-2 bg-emerald-900 hover:bg-emerald-800 text-white rounded-lg font-bold transition">Simpan</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Modal Prestasi (BARU) -->
-    <div id="prestasiModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
-        <div class="bg-slate-800 p-6 rounded-xl border border-white/10 w-full max-w-lg m-4">
-            <h3 class="text-xl font-bold text-white mb-4" id="prestasiModalTitle">Tambah Prestasi</h3>
+    <!-- ============ MODAL: PRESTASI ============ -->
+    <div id="prestasiModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm">
+        <div class="bg-white p-6 rounded-2xl border border-mint-200 w-full max-w-lg m-4 shadow-2xl">
+            <h3 class="font-serif text-xl font-bold text-slate-900 mb-4" id="prestasiModalTitle">Tambah Prestasi</h3>
             <form id="prestasiForm" onsubmit="savePrestasi(event)">
                 <input type="hidden" id="prId">
                 <div class="mb-4">
-                    <label class="block text-sm text-gray-400 mb-2">Judul Prestasi</label>
-                    <input type="text" id="prTitle" required class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:border-gold-400 outline-none">
+                    <label class="block text-sm text-gray-600 mb-2">Judul Prestasi</label>
+                    <input type="text" id="prTitle" required class="w-full bg-mint-50 border border-mint-300 rounded-lg px-4 py-2 text-slate-900 focus:border-gold-400 focus:bg-white outline-none transition">
                 </div>
                 <div class="grid grid-cols-2 gap-4 mb-4">
                     <div>
-                        <label class="block text-sm text-gray-400 mb-2">Level</label>
-                        <select id="prLevel" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:border-gold-400 outline-none">
+                        <label class="block text-sm text-gray-600 mb-2">Level</label>
+                        <select id="prLevel" class="w-full bg-mint-50 border border-mint-300 rounded-lg px-4 py-2 text-slate-900 focus:border-gold-400 focus:bg-white outline-none transition">
                             <option>Internasional</option><option>Nasional</option><option>Regional</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block-sm text-sm text-gray-400 mb-2">Medali</label>
-                        <select id="prMedal" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:border-gold-400 outline-none">
+                        <label class="block text-sm text-gray-600 mb-2">Medali</label>
+                        <select id="prMedal" class="w-full bg-mint-50 border border-mint-300 rounded-lg px-4 py-2 text-slate-900 focus:border-gold-400 focus:bg-white outline-none transition">
                             <option>Emas</option><option>Perak</option><option>Perunggu</option><option>Juara Umum</option>
                         </select>
                     </div>
                 </div>
                 <div class="mb-4">
-                    <label class="block text-sm text-gray-400 mb-2">Tahun</label>
-                    <input type="number" id="prYear" required value="2026" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:border-gold-400 outline-none">
+                    <label class="block text-sm text-gray-600 mb-2">Tahun</label>
+                    <input type="number" id="prYear" required value="2026" class="w-full bg-mint-50 border border-mint-300 rounded-lg px-4 py-2 text-slate-900 focus:border-gold-400 focus:bg-white outline-none transition">
                 </div>
                 <div class="mb-4">
-                    <label class="block text-sm text-gray-400 mb-2">Deskripsi Singkat</label>
-                    <textarea id="prDesc" rows="3" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:border-gold-400 outline-none"></textarea>
+                    <label class="block text-sm text-gray-600 mb-2">Deskripsi Singkat</label>
+                    <textarea id="prDesc" rows="3" class="w-full bg-mint-50 border border-mint-300 rounded-lg px-4 py-2 text-slate-900 focus:border-gold-400 focus:bg-white outline-none transition"></textarea>
                 </div>
                 <div class="flex justify-end gap-3 mt-6">
-                    <button type="button" onclick="closePrestasiModal()" class="px-4 py-2 text-gray-400 hover:text-white">Batal</button>
-                    <button type="submit" class="px-6 py-2 bg-emerald-900 hover:bg-emerald-800 text-white rounded-lg font-bold">Simpan</button>
+                    <button type="button" onclick="closePrestasiModal()" class="px-4 py-2 text-gray-500 hover:text-slate-900 transition">Batal</button>
+                    <button type="submit" class="px-6 py-2 bg-emerald-900 hover:bg-emerald-800 text-white rounded-lg font-bold transition">Simpan</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Toast (BARU) -->
-    <div id="toast" class="hidden fixed bottom-6 right-6 z-[100] max-w-sm bg-slate-800 border border-gold-400/40 text-gray-100 text-sm rounded-xl px-5 py-4 shadow-2xl"></div>
+    <!-- Toast -->
+    <div id="toast" class="hidden fixed bottom-6 right-6 z-[100] max-w-sm bg-emerald-900 border border-gold-400/50 text-white text-sm rounded-xl px-5 py-4 shadow-2xl"></div>
 
     <script>
         // --- AUTHENTICATION LOGIC ---
@@ -632,7 +686,7 @@
             const u = document.getElementById('username').value;
             const p = document.getElementById('password').value;
             const creds = JSON.parse(localStorage.getItem('adminCreds') || 'null') || { u: 'admin', p: 'pesantren2026' };
-            
+
             if(u === creds.u && p === creds.p) {
                 localStorage.setItem('isLoggedIn', 'true');
                 checkAuth();
@@ -651,7 +705,7 @@
             if(isLogged === 'true') {
                 document.getElementById('loginOverlay').classList.add('hidden');
                 document.getElementById('dashboardContent').classList.remove('hidden');
-                loadNews(); // Load data when logged in
+                loadNews();
                 switchTab('overview');
             } else {
                 document.getElementById('loginOverlay').classList.remove('hidden');
@@ -659,7 +713,7 @@
             }
         }
 
-        // --- NAVIGATION LOGIC ---
+        // --- NAVIGATION LOGIC (kelas sidebar sesuai tema mint) ---
         const TABS = ['overview','news','psb','agenda','galeri','prestasi','profil','settings'];
         function switchTab(tabName) {
             TABS.forEach(t => {
@@ -669,8 +723,8 @@
             document.querySelectorAll('[data-tablink]').forEach(a => {
                 const on = a.dataset.tablink === tabName;
                 a.className = on
-                    ? 'flex items-center gap-3 px-4 py-3 bg-emerald-900/20 text-emerald-400 rounded-lg border border-emerald-900/50'
-                    : 'flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-slate-900 hover:text-white rounded-lg transition';
+                    ? 'flex items-center gap-3 px-4 py-3 bg-gold-400/15 text-gold-light rounded-lg border border-gold-400/40 font-semibold'
+                    : 'flex items-center gap-3 px-4 py-3 text-emerald-100/70 hover:bg-white/5 hover:text-white rounded-lg transition';
             });
             if (tabName === 'overview') renderOverview();
             if (tabName === 'news') loadNews();
@@ -695,13 +749,13 @@
 
             newsData.forEach(item => {
                 const row = `
-                    <tr class="hover:bg-slate-700/30 transition">
-                        <td class="px-6 py-4 font-medium text-white">${item.title}</td>
+                    <tr class="hover:bg-mint-50 transition">
+                        <td class="px-6 py-4 font-medium text-slate-900">${item.title}</td>
                         <td class="px-6 py-4">${item.date}</td>
-                        <td class="px-6 py-4"><span class="bg-emerald-900/50 text-emerald-400 px-2 py-1 rounded text-xs border border-emerald-800">Published</span></td>
+                        <td class="px-6 py-4"><span class="bg-emerald-100 text-emerald-700 border border-emerald-300 px-2 py-1 rounded text-xs">Published</span></td>
                         <td class="px-6 py-4 text-right">
-                            <button onclick="editNews(${item.id})" class="text-blue-400 hover:text-blue-300 mr-3"><i class="fas fa-edit"></i></button>
-                            <button onclick="deleteNews(${item.id})" class="text-red-400 hover:text-red-300"><i class="fas fa-trash"></i></button>
+                            <button onclick="editNews(${item.id})" class="text-emerald-600 hover:text-emerald-500 mr-3"><i class="fas fa-edit"></i></button>
+                            <button onclick="deleteNews(${item.id})" class="text-red-500 hover:text-red-400"><i class="fas fa-trash"></i></button>
                         </td>
                     </tr>
                 `;
@@ -718,11 +772,9 @@
             const date = new Date().toISOString().split('T')[0];
 
             if(id) {
-                // Edit
                 const index = newsData.findIndex(n => n.id == id);
                 newsData[index] = { ...newsData[index], id: parseInt(id), title, content, cat, date };
             } else {
-                // Add
                 const newId = newsData.length > 0 ? Math.max(...newsData.map(n => n.id)) + 1 : 1;
                 newsData.push({ id: newId, title, content, cat, date });
             }
@@ -763,14 +815,14 @@
             document.getElementById('newsModal').classList.add('hidden');
         }
 
-        // ============ UTIL: STORAGE & TOAST (BARU) ============
+        // ============ UTIL: STORAGE & TOAST ============
         const store = {
             get(k, fb) { try { return JSON.parse(localStorage.getItem(k)) ?? fb; } catch(e) { return fb; } },
             set(k, v) { localStorage.setItem(k, JSON.stringify(v)); }
         };
         function toast(msg, type) {
             const t = document.getElementById('toast');
-            t.innerHTML = `<i class="fas ${type === 'error' ? 'fa-circle-exclamation text-red-400' : 'fa-circle-check text-emerald-400'} mr-2"></i>${msg}`;
+            t.innerHTML = `<i class="fas ${type === 'error' ? 'fa-circle-exclamation text-red-400' : 'fa-circle-check text-gold-light'} mr-2"></i>${msg}`;
             t.classList.remove('hidden');
             clearTimeout(t._h);
             t._h = setTimeout(() => t.classList.add('hidden'), 3500);
@@ -781,7 +833,7 @@
             return 'https://wa.me/' + d;
         }
 
-        // ============ OVERVIEW (BARU) ============
+        // ============ OVERVIEW ============
         function renderOverview() {
             const psb = store.get('psbRegistrations', []);
             const agenda = store.get('agendaData', []);
@@ -798,21 +850,21 @@
             document.getElementById('ovChart').innerHTML = Object.keys(counts).length
                 ? Object.entries(counts).map(([k, v]) => `
                     <div class="mb-4">
-                        <div class="flex justify-between text-xs text-gray-400 mb-1"><span>${k}</span><span class="text-gold-400 font-bold">${v} pendaftar</span></div>
-                        <div class="h-2 bg-slate-900 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-emerald-700 to-gold-400 rounded-full" style="width:${(v / max) * 100}%"></div></div>
+                        <div class="flex justify-between text-xs text-gray-600 mb-1"><span>${k}</span><span class="text-gold-500 font-bold">${v} pendaftar</span></div>
+                        <div class="h-2 bg-mint-200 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-emerald-800 to-gold-400 rounded-full" style="width:${(v / max) * 100}%"></div></div>
                     </div>`).join('')
                 : '<p class="text-sm text-gray-500">Belum ada pendaftar dari formulir website.</p>';
 
             document.getElementById('ovRecent').innerHTML = psb.slice(-5).reverse().map(p => `
-                <tr class="hover:bg-slate-700/30 transition">
-                    <td class="px-6 py-3 font-medium text-white">${p.nama}</td>
+                <tr class="hover:bg-mint-50 transition">
+                    <td class="px-6 py-3 font-medium text-slate-900">${p.nama}</td>
                     <td class="px-6 py-3">${p.program}</td>
                     <td class="px-6 py-3">${p.tanggal}</td>
-                    <td class="px-6 py-3"><span class="bg-yellow-900/60 text-yellow-300 px-2 py-1 rounded text-xs">${p.status}</span></td>
+                    <td class="px-6 py-3"><span class="bg-amber-100 text-amber-700 border border-amber-300 px-2 py-1 rounded text-xs">${p.status}</span></td>
                 </tr>`).join('') || '<tr><td colspan="4" class="px-6 py-4 text-gray-500">Belum ada pendaftar masuk.</td></tr>';
         }
 
-        // ============ PSB REAL-TIME (BARU) ============
+        // ============ PSB REAL-TIME ============
         function renderPsbDynamic() {
             const psb = store.get('psbRegistrations', []);
             document.getElementById('psbTotal').textContent = psb.length;
@@ -820,21 +872,21 @@
             document.getElementById('psbProses').textContent = psb.filter(p => p.status !== 'Lulus' && p.status !== 'Ditolak').length;
 
             document.getElementById('psbDynBody').innerHTML = psb.map((p, i) => `
-                <tr class="hover:bg-slate-700/30 transition">
-                    <td class="px-6 py-4 text-gold-400 font-mono text-xs">${p.nomor}</td>
-                    <td class="px-6 py-4 font-medium text-white">${p.nama}<span class="block text-xs text-gray-500 font-normal">${p.sekolah}</span></td>
+                <tr class="hover:bg-mint-50 transition">
+                    <td class="px-6 py-4 text-gold-500 font-mono text-xs">${p.nomor}</td>
+                    <td class="px-6 py-4 font-medium text-slate-900">${p.nama}<span class="block text-xs text-gray-500 font-normal">${p.sekolah}</span></td>
                     <td class="px-6 py-4">${p.program}</td>
                     <td class="px-6 py-4">${p.wa}</td>
                     <td class="px-6 py-4">${p.dokumen || 0} file</td>
                     <td class="px-6 py-4">${p.tanggal}</td>
                     <td class="px-6 py-4">
-                        <select onchange="setPsbStatus(${i}, this.value)" class="bg-slate-900 border border-slate-700 rounded px-2 py-1.5 text-xs text-white focus:border-gold-400 outline-none">
+                        <select onchange="setPsbStatus(${i}, this.value)" class="bg-mint-50 border border-mint-300 rounded px-2 py-1.5 text-xs text-slate-900 focus:border-gold-400 outline-none">
                             ${['Verifikasi Berkas','Menunggu Tes','Lulus','Ditolak'].map(s => `<option ${s === p.status ? 'selected' : ''}>${s}</option>`).join('')}
                         </select>
                     </td>
                     <td class="px-6 py-4 text-right">
-                        <a href="${waLink(p.wa)}" target="_blank" title="Hubungi wali via WhatsApp" class="text-emerald-400 hover:text-emerald-300 mr-3"><i class="fab fa-whatsapp text-lg"></i></a>
-                        <button onclick="deletePsb(${i})" class="text-red-400 hover:text-red-300"><i class="fas fa-trash"></i></button>
+                        <a href="${waLink(p.wa)}" target="_blank" title="Hubungi wali via WhatsApp" class="text-emerald-600 hover:text-emerald-500 mr-3"><i class="fab fa-whatsapp text-lg"></i></a>
+                        <button onclick="deletePsb(${i})" class="text-red-500 hover:text-red-400"><i class="fas fa-trash"></i></button>
                     </td>
                 </tr>`).join('') || '<tr><td colspan="8" class="px-6 py-8 text-center text-gray-500">Belum ada pendaftar dari formulir website.<br>Data muncul otomatis saat calon santri mendaftar di Beranda.</td></tr>';
         }
@@ -867,19 +919,19 @@
             toast('File CSV berhasil diunduh.', 'success');
         }
 
-        // ============ CRUD AGENDA (BARU) ============
+        // ============ CRUD AGENDA ============
         function renderAgenda() {
             const data = store.get('agendaData', []).sort((a, b) => a.date.localeCompare(b.date));
             document.getElementById('agendaBody').innerHTML = data.map(a => `
-                <tr class="hover:bg-slate-700/30 transition">
-                    <td class="px-6 py-4 text-gold-400 font-bold">${a.date}</td>
-                    <td class="px-6 py-4 font-medium text-white">${a.title}</td>
+                <tr class="hover:bg-mint-50 transition">
+                    <td class="px-6 py-4 text-gold-500 font-bold">${a.date}</td>
+                    <td class="px-6 py-4 font-medium text-slate-900">${a.title}</td>
                     <td class="px-6 py-4">${a.time || '-'}</td>
                     <td class="px-6 py-4">${a.location || '-'}</td>
-                    <td class="px-6 py-4"><span class="bg-emerald-900/50 text-emerald-300 px-2 py-1 rounded text-xs border border-emerald-800">${a.category}</span></td>
+                    <td class="px-6 py-4"><span class="bg-emerald-100 text-emerald-700 border border-emerald-300 px-2 py-1 rounded text-xs">${a.category}</span></td>
                     <td class="px-6 py-4 text-right">
-                        <button onclick="editAgenda(${a.id})" class="text-blue-400 hover:text-blue-300 mr-3"><i class="fas fa-edit"></i></button>
-                        <button onclick="deleteAgenda(${a.id})" class="text-red-400 hover:text-red-300"><i class="fas fa-trash"></i></button>
+                        <button onclick="editAgenda(${a.id})" class="text-emerald-600 hover:text-emerald-500 mr-3"><i class="fas fa-edit"></i></button>
+                        <button onclick="deleteAgenda(${a.id})" class="text-red-500 hover:text-red-400"><i class="fas fa-trash"></i></button>
                     </td>
                 </tr>`).join('') || '<tr><td colspan="6" class="px-6 py-8 text-center text-gray-500">Belum ada agenda. Tambahkan lewat tombol di atas.</td></tr>';
         }
@@ -925,17 +977,17 @@
             }
         }
 
-        // ============ CRUD GALERI (BARU) ============
+        // ============ CRUD GALERI ============
         function renderGaleri() {
             const data = store.get('galeriData', []);
             document.getElementById('galeriBody').innerHTML = data.map(g => `
-                <tr class="hover:bg-slate-700/30 transition">
-                    <td class="px-6 py-4"><img src="${g.img}" class="w-20 h-14 object-cover rounded-lg border border-white/10" onerror="this.style.opacity=0.2"></td>
-                    <td class="px-6 py-4 font-medium text-white">${g.caption}</td>
-                    <td class="px-6 py-4"><span class="bg-emerald-900/50 text-emerald-300 px-2 py-1 rounded text-xs border border-emerald-800">${g.category}</span></td>
+                <tr class="hover:bg-mint-50 transition">
+                    <td class="px-6 py-4"><img src="${g.img}" class="w-20 h-14 object-cover rounded-lg border border-mint-200" onerror="this.style.opacity=0.2"></td>
+                    <td class="px-6 py-4 font-medium text-slate-900">${g.caption}</td>
+                    <td class="px-6 py-4"><span class="bg-emerald-100 text-emerald-700 border border-emerald-300 px-2 py-1 rounded text-xs">${g.category}</span></td>
                     <td class="px-6 py-4 text-right">
-                        <button onclick="editGaleri(${g.id})" class="text-blue-400 hover:text-blue-300 mr-3"><i class="fas fa-edit"></i></button>
-                        <button onclick="deleteGaleri(${g.id})" class="text-red-400 hover:text-red-300"><i class="fas fa-trash"></i></button>
+                        <button onclick="editGaleri(${g.id})" class="text-emerald-600 hover:text-emerald-500 mr-3"><i class="fas fa-edit"></i></button>
+                        <button onclick="deleteGaleri(${g.id})" class="text-red-500 hover:text-red-400"><i class="fas fa-trash"></i></button>
                     </td>
                 </tr>`).join('') || '<tr><td colspan="4" class="px-6 py-8 text-center text-gray-500">Belum ada item galeri dari CMS.</td></tr>';
         }
@@ -978,18 +1030,18 @@
             }
         }
 
-        // ============ CRUD PRESTASI (BARU) ============
+        // ============ CRUD PRESTASI ============
         function renderPrestasi() {
             const data = store.get('prestasiData', []);
             document.getElementById('prestasiBody').innerHTML = data.map(p => `
-                <tr class="hover:bg-slate-700/30 transition">
-                    <td class="px-6 py-4 font-medium text-white">${p.title}</td>
+                <tr class="hover:bg-mint-50 transition">
+                    <td class="px-6 py-4 font-medium text-slate-900">${p.title}</td>
                     <td class="px-6 py-4">${p.level}</td>
-                    <td class="px-6 py-4"><span class="bg-yellow-900/50 text-yellow-300 px-2 py-1 rounded text-xs border border-yellow-700">${p.medal}</span></td>
+                    <td class="px-6 py-4"><span class="bg-amber-100 text-amber-700 border border-amber-300 px-2 py-1 rounded text-xs">${p.medal}</span></td>
                     <td class="px-6 py-4">${p.year}</td>
                     <td class="px-6 py-4 text-right">
-                        <button onclick="editPrestasi(${p.id})" class="text-blue-400 hover:text-blue-300 mr-3"><i class="fas fa-edit"></i></button>
-                        <button onclick="deletePrestasi(${p.id})" class="text-red-400 hover:text-red-300"><i class="fas fa-trash"></i></button>
+                        <button onclick="editPrestasi(${p.id})" class="text-emerald-600 hover:text-emerald-500 mr-3"><i class="fas fa-edit"></i></button>
+                        <button onclick="deletePrestasi(${p.id})" class="text-red-500 hover:text-red-400"><i class="fas fa-trash"></i></button>
                     </td>
                 </tr>`).join('') || '<tr><td colspan="5" class="px-6 py-8 text-center text-gray-500">Belum ada data prestasi dari CMS.</td></tr>';
         }
@@ -1035,7 +1087,7 @@
             }
         }
 
-        // ============ PROFIL & KONTEN (BARU) ============
+        // ============ PROFIL & KONTEN ============
         function loadProfilForm() {
             const p = store.get('profilData', {});
             document.getElementById('pfVisi').value = p.visi || '';
@@ -1062,7 +1114,7 @@
             toast('Konten profil tersimpan & tersync ke profil.html', 'success');
         }
 
-        // ============ PENGATURAN (BARU) ============
+        // ============ PENGATURAN ============
         function loadSettingsForm() {
             const s = store.get('siteSettings', {});
             document.getElementById('stTopbar').checked = s.topbarVisible !== false;
@@ -1100,7 +1152,7 @@
         // Init
         checkAuth();
     </script>
-    
+
 <script src="cms-public.js"></script>
 
 <!-- ============================================================ -->
@@ -1172,6 +1224,6 @@
         console.log('%c🔒 Proteksi Konten Aktif', 'color: #059669; font-size: 14px; font-weight: bold;');
     })();
     </script>
-    
+
 </body>
 </html>
