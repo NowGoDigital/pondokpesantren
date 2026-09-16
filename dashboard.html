@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Pesantren Al-Izzah</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: { 900: '#064E3B', 800: '#065F46' },
+                        gold: { 400: '#D97706' },
+                        slate: { 900: '#0f172a', 800: '#1e293b' }
+                    },
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #064E3B; border-radius: 4px; }
+    </style>
+</head>
+<body class="bg-slate-900 text-gray-100 font-sans">
+
+    <!-- Login Modal Overlay -->
+    <div id="loginOverlay" class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm">
+        <div class="bg-slate-800 p-8 rounded-2xl border border-white/10 w-full max-w-md shadow-2xl">
+            <div class="text-center mb-8">
+                <i class="fas fa-lock text-4xl text-gold-400 mb-4"></i>
+                <h2 class="text-2xl font-bold text-white">Admin Access</h2>
+                <p class="text-gray-400 text-sm">Silakan login untuk mengelola konten.</p>
+            </div>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="mb-4">
+                    <label class="block text-sm text-gray-400 mb-2">Username</label>
+                    <input type="text" id="username" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold-400 transition" placeholder="admin">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm text-gray-400 mb-2">Password</label>
+                    <input type="password" id="password" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold-400 transition" placeholder="pesantren2026">
+                </div>
+                <button type="submit" class="w-full bg-emerald-900 hover:bg-emerald-800 text-white font-bold py-3 rounded-lg transition">MASUK DASHBOARD</button>
+                <p id="errorMsg" class="text-red-500 text-xs text-center mt-4 hidden">Username atau password salah!</p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Dashboard Content (Hidden by default) -->
+    <div id="dashboardContent" class="hidden min-h-screen flex">
+        
+        <!-- Sidebar -->
+        <aside class="w-64 bg-slate-950 border-r border-white/5 hidden md:flex flex-col">
+            <div class="p-6 border-b border-white/5">
+                <h1 class="font-serif text-xl font-bold text-white">AL-IZZAH <span class="text-gold-400 text-xs block font-sans font-normal">ADMIN PANEL</span></h1>
+            </div>
+            <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
+                <a href="#" data-tablink="overview" onclick="switchTab('overview')" class="flex items-center gap-3 px-4 py-3 bg-emerald-900/20 text-emerald-400 rounded-lg border border-emerald-900/50">
+                    <i class="fas fa-gauge-high w-5"></i> Ringkasan
+                </a>
+                <a href="#" data-tablink="news" onclick="switchTab('news')" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-slate-900 hover:text-white rounded-lg transition">
+                    <i class="fas fa-newspaper w-5"></i> Berita & Pengumuman
+                </a>
+                <a href="#" data-tablink="psb" onclick="switchTab('psb')" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-slate-900 hover:text-white rounded-lg transition">
+                    <i class="fas fa-users w-5"></i> Data Pendaftar (PSB)
+                </a>
+                <a href="#" data-tablink="agenda" onclick="switchTab('agenda')" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-slate-900 hover:text-white rounded-lg transition">
+                    <i class="fas fa-calendar-alt w-5"></i> Agenda & Kalender
+                </a>
+                <a href="#" data-tablink="galeri" onclick="switchTab('galeri')" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-slate-900 hover:text-white rounded-lg transition">
+                    <i class="fas fa-images w-5"></i> Galeri Foto & Video
+                </a>
+                <a href="#" data-tablink="prestasi" onclick="switchTab('prestasi')" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-slate-900 hover:text-white rounded-lg transition">
+                    <i class="fas fa-trophy w-5"></i> Prestasi & Penghargaan
+                </a>
+                <a href="#" data-tablink="profil" onclick="switchTab('profil')" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-slate-900 hover:text-white rounded-lg transition">
+                    <i class="fas fa-id-card w-5"></i> Profil & Konten Web
+                </a>
+                <a href="#" data-tablink="settings" onclick="switchTab('settings')" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-slate-900 hover:text-white rounded-lg transition">
+                    <i class="fas fa-cog w-5"></i> Pengaturan
+                </a>
+            </nav>
+            <div class="p-4 border-t border-white/5">
+                <a href="index.html" target="_blank" class="flex items-center gap-3 text-emerald-400 hover:text-emerald-300 text-sm w-full px-4 py-2">
+                    <i class="fas fa-globe"></i> Lihat Website
+                </a>
+                <button onclick="logout()" class="flex items-center gap-3 text-red-400 hover:text-red-300 text-sm w-full px-4 py-2">
+                    <i class="fas fa-sign-out-alt"></i> Keluar
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-8 overflow-y-auto">
+            <!-- Header Mobile -->
+            <div class="md:hidden flex justify-between items-center mb-4">
+                <h1 class="font-bold text-xl">Dashboard</h1>
+                <button onclick="logout()" class="text-red-400"><i class="fas fa-sign-out-alt"></i></button>
+            </div>
+            <!-- Switcher Tab Mobile (BARU) -->
+            <div class="md:hidden flex gap-2 overflow-x-auto pb-3 mb-6">
+                <button onclick="switchTab('overview')" class="shrink-0 px-4 py-2 rounded-full text-xs border border-white/15 text-gray-300">Ringkasan</button>
+                <button onclick="switchTab('news')" class="shrink-0 px-4 py-2 rounded-full text-xs border border-white/15 text-gray-300">Berita</button>
+                <button onclick="switchTab('psb')" class="shrink-0 px-4 py-2 rounded-full text-xs border border-white/15 text-gray-300">PSB</button>
+                <button onclick="switchTab('agenda')" class="shrink-0 px-4 py-2 rounded-full text-xs border border-white/15 text-gray-300">Agenda</button>
+                <button onclick="switchTab('galeri')" class="shrink-0 px-4 py-2 rounded-full text-xs border border-white/15 text-gray-300">Galeri</button>
+                <button onclick="switchTab('prestasi')" class="shrink-0 px-4 py-2 rounded-full text-xs border border-white/15 text-gray-300">Prestasi</button>
+                <button onclick="switchTab('profil')" class="shrink-0 px-4 py-2 rounded-full text-xs border border-white/15 text-gray-300">Profil</button>
+                <button onclick="switchTab('settings')" class="shrink-0 px-4 py-2 rounded-full text-xs border border-white/15 text-gray-300">Pengaturan</button>
+            </div>
+
+            <!-- ============ TAB: RINGKASAN (BARU) ============ -->
+            <div id="tab-overview" class="hidden">
+                <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-8 gap-3">
+                    <div>
+                        <h2 class="text-2xl font-bold text-white">Ringkasan Dashboard</h2>
+                        <p class="text-gray-400 text-sm mt-1" id="ovDate"></p>
+                    </div>
+                    <a href="index.html" target="_blank" class="inline-flex items-center gap-2 bg-emerald-900 hover:bg-emerald-800 text-white px-4 py-2 rounded-lg text-sm font-bold transition">
+                        <i class="fas fa-globe"></i> Kunjungi Website
+                    </a>
+                </div>
+
+                <!-- Stats -->
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-slate-800 p-6 rounded-xl border border-white/5">
+                        <div class="flex items-center justify-between">
+                            <p class="text-gray-400 text-sm">Total Berita</p>
+                            <i class="fas fa-newspaper text-gold-400"></i>
+                        </div>
+                        <h3 class="text-3xl font-bold text-white mt-2" id="ovNews">0</h3>
+                    </div>
+                    <div class="bg-slate-800 p-6 rounded-xl border border-white/5">
+                        <div class="flex items-center justify-between">
+                            <p class="text-gray-400 text-sm">Pendaftar Website</p>
+                            <i class="fas fa-users text-emerald-400"></i>
+                        </div>
+                        <h3 class="text-3xl font-bold text-emerald-400 mt-2" id="ovPsb">0</h3>
+                    </div>
+                    <div class="bg-slate-800 p-6 rounded-xl border border-white/5">
+                        <div class="flex items-center justify-between">
+                            <p class="text-gray-400 text-sm">Agenda Tersimpan</p>
+                            <i class="fas fa-calendar-alt text-gold-400"></i>
+                        </div>
+                        <h3 class="text-3xl font-bold text-white mt-2" id="ovAgenda">0</h3>
+                    </div>
+                    <div class="bg-slate-800 p-6 rounded-xl border border-white/5">
+                        <div class="flex items-center justify-between">
+                            <p class="text-gray-400 text-sm">Item Galeri</p>
+                            <i class="fas fa-images text-gold-400"></i>
+                        </div>
+                        <h3 class="text-3xl font-bold text-white mt-2" id="ovGaleri">0</h3>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                    <!-- Grafik pendaftar per program -->
+                    <div class="bg-slate-800 p-6 rounded-xl border border-white/5">
+                        <h3 class="font-bold text-white mb-5"><i class="fas fa-chart-simple text-gold-400 mr-2"></i>Pendaftar per Program</h3>
+                        <div id="ovChart"></div>
+                    </div>
+                    <!-- Quick actions -->
+                    <div class="bg-slate-800 p-6 rounded-xl border border-white/5">
+                        <h3 class="font-bold text-white mb-5"><i class="fas fa-bolt text-gold-400 mr-2"></i>Aksi Cepat</h3>
+                        <div class="grid grid-cols-2 gap-3">
+                            <button onclick="switchTab('news'); openModal();" class="text-left bg-slate-900/60 hover:bg-emerald-900/40 border border-white/5 hover:border-gold-400/40 rounded-lg p-4 transition">
+                                <i class="fas fa-pen-to-square text-gold-400 mb-2"></i>
+                                <p class="text-sm font-bold text-white">Tulis Berita</p>
+                            </button>
+                            <button onclick="switchTab('psb')" class="text-left bg-slate-900/60 hover:bg-emerald-900/40 border border-white/5 hover:border-gold-400/40 rounded-lg p-4 transition">
+                                <i class="fas fa-user-check text-gold-400 mb-2"></i>
+                                <p class="text-sm font-bold text-white">Seleksi Pendaftar</p>
+                            </button>
+                            <button onclick="switchTab('agenda'); openAgendaModal();" class="text-left bg-slate-900/60 hover:bg-emerald-900/40 border border-white/5 hover:border-gold-400/40 rounded-lg p-4 transition">
+                                <i class="fas fa-calendar-plus text-gold-400 mb-2"></i>
+                                <p class="text-sm font-bold text-white">Tambah Agenda</p>
+                            </button>
+                            <button onclick="switchTab('galeri'); openGaleriModal();" class="text-left bg-slate-900/60 hover:bg-emerald-900/40 border border-white/5 hover:border-gold-400/40 rounded-lg p-4 transition">
+                                <i class="fas fa-photo-film text-gold-400 mb-2"></i>
+                                <p class="text-sm font-bold text-white">Unggah Galeri</p>
+                            </button>
+                        </div>
+                        <h4 class="text-xs text-gray-500 uppercase tracking-widest font-bold mt-6 mb-3">Tautan Halaman Publik</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <a href="index.html" target="_blank" class="text-[11px] px-3 py-1.5 rounded-full border border-white/10 text-gray-300 hover:border-gold-400 hover:text-gold-400 transition">Beranda</a>
+                            <a href="profil.html" target="_blank" class="text-[11px] px-3 py-1.5 rounded-full border border-white/10 text-gray-300 hover:border-gold-400 hover:text-gold-400 transition">Profil</a>
+                            <a href="struktur.html" target="_blank" class="text-[11px] px-3 py-1.5 rounded-full border border-white/10 text-gray-300 hover:border-gold-400 hover:text-gold-400 transition">Struktur</a>
+                            <a href="berita.html" target="_blank" class="text-[11px] px-3 py-1.5 rounded-full border border-white/10 text-gray-300 hover:border-gold-400 hover:text-gold-400 transition">Berita</a>
+                            <a href="agenda.html" target="_blank" class="text-[11px] px-3 py-1.5 rounded-full border border-white/10 text-gray-300 hover:border-gold-400 hover:text-gold-400 transition">Agenda</a>
+                            <a href="prestasi.html" target="_blank" class="text-[11px] px-3 py-1.5 rounded-full border border-white/10 text-gray-300 hover:border-gold-400 hover:text-gold-400 transition">Prestasi</a>
+                            <a href="galeri.html" target="_blank" class="text-[11px] px-3 py-1.5 rounded-full border border-white/10 text-gray-300 hover:border-gold-400 hover:text-gold-400 transition">Galeri</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pendaftar terbaru -->
+                <div class="bg-slate-800 rounded-xl border border-white/5 overflow-hidden">
+                    <div class="px-6 py-4 border-b border-white/5 flex justify-between items-center">
+                        <h3 class="font-bold text-white"><i class="fas fa-clock-rotate-left text-gold-400 mr-2"></i>Pendaftar Terbaru dari Website</h3>
+                        <button onclick="switchTab('psb')" class="text-xs text-gold-400 hover:text-gold-300 font-bold">Lihat Semua →</button>
+                    </div>
+                    <table class="w-full text-left text-sm text-gray-400">
+                        <thead class="bg-slate-900 text-gray-200 uppercase text-xs">
+                            <tr><th class="px-6 py-3">Nama</th><th class="px-6 py-3">Program</th><th class="px-6 py-3">Tanggal</th><th class="px-6 py-3">Status</th></tr>
+                        </thead>
+                        <tbody id="ovRecent" class="divide-y divide-white/5"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Tab: News Management -->
+            <div id="tab-news" class="hidden">
+                <div class="flex justify-between items-center mb-8">
+                    <h2 class="text-2xl font-bold text-white">Manajemen Berita</h2>
+                    <button onclick="openModal()" class="bg-gold-400 hover:bg-gold-500 text-slate-900 px-4 py-2 rounded-lg font-bold text-sm transition">
+                        <i class="fas fa-plus mr-2"></i> Tambah Berita
+                    </button>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-slate-800 p-6 rounded-xl border border-white/5">
+                        <p class="text-gray-400 text-sm">Total Berita</p>
+                        <h3 class="text-3xl font-bold text-white mt-2" id="totalNews">0</h3>
+                    </div>
+                    <div class="bg-slate-800 p-6 rounded-xl border border-white/5">
+                        <p class="text-gray-400 text-sm">Pendaftar Baru Hari Ini</p>
+                        <h3 class="text-3xl font-bold text-emerald-400 mt-2">12</h3>
+                    </div>
+                </div>
+
+                <!-- Table -->
+                <div class="bg-slate-800 rounded-xl border border-white/5 overflow-hidden">
+                    <table class="w-full text-left text-sm text-gray-400">
+                        <thead class="bg-slate-900 text-gray-200 uppercase text-xs">
+                            <tr>
+                                <th class="px-6 py-4">Judul</th>
+                                <th class="px-6 py-4">Tanggal</th>
+                                <th class="px-6 py-4">Status</th>
+                                <th class="px-6 py-4 text-right">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="newsTableBody" class="divide-y divide-white/5">
+                            <!-- Data will be injected here via JS -->
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-xs text-gray-500 mt-4"><i class="fas fa-circle-info text-gold-400 mr-1"></i> Berita yang disimpan di sini otomatis tampil di halaman <b>berita.html</b> setelah halaman publik memuat <b>cms-public.js</b>.</p>
+            </div>
+
+            <!-- Tab: PSB Data (Simple View) -->
+            <div id="tab-psb" class="hidden">
+                <h2 class="text-2xl font-bold text-white mb-8">Data Pendaftar Masuk (Simulasi)</h2>
+                <div class="bg-slate-800 rounded-xl border border-white/5 overflow-hidden">
+                    <table class="w-full text-left text-sm text-gray-400">
+                        <thead class="bg-slate-900 text-gray-200 uppercase text-xs">
+                            <tr>
+                                <th class="px-6 py-4">Nama Calon Santri</th>
+                                <th class="px-6 py-4">Asal Sekolah</th>
+                                <th class="px-6 py-4">Program</th>
+                                <th class="px-6 py-4">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-white/5">
+                            <tr class="hover:bg-slate-700/50 transition">
+                                <td class="px-6 py-4 font-medium text-white">Muhammad Fatih</td>
+                                <td class="px-6 py-4">SDIT Al-Azhar</td>
+                                <td class="px-6 py-4">SMP Tahfidz</td>
+                                <td class="px-6 py-4"><span class="bg-green-900 text-green-300 px-2 py-1 rounded text-xs">Verifikasi Berkas</span></td>
+                            </tr>
+                            <tr class="hover:bg-slate-700/50 transition">
+                                <td class="px-6 py-4 font-medium text-white">Aisyah Humaira</td>
+                                <td class="px-6 py-4">MI Nurul Huda</td>
+                                <td class="px-6 py-4">SMA Science</td>
+                                <td class="px-6 py-4"><span class="bg-yellow-900 text-yellow-300 px-2 py-1 rounded text-xs">Menunggu Tes</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- ============ PSB REAL-TIME DARI WEBSITE (BARU) ============ -->
+                <div class="mt-12">
+                    <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-6 gap-3">
+                        <h3 class="text-xl font-bold text-white"><i class="fas fa-satellite-dish text-gold-400 mr-2"></i>Pendaftar Real-Time dari Formulir Website</h3>
+                        <button onclick="exportPsbCsv()" class="inline-flex items-center gap-2 bg-emerald-900 hover:bg-emerald-800 text-white px-4 py-2 rounded-lg text-sm font-bold transition">
+                            <i class="fas fa-file-csv"></i> Export CSV
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-4 mb-6">
+                        <div class="bg-slate-800 p-4 rounded-xl border border-white/5 text-center">
+                            <h4 class="text-2xl font-bold text-white" id="psbTotal">0</h4>
+                            <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-1">Total Masuk</p>
+                        </div>
+                        <div class="bg-slate-800 p-4 rounded-xl border border-white/5 text-center">
+                            <h4 class="text-2xl font-bold text-emerald-400" id="psbLulus">0</h4>
+                            <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-1">Dinyatakan Lulus</p>
+                        </div>
+                        <div class="bg-slate-800 p-4 rounded-xl border border-white/5 text-center">
+                            <h4 class="text-2xl font-bold text-yellow-400" id="psbProses">0</h4>
+                            <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-1">Dalam Proses</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-800 rounded-xl border border-white/5 overflow-x-auto">
+                        <table class="w-full text-left text-sm text-gray-400">
+                            <thead class="bg-slate-900 text-gray-200 uppercase text-xs">
+                                <tr>
+                                    <th class="px-6 py-4">No. Daftar</th>
+                                    <th class="px-6 py-4">Nama / Asal</th>
+                                    <th class="px-6 py-4">Program</th>
+                                    <th class="px-6 py-4">WA Wali</th>
+                                    <th class="px-6 py-4">Dokumen</th>
+                                    <th class="px-6 py-4">Tanggal</th>
+                                    <th class="px-6 py-4">Status Seleksi</th>
+                                    <th class="px-6 py-4 text-right">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="psbDynBody" class="divide-y divide-white/5"></tbody>
+                        </table>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-4"><i class="fas fa-circle-info text-gold-400 mr-1"></i> Mengubah status di sini langsung terbaca oleh fitur <b>"Pengumuman Hasil Seleksi"</b> di beranda website.</p>
+                </div>
+            </div>
+
+            <!-- ============ TAB: AGENDA (BARU) ============ -->
+            <div id="tab-agenda" class="hidden">
+                <div class="flex justify-between items-center mb-8">
+                    <h2 class="text-2xl font-bold text-white">Manajemen Agenda & Kalender</h2>
+                    <button onclick="openAgendaModal()" class="bg-gold-400 hover:bg-gold-500 text-slate-900 px-4 py-2 rounded-lg font-bold text-sm transition">
+                        <i class="fas fa-plus mr-2"></i> Tambah Agenda
+                    </button>
+                </div>
+                <div class="bg-slate-800 rounded-xl border border-white/5 overflow-x-auto">
+                    <table class="w-full text-left text-sm text-gray-400">
+                        <thead class="bg-slate-900 text-gray-200 uppercase text-xs">
+                            <tr><th class="px-6 py-4">Tanggal</th><th class="px-6 py-4">Judul Kegiatan</th><th class="px-6 py-4">Waktu</th><th class="px-6 py-4">Lokasi</th><th class="px-6 py-4">Kategori</th><th class="px-6 py-4 text-right">Aksi</th></tr>
+                        </thead>
+                        <tbody id="agendaBody" class="divide-y divide-white/5"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ============ TAB: GALERI (BARU) ============ -->
+            <div id="tab-galeri" class="hidden">
+                <div class="flex justify-between items-center mb-8">
+                    <h2 class="text-2xl font-bold text-white">Manajemen Galeri Foto & Video</h2>
+                    <button onclick="openGaleriModal()" class="bg-gold-400 hover:bg-gold-500 text-slate-900 px-4 py-2 rounded-lg font-bold text-sm transition">
+                        <i class="fas fa-plus mr-2"></i> Tambah Item
+                    </button>
+                </div>
+                <div class="bg-slate-800 rounded-xl border border-white/5 overflow-x-auto">
+                    <table class="w-full text-left text-sm text-gray-400">
+                        <thead class="bg-slate-900 text-gray-200 uppercase text-xs">
+                            <tr><th class="px-6 py-4">Pratinjau</th><th class="px-6 py-4">Keterangan</th><th class="px-6 py-4">Kategori</th><th class="px-6 py-4 text-right">Aksi</th></tr>
+                        </thead>
+                        <tbody id="galeriBody" class="divide-y divide-white/5"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ============ TAB: PRESTASI (BARU) ============ -->
+            <div id="tab-prestasi" class="hidden">
+                <div class="flex justify-between items-center mb-8">
+                    <h2 class="text-2xl font-bold text-white">Manajemen Prestasi & Penghargaan</h2>
+                    <button onclick="openPrestasiModal()" class="bg-gold-400 hover:bg-gold-500 text-slate-900 px-4 py-2 rounded-lg font-bold text-sm transition">
+                        <i class="fas fa-plus mr-2"></i> Tambah Prestasi
+                    </button>
+                </div>
+                <div class="bg-slate-800 rounded-xl border border-white/5 overflow-x-auto">
+                    <table class="w-full text-left text-sm text-gray-400">
+                        <thead class="bg-slate-900 text-gray-200 uppercase text-xs">
+                            <tr><th class="px-6 py-4">Judul Prestasi</th><th class="px-6 py-4">Level</th><th class="px-6 py-4">Medali</th><th class="px-6 py-4">Tahun</th><th class="px-6 py-4 text-right">Aksi</th></tr>
+                        </thead>
+                        <tbody id="prestasiBody" class="divide-y divide-white/5"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ============ TAB: PROFIL & KONTEN (BARU) ============ -->
+            <div id="tab-profil" class="hidden">
+                <h2 class="text-2xl font-bold text-white mb-8">Profil & Konten Website</h2>
+                <form onsubmit="saveProfil(event)" class="bg-slate-800 p-8 rounded-xl border border-white/5 space-y-6 max-w-4xl">
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2">Visi Pesantren</label>
+                        <textarea id="pfVisi" rows="3" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:border-gold-400 outline-none"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2">Misi (pisahkan tiap poin dengan baris baru)</label>
+                        <textarea id="pfMisi" rows="5" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:border-gold-400 outline-none"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2">Ringkasan Sejarah</label>
+                        <textarea id="pfSejarah" rows="4" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:border-gold-400 outline-none"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2">Sambutan Pimpinan (kutipan utama)</label>
+                        <textarea id="pfSambutan" rows="3" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:border-gold-400 outline-none"></textarea>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2">Alamat</label>
+                            <input type="text" id="pfAddr" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:border-gold-400 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2">Telepon</label>
+                            <input type="text" id="pfPhone" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:border-gold-400 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2">Email</label>
+                            <input type="email" id="pfEmail" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:border-gold-400 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2">WhatsApp SPMB</label>
+                            <input type="text" id="pfWa" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:border-gold-400 outline-none">
+                        </div>
+                    </div>
+                    <button type="submit" class="bg-gold-400 hover:bg-gold-500 text-slate-900 px-6 py-3 rounded-lg font-bold transition">
+                        <i class="fas fa-floppy-disk mr-2"></i> Simpan Konten Profil
+                    </button>
+                </form>
+            </div>
+
+            <!-- ============ TAB: PENGATURAN (BARU, kini berfungsi) ============ -->
+            <div id="tab-settings" class="hidden">
+                <h2 class="text-2xl font-bold text-white mb-8">Pengaturan Sistem</h2>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-5xl">
+                    <!-- Akun -->
+                    <div class="bg-slate-800 p-8 rounded-xl border border-white/5">
+                        <h3 class="font-bold text-white mb-6"><i class="fas fa-user-shield text-gold-400 mr-2"></i>Keamanan Akun</h3>
+                        <form onsubmit="changePassword(event)" class="space-y-4">
+                            <div>
+                                <label class="block text-sm text-gray-400 mb-2">Password Saat Ini</label>
+                                <input type="password" id="setCurPass" required class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:border-gold-400 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-sm text-gray-400 mb-2">Password Baru</label>
+                                <input type="password" id="setNewPass" required minlength="6" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:border-gold-400 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-sm text-gray-400 mb-2">Ulangi Password Baru</label>
+                                <input type="password" id="setConfPass" required class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:border-gold-400 outline-none">
+                            </div>
+                            <button type="submit" class="bg-emerald-900 hover:bg-emerald-800 text-white px-6 py-3 rounded-lg font-bold transition">Ganti Password</button>
+                        </form>
+                    </div>
+                    <!-- Tampilan situs -->
+                    <div class="bg-slate-800 p-8 rounded-xl border border-white/5">
+                        <h3 class="font-bold text-white mb-6"><i class="fas fa-sliders text-gold-400 mr-2"></i>Topbar & Kontak Website</h3>
+                        <form onsubmit="saveSiteSettings(event)" class="space-y-4">
+                            <label class="flex items-center gap-3 text-sm text-gray-300 cursor-pointer">
+                                <input type="checkbox" id="stTopbar" class="w-4 h-4 accent-amber-600">
+                                Tampilkan topbar penawaran di beranda
+                            </label>
+                            <div>
+                                <label class="block text-sm text-gray-400 mb-2">Teks Pesan Topbar</label>
+                                <input type="text" id="stText" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:border-gold-400 outline-none" placeholder="cth: Desain website premium ini dibuka hanya untuk 1 slot!">
+                            </div>
+                            <div>
+                                <label class="block text-sm text-gray-400 mb-2">Link WhatsApp Tombol "Klaim Sekarang"</label>
+                                <input type="text" id="stWa" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:border-gold-400 outline-none" placeholder="https://wa.me/62812xxxxxxx">
+                            </div>
+                            <button type="submit" class="bg-gold-400 hover:bg-gold-500 text-slate-900 px-6 py-3 rounded-lg font-bold transition">Simpan Pengaturan</button>
+                        </form>
+                    </div>
+                    <!-- Zona berbahaya -->
+                    <div class="lg:col-span-2 bg-red-950/30 p-8 rounded-xl border border-red-900/50">
+                        <h3 class="font-bold text-red-300 mb-3"><i class="fas fa-triangle-exclamation mr-2"></i>Zona Berbahaya</h3>
+                        <p class="text-sm text-gray-400 mb-4">Menghapus seluruh data CMS (berita, agenda, galeri, prestasi, profil, pendaftar) dari penyimpanan browser.</p>
+                        <button onclick="resetAllData()" class="bg-red-900/60 hover:bg-red-800 border border-red-700 text-red-200 px-6 py-3 rounded-lg font-bold transition">Reset Semua Data CMS</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add/Edit News Modal -->
+    <div id="newsModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
+        <div class="bg-slate-800 p-6 rounded-xl border border-white/10 w-full max-w-lg m-4">
+            <h3 class="text-xl font-bold text-white mb-4" id="modalTitle">Tambah Berita Baru</h3>
+            <form id="newsForm" onsubmit="saveNews(event)">
+                <input type="hidden" id="newsId">
+                <div class="mb-4">
+                    <label class="block text-sm text-gray-400 mb-2">Judul Berita</label>
+                    <input type="text" id="newsTitle" required class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:border-gold-400 outline-none">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm text-gray-400 mb-2">Isi Konten</label>
+                    <textarea id="newsContent" rows="4" required class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:border-gold-400 outline-none"></textarea>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm text-gray-400 mb-2">Kategori (untuk filter di berita.html)</label>
+                    <select id="newsCat" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:border-gold-400 outline-none">
+                        <option value="kegiatan">Kegiatan</option>
+                        <option value="akademik">Akademik</option>
+                        <option value="tahfidz">Tahfidz</option>
+                        <option value="pengumuman">Pengumuman</option>
+                    </select>
+                </div>
+                <div class="flex justify-end gap-3 mt-6">
+                    <button type="button" onclick="closeModal()" class="px-4 py-2 text-gray-400 hover:text-white">Batal</button>
+                    <button type="submit" class="px-6 py-2 bg-emerald-900 hover:bg-emerald-800 text-white rounded-lg font-bold">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Agenda (BARU) -->
+    <div id="agendaModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
+        <div class="bg-slate-800 p-6 rounded-xl border border-white/10 w-full max-w-lg m-4">
+            <h3 class="text-xl font-bold text-white mb-4" id="agendaModalTitle">Tambah Agenda</h3>
+            <form id="agendaForm" onsubmit="saveAgenda(event)">
+                <input type="hidden" id="agId">
+                <div class="mb-4">
+                    <label class="block text-sm text-gray-400 mb-2">Judul Kegiatan</label>
+                    <input type="text" id="agTitle" required class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:border-gold-400 outline-none">
+                </div>
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2">Tanggal</label>
+                        <input type="date" id="agDate" required class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:border-gold-400 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2">Waktu</label>
+                        <input type="text" id="agTime" placeholder="08.00 WIB" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:border-gold-400 outline-none">
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm text-gray-400 mb-2">Lokasi</label>
+                    <input type="text" id="agLoc" placeholder="cth: Aula Utama" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:border-gold-400 outline-none">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm text-gray-400 mb-2">Kategori</label>
+                    <select id="agCat" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:border-gold-400 outline-none">
+                        <option>Akademik</option><option>Tahfidz</option><option>Seremonial</option><option>Sosial</option><option>Keluarga</option>
+                    </select>
+                </div>
+                <div class="flex justify-end gap-3 mt-6">
+                    <button type="button" onclick="closeAgendaModal()" class="px-4 py-2 text-gray-400 hover:text-white">Batal</button>
+                    <button type="submit" class="px-6 py-2 bg-emerald-900 hover:bg-emerald-800 text-white rounded-lg font-bold">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Galeri (BARU) -->
+    <div id="galeriModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
+        <div class="bg-slate-800 p-6 rounded-xl border border-white/10 w-full max-w-lg m-4">
+            <h3 class="text-xl font-bold text-white mb-4" id="galeriModalTitle">Tambah Item Galeri</h3>
+            <form id="galeriForm" onsubmit="saveGaleri(event)">
+                <input type="hidden" id="gId">
+                <div class="mb-4">
+                    <label class="block text-sm text-gray-400 mb-2">Keterangan / Caption</label>
+                    <input type="text" id="gCaption" required class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:border-gold-400 outline-none">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm text-gray-400 mb-2">Kategori</label>
+                    <select id="gCat" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:border-gold-400 outline-none">
+                        <option value="kegiatan">Kegiatan Kampus</option>
+                        <option value="ibadah">Tahfidz & Ibadah</option>
+                        <option value="fasilitas">Fasilitas</option>
+                        <option value="prestasi">Prestasi</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm text-gray-400 mb-2">URL Gambar / Nama File Lokal</label>
+                    <input type="text" id="gImg" required placeholder="cth: img/kegiatan1.jpg" oninput="document.getElementById('gPreview').src=this.value" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:border-gold-400 outline-none">
+                    <img id="gPreview" src="" class="mt-3 h-28 rounded-lg border border-white/10 object-cover hidden" onerror="this.classList.add('hidden')" onload="this.classList.remove('hidden')">
+                </div>
+                <div class="flex justify-end gap-3 mt-6">
+                    <button type="button" onclick="closeGaleriModal()" class="px-4 py-2 text-gray-400 hover:text-white">Batal</button>
+                    <button type="submit" class="px-6 py-2 bg-emerald-900 hover:bg-emerald-800 text-white rounded-lg font-bold">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Prestasi (BARU) -->
+    <div id="prestasiModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
+        <div class="bg-slate-800 p-6 rounded-xl border border-white/10 w-full max-w-lg m-4">
+            <h3 class="text-xl font-bold text-white mb-4" id="prestasiModalTitle">Tambah Prestasi</h3>
+            <form id="prestasiForm" onsubmit="savePrestasi(event)">
+                <input type="hidden" id="prId">
+                <div class="mb-4">
+                    <label class="block text-sm text-gray-400 mb-2">Judul Prestasi</label>
+                    <input type="text" id="prTitle" required class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:border-gold-400 outline-none">
+                </div>
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2">Level</label>
+                        <select id="prLevel" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:border-gold-400 outline-none">
+                            <option>Internasional</option><option>Nasional</option><option>Regional</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block-sm text-sm text-gray-400 mb-2">Medali</label>
+                        <select id="prMedal" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:border-gold-400 outline-none">
+                            <option>Emas</option><option>Perak</option><option>Perunggu</option><option>Juara Umum</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm text-gray-400 mb-2">Tahun</label>
+                    <input type="number" id="prYear" required value="2026" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:border-gold-400 outline-none">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm text-gray-400 mb-2">Deskripsi Singkat</label>
+                    <textarea id="prDesc" rows="3" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:border-gold-400 outline-none"></textarea>
+                </div>
+                <div class="flex justify-end gap-3 mt-6">
+                    <button type="button" onclick="closePrestasiModal()" class="px-4 py-2 text-gray-400 hover:text-white">Batal</button>
+                    <button type="submit" class="px-6 py-2 bg-emerald-900 hover:bg-emerald-800 text-white rounded-lg font-bold">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast (BARU) -->
+    <div id="toast" class="hidden fixed bottom-6 right-6 z-[100] max-w-sm bg-slate-800 border border-gold-400/40 text-gray-100 text-sm rounded-xl px-5 py-4 shadow-2xl"></div>
+
+    <script>
+        // --- AUTHENTICATION LOGIC ---
+        function handleLogin(e) {
+            e.preventDefault();
+            const u = document.getElementById('username').value;
+            const p = document.getElementById('password').value;
+            const creds = JSON.parse(localStorage.getItem('adminCreds') || 'null') || { u: 'admin', p: 'pesantren2026' };
+            
+            if(u === creds.u && p === creds.p) {
+                localStorage.setItem('isLoggedIn', 'true');
+                checkAuth();
+            } else {
+                document.getElementById('errorMsg').classList.remove('hidden');
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('isLoggedIn');
+            location.reload();
+        }
+
+        function checkAuth() {
+            const isLogged = localStorage.getItem('isLoggedIn');
+            if(isLogged === 'true') {
+                document.getElementById('loginOverlay').classList.add('hidden');
+                document.getElementById('dashboardContent').classList.remove('hidden');
+                loadNews(); // Load data when logged in
+                switchTab('overview');
+            } else {
+                document.getElementById('loginOverlay').classList.remove('hidden');
+                document.getElementById('dashboardContent').classList.add('hidden');
+            }
+        }
+
+        // --- NAVIGATION LOGIC ---
+        const TABS = ['overview','news','psb','agenda','galeri','prestasi','profil','settings'];
+        function switchTab(tabName) {
+            TABS.forEach(t => {
+                const el = document.getElementById('tab-' + t);
+                if (el) el.classList.toggle('hidden', t !== tabName);
+            });
+            document.querySelectorAll('[data-tablink]').forEach(a => {
+                const on = a.dataset.tablink === tabName;
+                a.className = on
+                    ? 'flex items-center gap-3 px-4 py-3 bg-emerald-900/20 text-emerald-400 rounded-lg border border-emerald-900/50'
+                    : 'flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-slate-900 hover:text-white rounded-lg transition';
+            });
+            if (tabName === 'overview') renderOverview();
+            if (tabName === 'news') loadNews();
+            if (tabName === 'psb') renderPsbDynamic();
+            if (tabName === 'agenda') renderAgenda();
+            if (tabName === 'galeri') renderGaleri();
+            if (tabName === 'prestasi') renderPrestasi();
+            if (tabName === 'profil') loadProfilForm();
+            if (tabName === 'settings') loadSettingsForm();
+        }
+
+        // --- CRUD NEWS LOGIC (LOCALSTORAGE) ---
+        let newsData = JSON.parse(localStorage.getItem('newsData')) || [
+            { id: 1, title: "Penerimaan Santri Baru Gelombang 1 Dibuka", date: "2026-09-01", content: "Segera daftarkan putra-putri anda..." },
+            { id: 2, title: "Juara 1 Olimpiade Robotik Nasional", date: "2026-08-15", content: "Tim robotik Al-Izzah kembali menorehkan prestasi..." }
+        ];
+
+        function loadNews() {
+            const tbody = document.getElementById('newsTableBody');
+            tbody.innerHTML = '';
+            document.getElementById('totalNews').innerText = newsData.length;
+
+            newsData.forEach(item => {
+                const row = `
+                    <tr class="hover:bg-slate-700/30 transition">
+                        <td class="px-6 py-4 font-medium text-white">${item.title}</td>
+                        <td class="px-6 py-4">${item.date}</td>
+                        <td class="px-6 py-4"><span class="bg-emerald-900/50 text-emerald-400 px-2 py-1 rounded text-xs border border-emerald-800">Published</span></td>
+                        <td class="px-6 py-4 text-right">
+                            <button onclick="editNews(${item.id})" class="text-blue-400 hover:text-blue-300 mr-3"><i class="fas fa-edit"></i></button>
+                            <button onclick="deleteNews(${item.id})" class="text-red-400 hover:text-red-300"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+        }
+
+        function saveNews(e) {
+            e.preventDefault();
+            const id = document.getElementById('newsId').value;
+            const title = document.getElementById('newsTitle').value;
+            const content = document.getElementById('newsContent').value;
+            const cat = document.getElementById('newsCat').value;
+            const date = new Date().toISOString().split('T')[0];
+
+            if(id) {
+                // Edit
+                const index = newsData.findIndex(n => n.id == id);
+                newsData[index] = { ...newsData[index], id: parseInt(id), title, content, cat, date };
+            } else {
+                // Add
+                const newId = newsData.length > 0 ? Math.max(...newsData.map(n => n.id)) + 1 : 1;
+                newsData.push({ id: newId, title, content, cat, date });
+            }
+
+            localStorage.setItem('newsData', JSON.stringify(newsData));
+            closeModal();
+            loadNews();
+            toast('Berita berhasil disimpan & siap tampil di berita.html', 'success');
+        }
+
+        function deleteNews(id) {
+            if(confirm('Yakin ingin menghapus berita ini?')) {
+                newsData = newsData.filter(n => n !== id && n.id !== id);
+                localStorage.setItem('newsData', JSON.stringify(newsData));
+                loadNews();
+            }
+        }
+
+        function editNews(id) {
+            const item = newsData.find(n => n === id || n.id === id);
+            document.getElementById('newsId').value = item.id;
+            document.getElementById('newsTitle').value = item.title;
+            document.getElementById('newsContent').value = item.content;
+            document.getElementById('newsCat').value = item.cat || 'kegiatan';
+            document.getElementById('modalTitle').innerText = "Edit Berita";
+            document.getElementById('newsModal').classList.remove('hidden');
+        }
+
+        // --- MODAL UTILS ---
+        function openModal() {
+            document.getElementById('newsForm').reset();
+            document.getElementById('newsId').value = '';
+            document.getElementById('modalTitle').innerText = "Tambah Berita Baru";
+            document.getElementById('newsModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('newsModal').classList.add('hidden');
+        }
+
+        // ============ UTIL: STORAGE & TOAST (BARU) ============
+        const store = {
+            get(k, fb) { try { return JSON.parse(localStorage.getItem(k)) ?? fb; } catch(e) { return fb; } },
+            set(k, v) { localStorage.setItem(k, JSON.stringify(v)); }
+        };
+        function toast(msg, type) {
+            const t = document.getElementById('toast');
+            t.innerHTML = `<i class="fas ${type === 'error' ? 'fa-circle-exclamation text-red-400' : 'fa-circle-check text-emerald-400'} mr-2"></i>${msg}`;
+            t.classList.remove('hidden');
+            clearTimeout(t._h);
+            t._h = setTimeout(() => t.classList.add('hidden'), 3500);
+        }
+        function waLink(wa) {
+            let d = (wa || '').replace(/\D/g, '');
+            if (d.startsWith('0')) d = '62' + d.slice(1);
+            return 'https://wa.me/' + d;
+        }
+
+        // ============ OVERVIEW (BARU) ============
+        function renderOverview() {
+            const psb = store.get('psbRegistrations', []);
+            const agenda = store.get('agendaData', []);
+            const gal = store.get('galeriData', []);
+            document.getElementById('ovNews').textContent = newsData.length;
+            document.getElementById('ovPsb').textContent = psb.length;
+            document.getElementById('ovAgenda').textContent = agenda.length;
+            document.getElementById('ovGaleri').textContent = gal.length;
+            document.getElementById('ovDate').textContent = new Date().toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+
+            const counts = {};
+            psb.forEach(p => counts[p.program] = (counts[p.program] || 0) + 1);
+            const max = Math.max(1, ...Object.values(counts));
+            document.getElementById('ovChart').innerHTML = Object.keys(counts).length
+                ? Object.entries(counts).map(([k, v]) => `
+                    <div class="mb-4">
+                        <div class="flex justify-between text-xs text-gray-400 mb-1"><span>${k}</span><span class="text-gold-400 font-bold">${v} pendaftar</span></div>
+                        <div class="h-2 bg-slate-900 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-emerald-700 to-gold-400 rounded-full" style="width:${(v / max) * 100}%"></div></div>
+                    </div>`).join('')
+                : '<p class="text-sm text-gray-500">Belum ada pendaftar dari formulir website.</p>';
+
+            document.getElementById('ovRecent').innerHTML = psb.slice(-5).reverse().map(p => `
+                <tr class="hover:bg-slate-700/30 transition">
+                    <td class="px-6 py-3 font-medium text-white">${p.nama}</td>
+                    <td class="px-6 py-3">${p.program}</td>
+                    <td class="px-6 py-3">${p.tanggal}</td>
+                    <td class="px-6 py-3"><span class="bg-yellow-900/60 text-yellow-300 px-2 py-1 rounded text-xs">${p.status}</span></td>
+                </tr>`).join('') || '<tr><td colspan="4" class="px-6 py-4 text-gray-500">Belum ada pendaftar masuk.</td></tr>';
+        }
+
+        // ============ PSB REAL-TIME (BARU) ============
+        function renderPsbDynamic() {
+            const psb = store.get('psbRegistrations', []);
+            document.getElementById('psbTotal').textContent = psb.length;
+            document.getElementById('psbLulus').textContent = psb.filter(p => p.status === 'Lulus').length;
+            document.getElementById('psbProses').textContent = psb.filter(p => p.status !== 'Lulus' && p.status !== 'Ditolak').length;
+
+            document.getElementById('psbDynBody').innerHTML = psb.map((p, i) => `
+                <tr class="hover:bg-slate-700/30 transition">
+                    <td class="px-6 py-4 text-gold-400 font-mono text-xs">${p.nomor}</td>
+                    <td class="px-6 py-4 font-medium text-white">${p.nama}<span class="block text-xs text-gray-500 font-normal">${p.sekolah}</span></td>
+                    <td class="px-6 py-4">${p.program}</td>
+                    <td class="px-6 py-4">${p.wa}</td>
+                    <td class="px-6 py-4">${p.dokumen || 0} file</td>
+                    <td class="px-6 py-4">${p.tanggal}</td>
+                    <td class="px-6 py-4">
+                        <select onchange="setPsbStatus(${i}, this.value)" class="bg-slate-900 border border-slate-700 rounded px-2 py-1.5 text-xs text-white focus:border-gold-400 outline-none">
+                            ${['Verifikasi Berkas','Menunggu Tes','Lulus','Ditolak'].map(s => `<option ${s === p.status ? 'selected' : ''}>${s}</option>`).join('')}
+                        </select>
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                        <a href="${waLink(p.wa)}" target="_blank" title="Hubungi wali via WhatsApp" class="text-emerald-400 hover:text-emerald-300 mr-3"><i class="fab fa-whatsapp text-lg"></i></a>
+                        <button onclick="deletePsb(${i})" class="text-red-400 hover:text-red-300"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>`).join('') || '<tr><td colspan="8" class="px-6 py-8 text-center text-gray-500">Belum ada pendaftar dari formulir website.<br>Data muncul otomatis saat calon santri mendaftar di Beranda.</td></tr>';
+        }
+        function setPsbStatus(i, v) {
+            const psb = store.get('psbRegistrations', []);
+            psb[i].status = v;
+            store.set('psbRegistrations', psb);
+            toast(`Status "${psb[i].nama}" diubah menjadi ${v} — tersync ke halaman pengumuman website.`, 'success');
+            renderPsbDynamic();
+        }
+        function deletePsb(i) {
+            if (confirm('Hapus data pendaftar ini?')) {
+                const psb = store.get('psbRegistrations', []);
+                psb.splice(i, 1);
+                store.set('psbRegistrations', psb);
+                renderPsbDynamic();
+                renderOverview();
+            }
+        }
+        function exportPsbCsv() {
+            const psb = store.get('psbRegistrations', []);
+            if (!psb.length) return toast('Belum ada data untuk diekspor.', 'error');
+            const rows = [['Nomor','Nama','Asal Sekolah','Program','WA','Jumlah Dokumen','Status','Tanggal'],
+                ...psb.map(p => [p.nomor, p.nama, p.sekolah, p.program, p.wa, p.dokumen || 0, p.status, p.tanggal])];
+            const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(';')).join('\n');
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+            a.download = 'data-pendaftar-psb.csv';
+            a.click();
+            toast('File CSV berhasil diunduh.', 'success');
+        }
+
+        // ============ CRUD AGENDA (BARU) ============
+        function renderAgenda() {
+            const data = store.get('agendaData', []).sort((a, b) => a.date.localeCompare(b.date));
+            document.getElementById('agendaBody').innerHTML = data.map(a => `
+                <tr class="hover:bg-slate-700/30 transition">
+                    <td class="px-6 py-4 text-gold-400 font-bold">${a.date}</td>
+                    <td class="px-6 py-4 font-medium text-white">${a.title}</td>
+                    <td class="px-6 py-4">${a.time || '-'}</td>
+                    <td class="px-6 py-4">${a.location || '-'}</td>
+                    <td class="px-6 py-4"><span class="bg-emerald-900/50 text-emerald-300 px-2 py-1 rounded text-xs border border-emerald-800">${a.category}</span></td>
+                    <td class="px-6 py-4 text-right">
+                        <button onclick="editAgenda(${a.id})" class="text-blue-400 hover:text-blue-300 mr-3"><i class="fas fa-edit"></i></button>
+                        <button onclick="deleteAgenda(${a.id})" class="text-red-400 hover:text-red-300"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>`).join('') || '<tr><td colspan="6" class="px-6 py-8 text-center text-gray-500">Belum ada agenda. Tambahkan lewat tombol di atas.</td></tr>';
+        }
+        function openAgendaModal() {
+            document.getElementById('agendaForm').reset();
+            document.getElementById('agId').value = '';
+            document.getElementById('agendaModalTitle').innerText = 'Tambah Agenda';
+            document.getElementById('agendaModal').classList.remove('hidden');
+        }
+        function closeAgendaModal() { document.getElementById('agendaModal').classList.add('hidden'); }
+        function saveAgenda(e) {
+            e.preventDefault();
+            const data = store.get('agendaData', []);
+            const id = document.getElementById('agId').value;
+            const item = {
+                id: id ? parseInt(id) : (data.length ? Math.max(...data.map(d => d.id)) + 1 : 1),
+                title: document.getElementById('agTitle').value,
+                date: document.getElementById('agDate').value,
+                time: document.getElementById('agTime').value,
+                location: document.getElementById('agLoc').value,
+                category: document.getElementById('agCat').value
+            };
+            if (id) data[data.findIndex(d => d.id == id)] = item; else data.push(item);
+            store.set('agendaData', data);
+            closeAgendaModal(); renderAgenda();
+            toast('Agenda tersimpan & otomatis tampil di agenda.html', 'success');
+        }
+        function editAgenda(id) {
+            const a = store.get('agendaData', []).find(d => d.id === id);
+            document.getElementById('agId').value = a.id;
+            document.getElementById('agTitle').value = a.title;
+            document.getElementById('agDate').value = a.date;
+            document.getElementById('agTime').value = a.time || '';
+            document.getElementById('agLoc').value = a.location || '';
+            document.getElementById('agCat').value = a.category;
+            document.getElementById('agendaModalTitle').innerText = 'Edit Agenda';
+            document.getElementById('agendaModal').classList.remove('hidden');
+        }
+        function deleteAgenda(id) {
+            if (confirm('Hapus agenda ini?')) {
+                store.set('agendaData', store.get('agendaData', []).filter(d => d.id !== id));
+                renderAgenda();
+            }
+        }
+
+        // ============ CRUD GALERI (BARU) ============
+        function renderGaleri() {
+            const data = store.get('galeriData', []);
+            document.getElementById('galeriBody').innerHTML = data.map(g => `
+                <tr class="hover:bg-slate-700/30 transition">
+                    <td class="px-6 py-4"><img src="${g.img}" class="w-20 h-14 object-cover rounded-lg border border-white/10" onerror="this.style.opacity=0.2"></td>
+                    <td class="px-6 py-4 font-medium text-white">${g.caption}</td>
+                    <td class="px-6 py-4"><span class="bg-emerald-900/50 text-emerald-300 px-2 py-1 rounded text-xs border border-emerald-800">${g.category}</span></td>
+                    <td class="px-6 py-4 text-right">
+                        <button onclick="editGaleri(${g.id})" class="text-blue-400 hover:text-blue-300 mr-3"><i class="fas fa-edit"></i></button>
+                        <button onclick="deleteGaleri(${g.id})" class="text-red-400 hover:text-red-300"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>`).join('') || '<tr><td colspan="4" class="px-6 py-8 text-center text-gray-500">Belum ada item galeri dari CMS.</td></tr>';
+        }
+        function openGaleriModal() {
+            document.getElementById('galeriForm').reset();
+            document.getElementById('gId').value = '';
+            document.getElementById('gPreview').classList.add('hidden');
+            document.getElementById('galeriModalTitle').innerText = 'Tambah Item Galeri';
+            document.getElementById('galeriModal').classList.remove('hidden');
+        }
+        function closeGaleriModal() { document.getElementById('galeriModal').classList.add('hidden'); }
+        function saveGaleri(e) {
+            e.preventDefault();
+            const data = store.get('galeriData', []);
+            const id = document.getElementById('gId').value;
+            const item = {
+                id: id ? parseInt(id) : (data.length ? Math.max(...data.map(d => d.id)) + 1 : 1),
+                caption: document.getElementById('gCaption').value,
+                category: document.getElementById('gCat').value,
+                img: document.getElementById('gImg').value
+            };
+            if (id) data[data.findIndex(d => d.id == id)] = item; else data.push(item);
+            store.set('galeriData', data);
+            closeGaleriModal(); renderGaleri();
+            toast('Item galeri tersimpan & masuk ke grid galeri.html', 'success');
+        }
+        function editGaleri(id) {
+            const g = store.get('galeriData', []).find(d => d.id === id);
+            document.getElementById('gId').value = g.id;
+            document.getElementById('gCaption').value = g.caption;
+            document.getElementById('gCat').value = g.category;
+            document.getElementById('gImg').value = g.img;
+            document.getElementById('galeriModalTitle').innerText = 'Edit Item Galeri';
+            document.getElementById('galeriModal').classList.remove('hidden');
+        }
+        function deleteGaleri(id) {
+            if (confirm('Hapus item galeri ini?')) {
+                store.set('galeriData', store.get('galeriData', []).filter(d => d.id !== id));
+                renderGaleri();
+            }
+        }
+
+        // ============ CRUD PRESTASI (BARU) ============
+        function renderPrestasi() {
+            const data = store.get('prestasiData', []);
+            document.getElementById('prestasiBody').innerHTML = data.map(p => `
+                <tr class="hover:bg-slate-700/30 transition">
+                    <td class="px-6 py-4 font-medium text-white">${p.title}</td>
+                    <td class="px-6 py-4">${p.level}</td>
+                    <td class="px-6 py-4"><span class="bg-yellow-900/50 text-yellow-300 px-2 py-1 rounded text-xs border border-yellow-700">${p.medal}</span></td>
+                    <td class="px-6 py-4">${p.year}</td>
+                    <td class="px-6 py-4 text-right">
+                        <button onclick="editPrestasi(${p.id})" class="text-blue-400 hover:text-blue-300 mr-3"><i class="fas fa-edit"></i></button>
+                        <button onclick="deletePrestasi(${p.id})" class="text-red-400 hover:text-red-300"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>`).join('') || '<tr><td colspan="5" class="px-6 py-8 text-center text-gray-500">Belum ada data prestasi dari CMS.</td></tr>';
+        }
+        function openPrestasiModal() {
+            document.getElementById('prestasiForm').reset();
+            document.getElementById('prId').value = '';
+            document.getElementById('prestasiModalTitle').innerText = 'Tambah Prestasi';
+            document.getElementById('prestasiModal').classList.remove('hidden');
+        }
+        function closePrestasiModal() { document.getElementById('prestasiModal').classList.add('hidden'); }
+        function savePrestasi(e) {
+            e.preventDefault();
+            const data = store.get('prestasiData', []);
+            const id = document.getElementById('prId').value;
+            const item = {
+                id: id ? parseInt(id) : (data.length ? Math.max(...data.map(d => d.id)) + 1 : 1),
+                title: document.getElementById('prTitle').value,
+                level: document.getElementById('prLevel').value,
+                medal: document.getElementById('prMedal').value,
+                year: document.getElementById('prYear').value,
+                desc: document.getElementById('prDesc').value
+            };
+            if (id) data[data.findIndex(d => d.id == id)] = item; else data.push(item);
+            store.set('prestasiData', data);
+            closePrestasiModal(); renderPrestasi();
+            toast('Prestasi tersimpan & tampil di prestasi.html', 'success');
+        }
+        function editPrestasi(id) {
+            const p = store.get('prestasiData', []).find(d => d.id === id);
+            document.getElementById('prId').value = p.id;
+            document.getElementById('prTitle').value = p.title;
+            document.getElementById('prLevel').value = p.level;
+            document.getElementById('prMedal').value = p.medal;
+            document.getElementById('prYear').value = p.year;
+            document.getElementById('prDesc').value = p.desc || '';
+            document.getElementById('prestasiModalTitle').innerText = 'Edit Prestasi';
+            document.getElementById('prestasiModal').classList.remove('hidden');
+        }
+        function deletePrestasi(id) {
+            if (confirm('Hapus prestasi ini?')) {
+                store.set('prestasiData', store.get('prestasiData', []).filter(d => d.id !== id));
+                renderPrestasi();
+            }
+        }
+
+        // ============ PROFIL & KONTEN (BARU) ============
+        function loadProfilForm() {
+            const p = store.get('profilData', {});
+            document.getElementById('pfVisi').value = p.visi || '';
+            document.getElementById('pfMisi').value = p.misi || '';
+            document.getElementById('pfSejarah').value = p.sejarah || '';
+            document.getElementById('pfSambutan').value = p.sambutan || '';
+            document.getElementById('pfAddr').value = p.addr || '';
+            document.getElementById('pfPhone').value = p.phone || '';
+            document.getElementById('pfEmail').value = p.email || '';
+            document.getElementById('pfWa').value = p.wa || '';
+        }
+        function saveProfil(e) {
+            e.preventDefault();
+            store.set('profilData', {
+                visi: document.getElementById('pfVisi').value,
+                misi: document.getElementById('pfMisi').value,
+                sejarah: document.getElementById('pfSejarah').value,
+                sambutan: document.getElementById('pfSambutan').value,
+                addr: document.getElementById('pfAddr').value,
+                phone: document.getElementById('pfPhone').value,
+                email: document.getElementById('pfEmail').value,
+                wa: document.getElementById('pfWa').value
+            });
+            toast('Konten profil tersimpan & tersync ke profil.html', 'success');
+        }
+
+        // ============ PENGATURAN (BARU) ============
+        function loadSettingsForm() {
+            const s = store.get('siteSettings', {});
+            document.getElementById('stTopbar').checked = s.topbarVisible !== false;
+            document.getElementById('stText').value = s.topbarText || '';
+            document.getElementById('stWa').value = s.waClaim || '';
+        }
+        function saveSiteSettings(e) {
+            e.preventDefault();
+            store.set('siteSettings', {
+                topbarVisible: document.getElementById('stTopbar').checked,
+                topbarText: document.getElementById('stText').value,
+                waClaim: document.getElementById('stWa').value
+            });
+            toast('Pengaturan situs tersimpan & diterapkan di beranda.', 'success');
+        }
+        function changePassword(e) {
+            e.preventDefault();
+            const creds = JSON.parse(localStorage.getItem('adminCreds') || 'null') || { u: 'admin', p: 'pesantren2026' };
+            const cur = document.getElementById('setCurPass').value;
+            const nw = document.getElementById('setNewPass').value;
+            const cf = document.getElementById('setConfPass').value;
+            if (cur !== creds.p) return toast('Password saat ini salah!', 'error');
+            if (nw !== cf) return toast('Konfirmasi password tidak cocok!', 'error');
+            store.set('adminCreds', { u: creds.u, p: nw });
+            e.target.reset();
+            toast('Password admin berhasil diganti.', 'success');
+        }
+        function resetAllData() {
+            if (confirm('PERHATIAN: Seluruh data CMS akan dihapus permanen dari browser ini. Lanjutkan?')) {
+                ['newsData','psbRegistrations','agendaData','galeriData','prestasiData','profilData','siteSettings'].forEach(k => localStorage.removeItem(k));
+                location.reload();
+            }
+        }
+
+        // Init
+        checkAuth();
+    </script>
+    
+<script src="cms-public.js"></script>
+
+<!-- ============================================================ -->
+    <!-- 🔒 Proteksi Konten (TETAP SAMA)                              -->
+    <!-- ============================================================ -->
+    <script>
+    (function() {
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            showToastCustom('🔒 Konten dilindungi. Klik kanan dinonaktifkan.');
+            return false;
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'u') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.key === 's') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.key === 'c') { e.preventDefault(); return false; }
+            if ((e.ctrlKey && e.shiftKey && e.key === 'I') || e.key === 'F12') { 
+                e.preventDefault(); 
+                showToastCustom('🔒 Developer Tools dinonaktifkan.');
+                return false; 
+            }
+            if (e.ctrlKey && e.shiftKey && e.key === 'J') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.key === 'p') { e.preventDefault(); return false; }
+        });
+
+        document.addEventListener('selectstart', function(e) {
+            if (!['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        document.addEventListener('dragstart', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        function showToastCustom(message) {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed; top: 20px; right: 20px; z-index: 99999;
+                background: linear-gradient(135deg, #064e3b, #059669);
+                color: white; padding: 14px 20px; border-radius: 10px;
+                font-weight: 600; font-size: 0.9rem; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                animation: slideInToast 0.3s ease-out;
+            `;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.3s';
+                setTimeout(() => toast.remove(), 300);
+            }, 2500);
+        }
+
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInToast {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            body { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
+            input, textarea, select { -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text; }
+        `;
+        document.head.appendChild(style);
+
+        console.log('%c🔒 Proteksi Konten Aktif', 'color: #059669; font-size: 14px; font-weight: bold;');
+    })();
+    </script>
+    
+</body>
+</html>
