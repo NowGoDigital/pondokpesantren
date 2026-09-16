@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agenda & Kalender | Pesantren Modern Al-Izzah</title>
+    <title>Galeri Foto & Video | Pesantren Modern Al-Izzah</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -48,45 +48,8 @@
             background: radial-gradient(circle at top left, rgba(252,211,77,0.08), transparent 45%);
             pointer-events: none;
         }
-
-        /* ================= MINI CALENDAR (BARU — COMPACT & CANTIK) ================= */
-        .mini-cal { width: 100%; max-width: 340px; }
-        .mini-cal-head {
-            background: linear-gradient(135deg, #D97706 0%, #B45309 100%);
-            position: relative; overflow: hidden;
-        }
-        .mini-cal-head::after {
-            content: ''; position: absolute; top: 0; bottom: 0; left: -40%; width: 40%;
-            background: linear-gradient(100deg, transparent, rgba(255,255,255,0.35), transparent);
-            animation: calShine 4s linear infinite; pointer-events: none;
-        }
-        @keyframes calShine { 0% { left: -40%; } 100% { left: 120%; } }
-        .cal-nav-btn {
-            width: 26px; height: 26px; border-radius: 8px;
-            background: rgba(15,23,42,0.25); border: 1px solid rgba(255,255,255,0.25);
-            color: #fff; display: inline-flex; align-items: center; justify-content: center;
-            font-size: 10px; cursor: pointer; transition: all .2s ease;
-        }
-        .cal-nav-btn:hover { background: #0f172a; transform: scale(1.1); }
-        .cal-nav-btn:active { transform: scale(0.95); }
-        .mcal-cell {
-            height: 34px; border-radius: 9px; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; font-size: 12px;
-            color: #fff; cursor: pointer; position: relative; transition: all .15s ease;
-            user-select: none;
-        }
-        .mcal-cell:hover:not(.mcal-empty) { background: rgba(252,211,77,0.18); color: #FCD34D; }
-        .mcal-empty { cursor: default; }
-        .mcal-today { border: 1.5px solid #FCD34D; color: #FCD34D; font-weight: 700; }
-        .mcal-selected {
-            background: linear-gradient(135deg, #D97706, #B45309) !important;
-            color: #fff !important; font-weight: 700;
-            box-shadow: 0 3px 10px rgba(217,119,6,0.5);
-        }
-        .mcal-dot { position: absolute; bottom: 4px; width: 4px; height: 4px; border-radius: 50%; background: #FCD34D; }
-        .mcal-selected .mcal-dot { background: #fff; }
-        .cal-fade { animation: calFadeIn .3s ease; }
-        @keyframes calFadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        /* Overlay hover galeri foto */
+        .gallery-overlay { background: linear-gradient(to top, rgba(6,78,59,0.95) 0%, rgba(6,78,59,0.3) 50%, transparent 100%); }
     </style>
 </head>
 <body class="bg-mint-50 text-gray-800 font-sans antialiased overflow-x-hidden">
@@ -104,19 +67,19 @@
             <div class="hidden lg:flex items-center gap-5 xl:gap-7">
                 <a href="index.html" class="nav-link text-sm font-medium text-gray-200 hover:text-gold-400 transition">Beranda</a>
                 <div class="relative group">
-                    <button class="nav-link text-sm font-medium text-gray-200 hover:text-gold-400 transition flex items-center gap-1 py-2">Profil <i class="fas fa-chevron-down text-[10px] mt-0.5"></i></button>
+                    <button class="nav-link text-sm font-medium text-gold-400 transition flex items-center gap-1 py-2">Profil <i class="fas fa-chevron-down text-[10px] mt-0.5"></i></button>
                     <div class="dropdown-menu absolute top-full left-0 w-64 bg-white/95 backdrop-blur-xl border border-mint-200 rounded-xl shadow-2xl overflow-hidden py-2">
                         <a href="profil.html" class="block px-5 py-3 text-sm text-gray-700 hover:bg-mint-100 hover:text-gold-500 hover:pl-6 transition-all border-l-2 border-transparent hover:border-gold-400"><i class="fas fa-school w-5 text-gold-400/70 mr-2"></i> Profil Sekolah<span class="block text-[10px] text-gray-400 mt-0.5 pl-7">Visi, Misi & Sejarah</span></a>
                         <a href="struktur.html" class="block px-5 py-3 text-sm text-gray-700 hover:bg-mint-100 hover:text-gold-500 hover:pl-6 transition-all border-l-2 border-transparent hover:border-gold-400"><i class="fas fa-sitemap w-5 text-gold-400/70 mr-2"></i> Struktur Organisasi</a>
                         <a href="index.html#facilities" class="block px-5 py-3 text-sm text-gray-700 hover:bg-mint-100 hover:text-gold-500 hover:pl-6 transition-all border-l-2 border-transparent hover:border-gold-400"><i class="fas fa-building w-5 text-gold-400/70 mr-2"></i> Fasilitas & Infrastruktur</a>
-                        <a href="galeri.html" class="block px-5 py-3 text-sm text-gray-700 hover:bg-mint-100 hover:text-gold-500 hover:pl-6 transition-all border-l-2 border-transparent hover:border-gold-400"><i class="fas fa-images w-5 text-gold-400/70 mr-2"></i> Galeri Foto & Video</a>
+                        <a href="galeri.html" class="block px-5 py-3 text-sm bg-mint-100 text-gold-500 border-l-2 border-gold-400 font-semibold"><i class="fas fa-images w-5 text-gold-400/70 mr-2"></i> Galeri Foto & Video</a>
                     </div>
                 </div>
                 <div class="relative group">
-                    <button class="nav-link text-sm font-medium text-gold-400 transition flex items-center gap-1 py-2">Kabar Berita <i class="fas fa-chevron-down text-[10px] mt-0.5"></i></button>
+                    <button class="nav-link text-sm font-medium text-gray-200 hover:text-gold-400 transition flex items-center gap-1 py-2">Kabar Berita <i class="fas fa-chevron-down text-[10px] mt-0.5"></i></button>
                     <div class="dropdown-menu absolute top-full left-0 w-64 bg-white/95 backdrop-blur-xl border border-mint-200 rounded-xl shadow-2xl overflow-hidden py-2">
                         <a href="berita.html" class="block px-5 py-3 text-sm text-gray-700 hover:bg-mint-100 hover:text-gold-500 hover:pl-6 transition-all border-l-2 border-transparent hover:border-gold-400"><i class="fas fa-newspaper w-5 text-gold-400/70 mr-2"></i> Berita & Artikel</a>
-                        <a href="agenda.html" class="block px-5 py-3 text-sm bg-mint-100 text-gold-500 border-l-2 border-gold-400 font-semibold"><i class="fas fa-calendar-alt w-5 text-gold-400/70 mr-2"></i> Agenda & Kalender</a>
+                        <a href="agenda.html" class="block px-5 py-3 text-sm text-gray-700 hover:bg-mint-100 hover:text-gold-500 hover:pl-6 transition-all border-l-2 border-transparent hover:border-gold-400"><i class="fas fa-calendar-alt w-5 text-gold-400/70 mr-2"></i> Agenda & Kalender</a>
                         <a href="prestasi.html" class="block px-5 py-3 text-sm text-gray-700 hover:bg-mint-100 hover:text-gold-500 hover:pl-6 transition-all border-l-2 border-transparent hover:border-gold-400"><i class="fas fa-trophy w-5 text-gold-400/70 mr-2"></i> Prestasi & Penghargaan</a>
                     </div>
                 </div>
@@ -140,17 +103,17 @@
         </div>
         <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-mint-50/95 backdrop-blur-xl border-t border-mint-200 p-6 flex-col gap-4 shadow-2xl max-h-[85vh] overflow-y-auto">
             <a href="index.html" class="block text-gray-700 hover:text-gold-500 py-2 font-medium">Beranda</a>
-            <div class="border-l-2 border-emerald-800 pl-4 space-y-3">
+            <div class="border-l-2 border-gold-400 pl-4 space-y-3 bg-gold-400/5 rounded-r-lg py-3 pr-3">
                 <p class="text-xs text-gold-500 uppercase tracking-widest font-bold mb-1">Profil</p>
                 <a href="profil.html" class="block text-sm text-gray-600 hover:text-emerald-900">Profil Sekolah (Visi, Misi, Sejarah)</a>
                 <a href="struktur.html" class="block text-sm text-gray-600 hover:text-emerald-900">Struktur Organisasi</a>
                 <a href="index.html#facilities" class="block text-sm text-gray-600 hover:text-emerald-900">Fasilitas & Infrastruktur</a>
-                <a href="galeri.html" class="block text-sm text-gray-600 hover:text-emerald-900">Galeri Foto & Video</a>
+                <a href="galeri.html" class="block text-sm text-gold-500 font-semibold">Galeri Foto & Video</a>
             </div>
-            <div class="border-l-2 border-gold-400 pl-4 space-y-3 bg-gold-400/5 rounded-r-lg py-3 pr-3">
+            <div class="border-l-2 border-emerald-800 pl-4 space-y-3">
                 <p class="text-xs text-gold-500 uppercase tracking-widest font-bold mb-1">Kabar Berita</p>
                 <a href="berita.html" class="block text-sm text-gray-600 hover:text-emerald-900">Berita & Artikel Sekolah</a>
-                <a href="agenda.html" class="block text-sm text-gold-500 font-semibold">Agenda & Kalender Kegiatan</a>
+                <a href="agenda.html" class="block text-sm text-gray-600 hover:text-emerald-900">Agenda & Kalender Kegiatan</a>
                 <a href="prestasi.html" class="block text-sm text-gray-600 hover:text-emerald-900">Prestasi & Penghargaan</a>
             </div>
             <div class="border-l-2 border-emerald-800 pl-4 space-y-3">
@@ -174,252 +137,163 @@
             <nav class="flex items-center justify-center gap-2 text-xs text-gray-400 mb-6" data-aos="fade-down">
                 <a href="index.html" class="hover:text-gold-400 transition">Beranda</a>
                 <i class="fas fa-chevron-right text-[8px] text-gold-400"></i>
-                <span class="text-gold-400 font-semibold">Agenda & Kalender</span>
+                <span class="text-gold-400 font-semibold">Galeri Foto & Video</span>
             </nav>
-            <p class="text-gold-400 text-xs font-bold tracking-[0.35em] uppercase mb-4" data-aos="fade-up">Jadwal Kegiatan Kampus</p>
-            <h1 class="font-serif text-4xl md:text-6xl font-bold text-white mb-6 drop-shadow-2xl" data-aos="fade-up" data-aos-delay="100">Agenda & <span class="text-gold-gradient italic">Kalender</span></h1>
+            <p class="text-gold-400 text-xs font-bold tracking-[0.35em] uppercase mb-4" data-aos="fade-up">Momen & Kenangan</p>
+            <h1 class="font-serif text-4xl md:text-6xl font-bold text-white mb-6 drop-shadow-2xl" data-aos="fade-up" data-aos-delay="100">Galeri <span class="text-gold-gradient italic">Foto & Video</span></h1>
             <div class="flex items-center justify-center gap-4 mb-6" data-aos="fade-up" data-aos-delay="200">
                 <span class="h-px w-16 md:w-24 bg-gradient-to-r from-transparent to-gold-400"></span>
                 <i class="fas fa-star-and-crescent text-gold-400 text-lg"></i>
                 <span class="h-px w-16 md:w-24 bg-gradient-to-l from-transparent to-gold-400"></span>
             </div>
-            <p class="text-gray-300 max-w-2xl mx-auto font-light leading-relaxed" data-aos="fade-up" data-aos-delay="300">Pantau seluruh kegiatan akademik, tahfidz, dan acara kampus agar tidak ada momen yang terlewat.</p>
+            <p class="text-gray-300 max-w-2xl mx-auto font-light leading-relaxed" data-aos="fade-up" data-aos-delay="300">Abadikan keindahan kehidupan pesantren — dari kekhusyukan ibadah, semangat belajar, hingga kehangatan persaudaraan.</p>
         </div>
     </header>
 
-    <!-- ============ KALENDER MINI + AGENDA HARI INI ============ -->
+    <!-- ============ GALERI FOTO ============ -->
     <section class="py-16 bg-mint-50">
         <div class="container mx-auto px-6">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start max-w-5xl mx-auto">
+            <div class="text-center mb-10">
+                <p class="text-gold-500 text-xs font-bold tracking-[0.3em] uppercase mb-3" data-aos="fade-up">Dokumentasi Kegiatan</p>
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-slate-900 mb-4" data-aos="fade-up">Galeri Foto</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-transparent via-gold-400 to-transparent mx-auto rounded-full"></div>
+            </div>
 
-                <!-- KOLOM KIRI: MINI KALENDER (compact, max 340px) -->
-                <div class="lg:col-span-5 flex justify-center lg:justify-start" data-aos="fade-right">
-                    <div class="mini-cal card-green relative rounded-2xl overflow-hidden">
-                        <!-- Pita header emas -->
-                        <div class="mini-cal-head px-4 py-3 flex items-center justify-between relative z-10">
-                            <button id="btnPrev" class="cal-nav-btn" aria-label="Bulan sebelumnya"><i class="fas fa-chevron-left"></i></button>
-                            <div class="text-center">
-                                <p id="calTitle" class="font-serif text-white font-bold text-sm leading-tight drop-shadow">Memuat...</p>
-                                <p id="calSub" class="text-white/70 text-[9px] uppercase tracking-[0.2em]">Kalender Kegiatan</p>
-                            </div>
-                            <button id="btnNext" class="cal-nav-btn" aria-label="Bulan berikutnya"><i class="fas fa-chevron-right"></i></button>
-                        </div>
+            <!-- Filter Kategori -->
+            <div class="flex flex-wrap justify-center gap-3 mb-12" data-aos="fade-up">
+                <button onclick="filterGallery('all', this)" class="g-btn px-5 py-2 rounded-full text-sm border border-gold-400 bg-gold-400 text-slate-900 font-bold transition">Semua</button>
+                <button onclick="filterGallery('ibadah', this)" class="g-btn px-5 py-2 rounded-full text-sm border border-mint-300 text-gray-600 hover:border-gold-400 hover:text-gold-500 transition">Ibadah</button>
+                <button onclick="filterGallery('akademik', this)" class="g-btn px-5 py-2 rounded-full text-sm border border-mint-300 text-gray-600 hover:border-gold-400 hover:text-gold-500 transition">Akademik</button>
+                <button onclick="filterGallery('kegiatan', this)" class="g-btn px-5 py-2 rounded-full text-sm border border-mint-300 text-gray-600 hover:border-gold-400 hover:text-gold-500 transition">Kegiatan</button>
+                <button onclick="filterGallery('fasilitas', this)" class="g-btn px-5 py-2 rounded-full text-sm border border-mint-300 text-gray-600 hover:border-gold-400 hover:text-gold-500 transition">Fasilitas</button>
+            </div>
 
-                        <div class="relative z-10 p-4">
-                            <!-- Nama hari -->
-                            <div class="grid grid-cols-7 gap-0.5 mb-1 text-center">
-                                <div class="text-[8px] font-bold uppercase tracking-wider text-gold-light py-1">Min</div>
-                                <div class="text-[8px] font-bold uppercase tracking-wider text-emerald-100/50 py-1">Sen</div>
-                                <div class="text-[8px] font-bold uppercase tracking-wider text-emerald-100/50 py-1">Sel</div>
-                                <div class="text-[8px] font-bold uppercase tracking-wider text-emerald-100/50 py-1">Rab</div>
-                                <div class="text-[8px] font-bold uppercase tracking-wider text-emerald-100/50 py-1">Kam</div>
-                                <div class="text-[8px] font-bold uppercase tracking-wider text-emerald-100/50 py-1">Jum</div>
-                                <div class="text-[8px] font-bold uppercase tracking-wider text-emerald-100/50 py-1">Sab</div>
-                            </div>
-                            <!-- Grid tanggal (dirender JS) -->
-                            <div id="calGrid" class="grid grid-cols-7 gap-0.5"></div>
-
-                            <!-- Tombol hari ini -->
-                            <button id="btnToday" class="mt-3 w-full py-2 rounded-lg bg-white/5 border border-gold-400/30 text-gold-light text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-gold-400 hover:text-slate-900 transition">
-                                <i class="fas fa-calendar-day mr-1"></i> Ke Hari Ini
-                            </button>
-
-                            <!-- Legenda mini -->
-                            <div class="flex items-center justify-center gap-4 mt-3 pt-3 border-t border-white/10 text-[9px] text-emerald-100/60">
-                                <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded border border-gold-light"></span> Hari ini</span>
-                                <span class="flex items-center gap-1"><span class="w-1 h-1 rounded-full bg-gold-light"></span> Ada kegiatan</span>
-                            </div>
-                        </div>
+            <!-- GRID GALERI (mount CMS mengisi #galleryGrid) -->
+            <div id="galleryGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div class="g-item relative group rounded-xl overflow-hidden cursor-pointer aspect-square bg-emerald-900/40" data-cat="ibadah" onclick="openLightbox(this)" data-aos="zoom-in">
+                    <img onerror="imgFallback(this,'g1')" src="prestasi2.jpg" class="w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="Shalat Berjamaah">
+                    <div class="gallery-overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-4">
+                        <p class="text-white font-serif font-bold text-sm">Shalat Berjamaah</p>
+                        <p class="text-gold-light text-[10px] uppercase tracking-widest">Ibadah</p>
                     </div>
+                    <div class="absolute top-3 right-3 w-8 h-8 rounded-full bg-emerald-900/70 border border-gold-400/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition"><i class="fas fa-magnifying-glass-plus text-gold-light text-xs"></i></div>
                 </div>
-
-                <!-- KOLOM KANAN: DETAIL TANGGAL + AGENDA HARI INI -->
-                <div class="lg:col-span-7 space-y-4" data-aos="fade-left">
-                    <!-- Panel detail tanggal terpilih -->
-                    <div id="calDetail" class="card-green relative rounded-2xl p-6 hidden">
-                        <div id="calDetailBody" class="relative z-10"></div>
+                <div class="g-item relative group rounded-xl overflow-hidden cursor-pointer aspect-square bg-emerald-900/40" data-cat="akademik" onclick="openLightbox(this)" data-aos="zoom-in" data-aos-delay="50">
+                    <img onerror="imgFallback(this,'g2')" src="prestasi3.jpg" class="w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="Belajar di Kelas">
+                    <div class="gallery-overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-4">
+                        <p class="text-white font-serif font-bold text-sm">KBM Cambridge</p>
+                        <p class="text-gold-light text-[10px] uppercase tracking-widest">Akademik</p>
                     </div>
-
-                    <!-- Agenda Hari Ini -->
-                    <div class="card-green relative rounded-2xl p-6">
-                        <div class="relative z-10">
-                            <div class="flex items-center gap-3 mb-5">
-                                <div class="w-10 h-10 rounded-lg bg-gold-400/15 border border-gold-400/40 flex items-center justify-center"><i class="fas fa-calendar-day text-gold-light"></i></div>
-                                <div>
-                                    <h3 class="font-serif font-bold text-white">Hari Ini</h3>
-                                    <p class="text-emerald-100/60 text-xs">Senin, 14 September 2026</p>
-                                </div>
-                            </div>
-                            <div class="space-y-4">
-                                <div class="flex gap-3">
-                                    <span class="text-gold-light text-xs font-bold w-12 shrink-0 pt-0.5">04.00</span>
-                                    <div class="border-l border-gold-400/30 pl-3"><p class="text-white text-sm font-semibold">Qiyamul Lail & Tahajud</p><p class="text-emerald-100/60 text-xs">Masjid Agung Al-Izzah</p></div>
-                                </div>
-                                <div class="flex gap-3">
-                                    <span class="text-gold-light text-xs font-bold w-12 shrink-0 pt-0.5">05.00</span>
-                                    <div class="border-l border-gold-400/30 pl-3"><p class="text-white text-sm font-semibold">Halaqah Tahfidz Ba'da Subuh</p><p class="text-emerald-100/60 text-xs">Serambi Masjid & Asrama</p></div>
-                                </div>
-                                <div class="flex gap-3">
-                                    <span class="text-gold-light text-xs font-bold w-12 shrink-0 pt-0.5">07.00</span>
-                                    <div class="border-l border-gold-400/30 pl-3"><p class="text-white text-sm font-semibold">KBM Cambridge & Nasional</p><p class="text-emerald-100/60 text-xs">Gedung Akademik A & B</p></div>
-                                </div>
-                                <div class="flex gap-3">
-                                    <span class="text-gold-light text-xs font-bold w-12 shrink-0 pt-0.5">16.00</span>
-                                    <div class="border-l border-gold-400/30 pl-3"><p class="text-white text-sm font-semibold">Ekstrakurikuler & Olahraga</p><p class="text-emerald-100/60 text-xs">Lapangan & Aula Serbaguna</p></div>
-                                </div>
-                                <div class="flex gap-3">
-                                    <span class="text-gold-light text-xs font-bold w-12 shrink-0 pt-0.5">20.00</span>
-                                    <div class="border-l border-gold-400/30 pl-3"><p class="text-white text-sm font-semibold">Muhadatsah Bilingual</p><p class="text-emerald-100/60 text-xs">Area Asrama</p></div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="absolute top-3 right-3 w-8 h-8 rounded-full bg-emerald-900/70 border border-gold-400/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition"><i class="fas fa-magnifying-glass-plus text-gold-light text-xs"></i></div>
+                </div>
+                <div class="g-item relative group rounded-xl overflow-hidden cursor-pointer aspect-square bg-emerald-900/40" data-cat="kegiatan" onclick="openLightbox(this)" data-aos="zoom-in" data-aos-delay="100">
+                    <img onerror="imgFallback(this,'g3')" src="prestasi1.jpg" class="w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="Upacara Wisuda Tahfidz">
+                    <div class="gallery-overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-4">
+                        <p class="text-white font-serif font-bold text-sm">Wisuda Tahfidz</p>
+                        <p class="text-gold-light text-[10px] uppercase tracking-widest">Kegiatan</p>
                     </div>
-
-                    <!-- Pengingat wali santri -->
-                    <div class="card-green relative rounded-2xl p-6 border-gold-400/30">
-                        <div class="relative z-10">
-                            <h4 class="font-serif font-bold text-white mb-2"><i class="fas fa-bell text-gold-light mr-2"></i> Pengingat Wali Santri</h4>
-                            <p class="text-emerald-100/80 text-sm leading-relaxed">Kunjungan wali santri (ziarah) dibuka setiap Ahad pekan ke-2 dan ke-4, pukul 08.00–16.00 WIB.</p>
-                        </div>
+                    <div class="absolute top-3 right-3 w-8 h-8 rounded-full bg-emerald-900/70 border border-gold-400/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition"><i class="fas fa-magnifying-glass-plus text-gold-light text-xs"></i></div>
+                </div>
+                <div class="g-item relative group rounded-xl overflow-hidden cursor-pointer aspect-square bg-emerald-900/40" data-cat="fasilitas" onclick="openLightbox(this)" data-aos="zoom-in" data-aos-delay="150">
+                    <img onerror="imgFallback(this,'g4')" src="asrama.jpg" class="w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="Asrama Santri">
+                    <div class="gallery-overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-4">
+                        <p class="text-white font-serif font-bold text-sm">Asrama Modern</p>
+                        <p class="text-gold-light text-[10px] uppercase tracking-widest">Fasilitas</p>
                     </div>
+                    <div class="absolute top-3 right-3 w-8 h-8 rounded-full bg-emerald-900/70 border border-gold-400/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition"><i class="fas fa-magnifying-glass-plus text-gold-light text-xs"></i></div>
+                </div>
+                <div class="g-item relative group rounded-xl overflow-hidden cursor-pointer aspect-square bg-emerald-900/40" data-cat="ibadah" onclick="openLightbox(this)" data-aos="zoom-in">
+                    <img onerror="imgFallback(this,'g5')" src="https://loremflickr.com/600/600/quran?lock=21" class="w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="Halaqah Tahfidz">
+                    <div class="gallery-overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-4">
+                        <p class="text-white font-serif font-bold text-sm">Halaqah Tahfidz</p>
+                        <p class="text-gold-light text-[10px] uppercase tracking-widest">Ibadah</p>
+                    </div>
+                    <div class="absolute top-3 right-3 w-8 h-8 rounded-full bg-emerald-900/70 border border-gold-400/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition"><i class="fas fa-magnifying-glass-plus text-gold-light text-xs"></i></div>
+                </div>
+                <div class="g-item relative group rounded-xl overflow-hidden cursor-pointer aspect-square bg-emerald-900/40" data-cat="akademik" onclick="openLightbox(this)" data-aos="zoom-in" data-aos-delay="50">
+                    <img onerror="imgFallback(this,'g6')" src="https://loremflickr.com/600/600/laboratory?lock=22" class="w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="Praktikum Sains">
+                    <div class="gallery-overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-4">
+                        <p class="text-white font-serif font-bold text-sm">Praktikum Sains</p>
+                        <p class="text-gold-light text-[10px] uppercase tracking-widest">Akademik</p>
+                    </div>
+                    <div class="absolute top-3 right-3 w-8 h-8 rounded-full bg-emerald-900/70 border border-gold-400/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition"><i class="fas fa-magnifying-glass-plus text-gold-light text-xs"></i></div>
+                </div>
+                <div class="g-item relative group rounded-xl overflow-hidden cursor-pointer aspect-square bg-emerald-900/40" data-cat="kegiatan" onclick="openLightbox(this)" data-aos="zoom-in" data-aos-delay="100">
+                    <img onerror="imgFallback(this,'g7')" src="https://loremflickr.com/600/600/scout?lock=23" class="w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="Pramuka Santri">
+                    <div class="gallery-overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-4">
+                        <p class="text-white font-serif font-bold text-sm">Pramuka Santri</p>
+                        <p class="text-gold-light text-[10px] uppercase tracking-widest">Kegiatan</p>
+                    </div>
+                    <div class="absolute top-3 right-3 w-8 h-8 rounded-full bg-emerald-900/70 border border-gold-400/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition"><i class="fas fa-magnifying-glass-plus text-gold-light text-xs"></i></div>
+                </div>
+                <div class="g-item relative group rounded-xl overflow-hidden cursor-pointer aspect-square bg-emerald-900/40" data-cat="fasilitas" onclick="openLightbox(this)" data-aos="zoom-in" data-aos-delay="150">
+                    <img onerror="imgFallback(this,'g8')" src="https://loremflickr.com/600/600/library?lock=24" class="w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="Perpustakaan Digital">
+                    <div class="gallery-overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-4">
+                        <p class="text-white font-serif font-bold text-sm">Digital Library</p>
+                        <p class="text-gold-light text-[10px] uppercase tracking-widest">Fasilitas</p>
+                    </div>
+                    <div class="absolute top-3 right-3 w-8 h-8 rounded-full bg-emerald-900/70 border border-gold-400/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition"><i class="fas fa-magnifying-glass-plus text-gold-light text-xs"></i></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ============ DAFTAR AGENDA MENDATANG ============ -->
+    <!-- ============ GALERI VIDEO ============ -->
     <section class="py-16 bg-mint-100 pattern-islamic">
         <div class="container mx-auto px-6">
             <div class="text-center mb-12">
-                <p class="text-gold-500 text-xs font-bold tracking-[0.3em] uppercase mb-3" data-aos="fade-up">Jadwal Kegiatan</p>
-                <h2 class="font-serif text-3xl md:text-4xl font-bold text-slate-900 mb-4" data-aos="fade-up">Agenda Mendatang</h2>
+                <p class="text-gold-500 text-xs font-bold tracking-[0.3em] uppercase mb-3" data-aos="fade-up">Channel Resmi</p>
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-slate-900 mb-4" data-aos="fade-up">Galeri Video</h2>
                 <div class="w-24 h-1 bg-gradient-to-r from-transparent via-gold-400 to-transparent mx-auto rounded-full"></div>
             </div>
 
-            <!-- MOUNT AGENDA DARI CMS DASHBOARD (INTEGRASI) -->
-            <div id="cmsAgendaMount" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10"></div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="card-green relative flex gap-5 rounded-2xl p-6" data-aos="fade-up">
-                    <div class="relative z-10 flex gap-5 w-full">
-                        <div class="shrink-0 w-16 text-center bg-gold-400/15 border border-gold-400/40 rounded-xl py-3">
-                            <p class="font-serif text-2xl font-bold text-gold-light leading-none">17</p>
-                            <p class="text-[10px] uppercase tracking-widest text-emerald-100/70 mt-1">Sep</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                <div class="card-green relative rounded-2xl overflow-hidden group cursor-pointer" onclick="openVideo('dQw4w9WgXcQ','Profil Pesantren Modern Al-Izzah')" data-aos="fade-up">
+                    <div class="relative h-44 bg-emerald-900/40 flex items-center justify-center overflow-hidden">
+                        <img src="https://loremflickr.com/640/360/mosque?lock=31" class="w-full h-full object-cover transition duration-700 group-hover:scale-110 opacity-80" alt="Profil Pesantren">
+                        <div class="absolute inset-0 bg-emerald-950/40 group-hover:bg-emerald-950/20 transition"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="w-14 h-14 rounded-full bg-gold-400 text-slate-900 flex items-center justify-center shadow-[0_0_25px_rgba(217,119,6,0.5)] group-hover:scale-110 transition"><i class="fas fa-play ml-1"></i></span>
                         </div>
-                        <div>
-                            <span class="inline-block bg-gold-400 text-slate-900 text-[9px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full mb-2">Akademik</span>
-                            <h3 class="font-serif font-bold text-white mb-1 leading-snug">Penilaian Tengah Semester (PTS) Ganjil</h3>
-                            <p class="text-emerald-100/70 text-xs mb-2"><i class="far fa-clock mr-1"></i> 07.00 – 12.00 WIB · <i class="fas fa-location-dot mx-1"></i> Gedung Akademik</p>
-                            <p class="text-emerald-100/80 text-sm leading-relaxed">Ujian tengah semester untuk seluruh jenjang SMP & SMA dengan sistem CBT.</p>
-                        </div>
+                        <span class="absolute bottom-3 right-3 bg-slate-900/80 text-white text-[10px] font-bold px-2 py-1 rounded"><i class="far fa-clock mr-1"></i>4:32</span>
+                    </div>
+                    <div class="p-5 relative z-10">
+                        <h3 class="font-serif font-bold text-white text-sm mb-1">Profil Pesantren Modern Al-Izzah</h3>
+                        <p class="text-emerald-100/60 text-xs"><i class="far fa-eye mr-1"></i> 12,4 rbx ditonton · 2 minggu lalu</p>
                     </div>
                 </div>
-                <div class="card-green relative flex gap-5 rounded-2xl p-6" data-aos="fade-up" data-aos-delay="100">
-                    <div class="relative z-10 flex gap-5 w-full">
-                        <div class="shrink-0 w-16 text-center bg-gold-400/15 border border-gold-400/40 rounded-xl py-3">
-                            <p class="font-serif text-2xl font-bold text-gold-light leading-none">20</p>
-                            <p class="text-[10px] uppercase tracking-widest text-emerald-100/70 mt-1">Sep</p>
+                <div class="card-green relative rounded-2xl overflow-hidden group cursor-pointer" onclick="openVideo('dQw4w9WgXcQ','Wisuda Tahfidz Angkatan XII')" data-aos="fade-up" data-aos-delay="100">
+                    <div class="relative h-44 bg-emerald-900/40 flex items-center justify-center overflow-hidden">
+                        <img src="https://loremflickr.com/640/360/quran?lock=32" class="w-full h-full object-cover transition duration-700 group-hover:scale-110 opacity-80" alt="Wisuda Tahfidz">
+                        <div class="absolute inset-0 bg-emerald-950/40 group-hover:bg-emerald-950/20 transition"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="w-14 h-14 rounded-full bg-gold-400 text-slate-900 flex items-center justify-center shadow-[0_0_25px_rgba(217,119,6,0.5)] group-hover:scale-110 transition"><i class="fas fa-play ml-1"></i></span>
                         </div>
-                        <div>
-                            <span class="inline-block bg-gold-400 text-slate-900 text-[9px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full mb-2">Keagamaan</span>
-                            <h3 class="font-serif font-bold text-white mb-1 leading-snug">Peringatan Maulid Nabi Muhammad SAW</h3>
-                            <p class="text-emerald-100/70 text-xs mb-2"><i class="far fa-clock mr-1"></i> 19.30 – selesai · <i class="fas fa-location-dot mx-1"></i> Masjid Agung Al-Izzah</p>
-                            <p class="text-emerald-100/80 text-sm leading-relaxed">Tabligh akbar bersama alim ulama dan terbuka untuk wali santri serta masyarakat umum.</p>
-                        </div>
+                        <span class="absolute bottom-3 right-3 bg-slate-900/80 text-white text-[10px] font-bold px-2 py-1 rounded"><i class="far fa-clock mr-1"></i>8:15</span>
+                    </div>
+                    <div class="p-5 relative z-10">
+                        <h3 class="font-serif font-bold text-white text-sm mb-1">Wisuda Tahfidz Angkatan XII</h3>
+                        <p class="text-emerald-100/60 text-xs"><i class="far fa-eye mr-1"></i> 8,7 rbx ditonton · 1 bulan lalu</p>
                     </div>
                 </div>
-                <div class="card-green relative flex gap-5 rounded-2xl p-6" data-aos="fade-up" data-aos-delay="200">
-                    <div class="relative z-10 flex gap-5 w-full">
-                        <div class="shrink-0 w-16 text-center bg-gold-400/15 border border-gold-400/40 rounded-xl py-3">
-                            <p class="font-serif text-2xl font-bold text-gold-light leading-none">25</p>
-                            <p class="text-[10px] uppercase tracking-widest text-emerald-100/70 mt-1">Sep</p>
+                <div class="card-green relative rounded-2xl overflow-hidden group cursor-pointer" onclick="openVideo('dQw4w9WgXcQ','Tur Virtual Fasilitas Kampus')" data-aos="fade-up" data-aos-delay="200">
+                    <div class="relative h-44 bg-emerald-900/40 flex items-center justify-center overflow-hidden">
+                        <img src="https://loremflickr.com/640/360/school?lock=33" class="w-full h-full object-cover transition duration-700 group-hover:scale-110 opacity-80" alt="Tur Virtual">
+                        <div class="absolute inset-0 bg-emerald-950/40 group-hover:bg-emerald-950/20 transition"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="w-14 h-14 rounded-full bg-gold-400 text-slate-900 flex items-center justify-center shadow-[0_0_25px_rgba(217,119,6,0.5)] group-hover:scale-110 transition"><i class="fas fa-play ml-1"></i></span>
                         </div>
-                        <div>
-                            <span class="inline-block bg-gold-400 text-slate-900 text-[9px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full mb-2">Tahfidz</span>
-                            <h3 class="font-serif font-bold text-white mb-1 leading-snug">Wisuda Tahfidz Angkatan XII</h3>
-                            <p class="text-emerald-100/70 text-xs mb-2"><i class="far fa-clock mr-1"></i> 08.00 – 15.00 WIB · <i class="fas fa-location-dot mx-1"></i> Aula Serbaguna</p>
-                            <p class="text-emerald-100/80 text-sm leading-relaxed">Penganugerahan syahadah bagi 120 santri yang menyelesaikan hafalan 30 juz.</p>
-                        </div>
+                        <span class="absolute bottom-3 right-3 bg-slate-900/80 text-white text-[10px] font-bold px-2 py-1 rounded"><i class="far fa-clock mr-1"></i>6:48</span>
                     </div>
-                </div>
-                <div class="card-green relative flex gap-5 rounded-2xl p-6" data-aos="fade-up" data-aos-delay="300">
-                    <div class="relative z-10 flex gap-5 w-full">
-                        <div class="shrink-0 w-16 text-center bg-gold-400/15 border border-gold-400/40 rounded-xl py-3">
-                            <p class="font-serif text-2xl font-bold text-gold-light leading-none">30</p>
-                            <p class="text-[10px] uppercase tracking-widest text-emerald-100/70 mt-1">Sep</p>
-                        </div>
-                        <div>
-                            <span class="inline-block bg-gold-400 text-slate-900 text-[9px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full mb-2">SPMB</span>
-                            <h3 class="font-serif font-bold text-white mb-1 leading-snug">Batas Akhir Pendaftaran SPMB Gelombang 1</h3>
-                            <p class="text-emerald-100/70 text-xs mb-2"><i class="far fa-clock mr-1"></i> 23.59 WIB · <i class="fas fa-location-dot mx-1"></i> Online</p>
-                            <p class="text-emerald-100/80 text-sm leading-relaxed">Kesempatan terakhir meraih diskon 25% uang pangkal. Daftar melalui formulir online.</p>
-                            <a href="index.html#spmb-form" class="inline-flex items-center gap-2 mt-3 text-xs font-bold text-gold-light hover:text-white transition">Daftar Sekarang <i class="fas fa-arrow-right"></i></a>
-                        </div>
+                    <div class="p-5 relative z-10">
+                        <h3 class="font-serif font-bold text-white text-sm mb-1">Tur Virtual Fasilitas Kampus</h3>
+                        <p class="text-emerald-100/60 text-xs"><i class="far fa-eye mr-1"></i> 15,2 rbx ditonton · 3 bulan lalu</p>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- ============ JADWAL HARIAN SANTRI ============ -->
-    <section class="py-16 bg-mint-50">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-12">
-                <p class="text-gold-500 text-xs font-bold tracking-[0.3em] uppercase mb-3" data-aos="fade-up">Rutinitas Kampus</p>
-                <h2 class="font-serif text-3xl md:text-4xl font-bold text-slate-900 mb-4" data-aos="fade-up">Jadwal Harian Santri</h2>
-                <div class="w-24 h-1 bg-gradient-to-r from-transparent via-gold-400 to-transparent mx-auto rounded-full"></div>
-                <p class="text-gray-600 max-w-2xl mx-auto mt-4 text-sm md:text-base" data-aos="fade-up">Keseimbangan ibadah, akademik, dan pengembangan diri dalam 24 jam kehidupan pesantren.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-                <div class="card-green relative rounded-2xl p-6" data-aos="fade-up">
-                    <div class="relative z-10">
-                        <div class="w-12 h-12 rounded-xl bg-gold-400/15 border border-gold-400/40 flex items-center justify-center mb-4"><i class="fas fa-moon text-gold-light text-lg"></i></div>
-                        <p class="text-gold-light text-xs font-bold uppercase tracking-widest mb-1">03.30 – 05.30</p>
-                        <h3 class="font-serif font-bold text-white mb-3">Spiritual Pagi</h3>
-                        <ul class="space-y-2 text-emerald-100/80 text-sm">
-                            <li class="flex gap-2"><i class="fas fa-circle text-[4px] mt-2 text-gold-light"></i> Qiyamul lail berjamaah</li>
-                            <li class="flex gap-2"><i class="fas fa-circle text-[4px] mt-2 text-gold-light"></i> Shalat Subuh & dzikir</li>
-                            <li class="flex gap-2"><i class="fas fa-circle text-[4px] mt-2 text-gold-light"></i> Halaqah tahfidz</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="card-green relative rounded-2xl p-6" data-aos="fade-up" data-aos-delay="100">
-                    <div class="relative z-10">
-                        <div class="w-12 h-12 rounded-xl bg-gold-400/15 border border-gold-400/40 flex items-center justify-center mb-4"><i class="fas fa-book-open text-gold-light text-lg"></i></div>
-                        <p class="text-gold-light text-xs font-bold uppercase tracking-widest mb-1">07.00 – 15.00</p>
-                        <h3 class="font-serif font-bold text-white mb-3">Akademik</h3>
-                        <ul class="space-y-2 text-emerald-100/80 text-sm">
-                            <li class="flex gap-2"><i class="fas fa-circle text-[4px] mt-2 text-gold-light"></i> KBM Cambridge & nasional</li>
-                            <li class="flex gap-2"><i class="fas fa-circle text-[4px] mt-2 text-gold-light"></i> Praktikum sains & robotik</li>
-                            <li class="flex gap-2"><i class="fas fa-circle text-[4px] mt-2 text-gold-light"></i> Shalat Dzuhur & makan siang</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="card-green relative rounded-2xl p-6" data-aos="fade-up" data-aos-delay="200">
-                    <div class="relative z-10">
-                        <div class="w-12 h-12 rounded-xl bg-gold-400/15 border border-gold-400/40 flex items-center justify-center mb-4"><i class="fas fa-futbol text-gold-light text-lg"></i></div>
-                        <p class="text-gold-light text-xs font-bold uppercase tracking-widest mb-1">16.00 – 19.30</p>
-                        <h3 class="font-serif font-bold text-white mb-3">Pengembangan Diri</h3>
-                        <ul class="space-y-2 text-emerald-100/80 text-sm">
-                            <li class="flex gap-2"><i class="fas fa-circle text-[4px] mt-2 text-gold-light"></i> Olahraga & ekstrakurikuler</li>
-                            <li class="flex gap-2"><i class="fas fa-circle text-[4px] mt-2 text-gold-light"></i> Shalat Maghrib & mengaji</li>
-                            <li class="flex gap-2"><i class="fas fa-circle text-[4px] mt-2 text-gold-light"></i> Makan malam bersama</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="card-green relative rounded-2xl p-6" data-aos="fade-up" data-aos-delay="300">
-                    <div class="relative z-10">
-                        <div class="w-12 h-12 rounded-xl bg-gold-400/15 border border-gold-400/40 flex items-center justify-center mb-4"><i class="fas fa-language text-gold-light text-lg"></i></div>
-                        <p class="text-gold-light text-xs font-bold uppercase tracking-widest mb-1">20.00 – 22.00</p>
-                        <h3 class="font-serif font-bold text-white mb-3">Malam Pembinaan</h3>
-                        <ul class="space-y-2 text-emerald-100/80 text-sm">
-                            <li class="flex gap-2"><i class="fas fa-circle text-[4px] mt-2 text-gold-light"></i> Shalat Isya berjamaah</li>
-                            <li class="flex gap-2"><i class="fas fa-circle text-[4px] mt-2 text-gold-light"></i> Belajar mandiri terpimpin</li>
-                            <li class="flex gap-2"><i class="fas fa-circle text-[4px] mt-2 text-gold-light"></i> Muhadatsah bilingual</li>
-                        </ul>
-                    </div>
-                </div>
+            <div class="text-center mt-10" data-aos="fade-up">
+                <a href="#" class="inline-flex items-center gap-2 px-8 py-4 border border-gold-400 text-gold-500 hover:bg-gold-400 hover:text-slate-900 font-bold rounded-lg transition"><i class="fab fa-youtube"></i> Kunjungi Channel YouTube Kami</a>
             </div>
         </div>
     </section>
@@ -428,9 +302,9 @@
     <section class="py-16 bg-gradient-to-r from-emerald-900 via-emerald-800 to-emerald-900 relative overflow-hidden">
         <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#FCD34D 1px, transparent 1px); background-size: 24px 24px;"></div>
         <div class="container mx-auto px-6 text-center relative z-10 max-w-3xl">
-            <i class="fas fa-calendar-check text-gold-400 text-4xl mb-6" data-aos="fade-up"></i>
-            <h2 class="font-serif text-3xl font-bold text-white mb-4" data-aos="fade-up">Jadilah Bagian dari Keluarga Al-Izzah</h2>
-            <p class="text-emerald-100/80 mb-8" data-aos="fade-up" data-aos-delay="100">Pendaftaran Santri Baru 2026/2027 Gelombang 1 masih dibuka hingga 30 September 2026. Kuota terbatas!</p>
+            <i class="fas fa-camera-retro text-gold-400 text-4xl mb-6" data-aos="fade-up"></i>
+            <h2 class="font-serif text-3xl font-bold text-white mb-4" data-aos="fade-up">Abadikan Ceritamu di Al-Izzah</h2>
+            <p class="text-emerald-100/80 mb-8" data-aos="fade-up" data-aos-delay="100">Bergabunglah dan ciptakan kenangan indah bersama keluarga besar Pesantren Modern Al-Izzah. SPMB 2026/2027 telah dibuka!</p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center" data-aos="fade-up" data-aos-delay="200">
                 <a href="index.html#spmb-form" class="px-8 py-4 bg-gold-400 hover:bg-gold-500 text-slate-900 font-bold rounded-lg transition transform hover:-translate-y-0.5">Daftar Sekarang</a>
                 <a href="index.html#spmb-info" class="px-8 py-4 border border-gold-400/60 text-gold-light hover:bg-white/10 font-semibold rounded-lg transition">Info Lengkap SPMB</a>
@@ -438,122 +312,74 @@
         </div>
     </section>
 
-        <!-- ============ FOOTER + PETA LOKASI (UNIVERSAL) ============ -->
-    <style>
-        /* Peta: grayscale elegan, berwarna penuh saat disentuh */
-        .map-frame { border: 0; filter: grayscale(1) contrast(1.05) brightness(1.02); transition: filter .7s ease; }
-        .map-wrap:hover .map-frame { filter: grayscale(0); }
-        .map-card { transition: transform .4s ease, box-shadow .4s ease; }
-        .map-card:hover { transform: translateY(-4px); box-shadow: 0 30px 70px -15px rgba(6, 78, 59, 0.45); }
-    </style>
-    <footer class="bg-mint-100 pt-12 pb-5 border-t border-mint-200 relative overflow-hidden">
-        <!-- ornamen lembut sudut kanan atas -->
-        <div class="pointer-events-none absolute -top-24 -right-24 w-72 h-72 rounded-full bg-gold-400/10 blur-3xl"></div>
-
-        <div class="container mx-auto px-6 relative z-10">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-8">
-
-                <!-- ===== KOLOM KIRI: INFO & NAVIGASI ===== -->
-                <div class="lg:col-span-7">
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-x-8 gap-y-10 h-full">
-                        <!-- Brand -->
-                        <div class="sm:col-span-3">
-                            <div class="flex items-center gap-2 mb-5">
-                                <div class="w-10 h-10 rounded-full bg-emerald-900 border border-gold-400/60 flex items-center justify-center shadow-[0_0_15px_rgba(217,119,6,0.25)]"><i class="fas fa-mosque text-gold-400"></i></div>
-                                <h2 class="font-serif text-2xl font-bold text-slate-900">AL-IZZAH</h2>
-                            </div>
-                            <p class="text-gray-600 text-sm leading-relaxed max-w-md mb-6">Lembaga pendidikan Islam modern yang mencetak generasi Qur'ani, berwawasan global, dan siap memimpin masa depan.</p>
-                            <div class="flex gap-3">
-                                <a href="#" aria-label="Instagram" class="w-9 h-9 rounded-full bg-mint-200 flex items-center justify-center text-emerald-900 hover:bg-gold-400 hover:text-white transition"><i class="fab fa-instagram text-sm"></i></a>
-                                <a href="#" aria-label="YouTube" class="w-9 h-9 rounded-full bg-mint-200 flex items-center justify-center text-emerald-900 hover:bg-gold-400 hover:text-white transition"><i class="fab fa-youtube text-sm"></i></a>
-                                <a href="#" aria-label="Facebook" class="w-9 h-9 rounded-full bg-mint-200 flex items-center justify-center text-emerald-900 hover:bg-gold-400 hover:text-white transition"><i class="fab fa-facebook-f text-sm"></i></a>
-                            </div>
-                        </div>
-                        <!-- Navigasi -->
-                        <div>
-                            <h3 class="text-slate-900 font-bold mb-5 text-sm uppercase tracking-widest">Navigasi</h3>
-                            <ul class="space-y-3 text-sm text-gray-600">
-                                <li><a href="index.html" class="hover:text-gold-500 transition">Beranda</a></li>
-                                <li><a href="profil.html" class="hover:text-gold-500 transition">Profil Sekolah</a></li>
-                                <li><a href="berita.html" class="hover:text-gold-500 transition">Kabar Berita</a></li>
-                                <li><a href="index.html#spmb" class="hover:text-gold-500 transition">SPMB Online</a></li>
-                            </ul>
-                        </div>
-                        <!-- Layanan SPMB -->
-                        <div>
-                            <h3 class="text-slate-900 font-bold mb-5 text-sm uppercase tracking-widest">Layanan SPMB</h3>
-                            <ul class="space-y-3 text-sm text-gray-600">
-                                <li><a href="index.html#spmb-info" class="hover:text-gold-500 transition">Informasi Pendaftaran</a></li>
-                                <li><a href="index.html#spmb-result" class="hover:text-gold-500 transition">Hasil Seleksi</a></li>
-                                <li><a href="index.html#spmb-form" class="hover:text-gold-500 transition">Formulir Pendaftaran</a></li>
-                            </ul>
-                        </div>
-                        <!-- Kontak -->
-                        <div>
-                            <h3 class="text-slate-900 font-bold mb-5 text-sm uppercase tracking-widest">Hubungi Kami</h3>
-                            <ul class="space-y-3 text-sm text-gray-600">
-                                <li class="flex items-center gap-2.5"><i class="fas fa-phone text-gold-500 text-xs"></i><span>+62 812-3456-7890</span></li>
-                                <li class="flex items-center gap-2.5"><i class="fas fa-envelope text-gold-500 text-xs"></i><span>info@alizzah.sch.id</span></li>
-                                <li class="flex items-start gap-2.5"><i class="fas fa-clock text-gold-500 text-xs mt-1"></i><span>Senin – Sabtu, 08.00 – 16.00 WIB</span></li>
-                            </ul>
-                        </div>
+    <!-- ============ FOOTER ============ -->
+    <footer class="bg-mint-100 pt-20 pb-10 border-t border-mint-200">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+                <div>
+                    <div class="flex items-center gap-2 mb-6"><i class="fas fa-mosque text-gold-500 text-2xl"></i><h2 class="font-serif text-2xl font-bold text-slate-900">AL-IZZAH</h2></div>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-6">Lembaga pendidikan Islam modern yang mencetak generasi Qur'ani, berwawasan global, dan siap memimpin masa depan.</p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-mint-200 flex items-center justify-center text-emerald-900 hover:bg-gold-400 hover:text-white transition"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-mint-200 flex items-center justify-center text-emerald-900 hover:bg-gold-400 hover:text-white transition"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-mint-200 flex items-center justify-center text-emerald-900 hover:bg-gold-400 hover:text-white transition"><i class="fab fa-facebook-f"></i></a>
                     </div>
                 </div>
-
-                <!-- ===== KOLOM KANAN: KARTU PETA GOOGLE MAPS ===== -->
-                <div class="lg:col-span-5" data-aos="fade-left">
-                    <div class="map-card relative h-full min-h-[380px] rounded-3xl overflow-hidden bg-white border border-mint-200 shadow-[0_25px_60px_-15px_rgba(6,78,59,0.35)] flex flex-col">
-
-                        <!-- Header peta -->
-                        <div class="relative z-10 flex items-center justify-between px-5 py-4 bg-gradient-to-r from-emerald-900 to-emerald-800">
-                            <div class="flex items-center gap-3">
-                                <span class="w-9 h-9 rounded-xl bg-gold-400/20 border border-gold-400/40 flex items-center justify-center"><i class="fas fa-location-dot text-gold-light text-sm"></i></span>
-                                <div>
-                                    <h3 class="font-serif font-bold text-white text-sm leading-none">Lokasi Kampus</h3>
-                                    <p class="text-emerald-100/60 text-[9px] mt-1 uppercase tracking-[0.25em]">Pesantren Modern Al-Izzah</p>
-                                </div>
-                            </div>
-                            <span class="hidden sm:flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-widest text-emerald-100/70 bg-white/5 border border-white/10 rounded-full px-2.5 py-1">
-                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Boarding 24/7
-                            </span>
-                        </div>
-
-                        <!-- Frame peta -->
-                        <div class="map-wrap relative flex-1 min-h-[240px]">
-                            <iframe
-                                class="map-frame absolute inset-0 w-full h-full"
-                                src="https://www.google.com/maps?q=Jl.+Pendidikan+Islam+No.+99,+Kota+Baru,+Indonesia&z=15&output=embed"
-                                loading="lazy"
-                                referrerpolicy="no-referrer-when-downgrade"
-                                allowfullscreen
-                                title="Lokasi Pesantren Modern Al-Izzah"></iframe>
-
-                            <!-- Sudut emas dekoratif -->
-                            <span class="pointer-events-none absolute top-3 left-3 w-6 h-6 border-t-2 border-l-2 border-gold-400 rounded-tl-lg"></span>
-                            <span class="pointer-events-none absolute top-3 right-3 w-6 h-6 border-t-2 border-r-2 border-gold-400 rounded-tr-lg"></span>
-                            <span class="pointer-events-none absolute bottom-3 left-3 w-6 h-6 border-b-2 border-l-2 border-gold-400 rounded-bl-lg"></span>
-                            <span class="pointer-events-none absolute bottom-3 right-3 w-6 h-6 border-b-2 border-r-2 border-gold-400 rounded-br-lg"></span>
-
-                            <!-- Gradasi bawah -->
-                            <div class="pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-emerald-950/50 to-transparent"></div>
-                        </div>
-
-                        <!-- Bar alamat + tombol rute -->
-                        <div class="relative z-10 px-5 py-4 bg-mint-50 border-t border-mint-200 flex items-center gap-3">
-                            <i class="fas fa-map-pin text-gold-500"></i>
-                            <p class="text-gray-600 text-xs leading-relaxed flex-1">Jl. Pendidikan Islam No. 99, Kota Baru, Indonesia 40123</p>
-                            <a href="https://www.google.com/maps/dir/?api=1&destination=Jl.+Pendidikan+Islam+No.+99,+Kota+Baru,+Indonesia" target="_blank" rel="noopener"
-                               class="shrink-0 inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-emerald-900 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-gold-400 hover:text-slate-900 transition">
-                                Rute <i class="fas fa-directions text-[9px]"></i>
-                            </a>
-                        </div>
-                    </div>
+                <div>
+                    <h3 class="text-slate-900 font-bold mb-6">Navigasi</h3>
+                    <ul class="space-y-3 text-sm text-gray-600">
+                        <li><a href="index.html" class="hover:text-gold-500 transition">Beranda</a></li>
+                        <li><a href="profil.html" class="hover:text-gold-500 transition">Profil Sekolah</a></li>
+                        <li><a href="berita.html" class="hover:text-gold-500 transition">Berita & Artikel</a></li>
+                        <li><a href="index.html#spmb" class="hover:text-gold-500 transition">SPMB Online</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-slate-900 font-bold mb-6">Kabar Berita</h3>
+                    <ul class="space-y-3 text-sm text-gray-600">
+                        <li><a href="berita.html" class="hover:text-gold-500 transition">Berita & Artikel</a></li>
+                        <li><a href="agenda.html" class="hover:text-gold-500 transition">Agenda & Kalender</a></li>
+                        <li><a href="prestasi.html" class="hover:text-gold-500 transition">Prestasi & Penghargaan</a></li>
+                        <li><a href="galeri.html" class="hover:text-gold-500 transition">Galeri Foto & Video</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-slate-900 font-bold mb-6">Hubungi Kami</h3>
+                    <ul class="space-y-4 text-sm text-gray-600">
+                        <li class="flex items-start gap-3"><i class="fas fa-map-marker-alt text-gold-500 mt-1"></i><span>Jl. Pendidikan Islam No. 99, Kota Baru, Indonesia 40123</span></li>
+                        <li class="flex items-center gap-3"><i class="fas fa-phone text-gold-500"></i><span>+62 812-3456-7890</span></li>
+                        <li class="flex items-center gap-3"><i class="fas fa-envelope text-gold-500"></i><span>info@alizzah.sch.id</span></li>
+                    </ul>
                 </div>
             </div>
-
-            <div class="border-t border-mint-200 pt-4 text-center text-sm text-gray-500">&copy; 2026 Pesantren Modern Al-Izzah. All Rights Reserved.</div>
+            <div class="border-t border-mint-200 pt-8 text-center text-sm text-gray-500">&copy; 2026 Pesantren Modern Al-Izzah. All Rights Reserved.</div>
         </div>
     </footer>
+
+    <!-- ============ LIGHTBOX FOTO ============ -->
+    <div id="lightbox" class="fixed inset-0 z-[9999] bg-slate-950/95 backdrop-blur-sm hidden items-center justify-center p-6" onclick="closeLightbox(event)">
+        <button onclick="closeLightbox()" class="absolute top-6 right-6 w-11 h-11 rounded-full bg-white/10 border border-white/20 text-white hover:bg-gold-400 hover:text-slate-900 transition flex items-center justify-center text-lg z-10"><i class="fas fa-xmark"></i></button>
+        <button onclick="navLightbox(-1, event)" class="absolute left-4 md:left-10 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 border border-white/20 text-white hover:bg-gold-400 hover:text-slate-900 transition flex items-center justify-center text-lg z-10"><i class="fas fa-chevron-left"></i></button>
+        <button onclick="navLightbox(1, event)" class="absolute right-4 md:right-10 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 border border-white/20 text-white hover:bg-gold-400 hover:text-slate-900 transition flex items-center justify-center text-lg z-10"><i class="fas fa-chevron-right"></i></button>
+        <div class="max-w-5xl max-h-full text-center" onclick="event.stopPropagation()">
+            <img id="lightboxImg" src="" class="max-h-[80vh] max-w-full rounded-xl shadow-2xl border border-white/10 object-contain" alt="">
+            <div class="mt-4">
+                <p id="lightboxTitle" class="text-white font-serif text-lg font-bold"></p>
+                <p id="lightboxCat" class="text-gold-light text-xs uppercase tracking-[0.25em] mt-1"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ MODAL VIDEO ============ -->
+    <div id="videoModal" class="fixed inset-0 z-[9999] bg-slate-950/95 backdrop-blur-sm hidden items-center justify-center p-6" onclick="closeVideo(event)">
+        <button onclick="closeVideo()" class="absolute top-6 right-6 w-11 h-11 rounded-full bg-white/10 border border-white/20 text-white hover:bg-gold-400 hover:text-slate-900 transition flex items-center justify-center text-lg z-10"><i class="fas fa-xmark"></i></button>
+        <div class="w-full max-w-4xl" onclick="event.stopPropagation()">
+            <div class="relative rounded-xl overflow-hidden border border-gold-400/30 shadow-2xl" style="padding-bottom:56.25%; height:0;">
+                <iframe id="videoFrame" class="absolute top-0 left-0 w-full h-full" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <p id="videoTitle" class="text-white font-serif text-center mt-4 font-bold"></p>
+        </div>
+    </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
@@ -564,124 +390,76 @@
             else { navbar.classList.remove('glass-nav', 'py-2'); navbar.classList.add('py-5'); }
         });
         function toggleMobileMenu() { const m = document.getElementById('mobile-menu'); m.classList.toggle('hidden'); m.classList.toggle('flex'); }
-    </script>
+        function imgFallback(img, seed) { if (!img.dataset.fb1) { img.dataset.fb1 = 1; img.src = 'https://picsum.photos/seed/' + seed + '/600/600'; } else { img.style.display = 'none'; } }
 
-    <!-- ============================================================
-         MINI KALENDER INTERAKTIF — semua event dipasang via JS
-         (addEventListener, bukan onclick inline → dijamin jalan)
-         ============================================================ -->
-    <script>
-    (function() {
-        const BULAN = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
-
-        /* Data kegiatan — key: YYYY-MM-DD (mudah ditambah nanti) */
-        const EVENTS = {
-            '2026-09-01': [{ t: "Upacara Pembukaan Tahun Ajaran Baru", k: 'Kegiatan', j: '07.00 WIB · Lapangan Utama' }],
-            '2026-09-05': [{ t: 'Milad ke-16 Pesantren Al-Izzah', k: 'Kegiatan', j: '08.00 WIB · Aula Serbaguna' }],
-            '2026-09-09': [{ t: 'Parenting Day — Seminar Wali Santri', k: 'Kegiatan', j: '08.00 WIB · Aula Serbaguna' }],
-            '2026-09-17': [{ t: 'Penilaian Tengah Semester (PTS) Ganjil', k: 'Akademik', j: '07.00 – 12.00 WIB · Gedung Akademik' }],
-            '2026-09-20': [{ t: 'Peringatan Maulid Nabi Muhammad SAW', k: 'Keagamaan', j: '19.30 WIB · Masjid Agung Al-Izzah' }],
-            '2026-09-25': [{ t: 'Wisuda Tahfidz Angkatan XII', k: 'Tahfidz', j: '08.00 – 15.00 WIB · Aula Serbaguna' }],
-            '2026-09-30': [{ t: 'Batas Akhir Pendaftaran SPMB Gelombang 1', k: 'SPMB', j: '23.59 WIB · Online' }],
-            '2026-10-05': [{ t: 'Ujian Praktik Tahsin Bersanad', k: 'Tahfidz', j: '05.30 WIB · Serambi Masjid' }],
-            '2026-10-17': [{ t: 'Lomba Antar Kelas (Class Meeting)', k: 'Kegiatan', j: '07.30 WIB · Area Kampus' }],
-            '2026-10-22': [{ t: 'Peringatan Hari Santri Nasional', k: 'Keagamaan', j: '07.00 WIB · Lapangan Utama' }],
-            '2026-11-10': [{ t: 'Open House & Campus Expo', k: 'SPMB', j: '08.00 WIB · Aula Serbaguna' }],
-            '2026-12-01': [{ t: 'Pendaftaran SPMB Gelombang 2 Dibuka', k: 'SPMB', j: 'Sepanjang hari · Online' }],
-            '2026-12-18': [{ t: 'Pembagian Rapor Semester Ganjil', k: 'Akademik', j: '08.00 WIB · Gedung Akademik' }]
-        };
-
-        const today = new Date();
-        let view = new Date(today.getFullYear(), today.getMonth(), 1);
-        let selected = null;
-
-        const elGrid   = document.getElementById('calGrid');
-        const elTitle  = document.getElementById('calTitle');
-        const elDetail = document.getElementById('calDetail');
-        const elBody   = document.getElementById('calDetailBody');
-
-        function key(y, m, d) { return y + '-' + String(m + 1).padStart(2,'0') + '-' + String(d).padStart(2,'0'); }
-
-        function render() {
-            const y = view.getFullYear(), m = view.getMonth();
-            elTitle.textContent = BULAN[m] + ' ' + y;
-            elGrid.innerHTML = '';
-
-            const first = new Date(y, m, 1).getDay();
-            const total = new Date(y, m + 1, 0).getDate();
-            const todayKey = key(today.getFullYear(), today.getMonth(), today.getDate());
-
-            for (let i = 0; i < first; i++) {
-                const s = document.createElement('div');
-                s.className = 'mcal-cell mcal-empty';
-                elGrid.appendChild(s);
-            }
-            for (let d = 1; d <= total; d++) {
-                const k = key(y, m, d);
-                const cell = document.createElement('div');
-                cell.className = 'mcal-cell';
-                cell.textContent = d;
-                if (k === selected) cell.classList.add('mcal-selected');
-                else if (k === todayKey) cell.classList.add('mcal-today');
-                if (EVENTS[k]) {
-                    const dot = document.createElement('span');
-                    dot.className = 'mcal-dot';
-                    cell.appendChild(dot);
-                }
-                cell.addEventListener('click', function() {
-                    selected = k;
-                    render();
-                    showDetail(k);
-                });
-                elGrid.appendChild(cell);
-            }
-            elGrid.classList.remove('cal-fade');
-            void elGrid.offsetWidth;
-            elGrid.classList.add('cal-fade');
+        /* ====== Filter Galeri ====== */
+        function filterGallery(cat, btn) {
+            document.querySelectorAll('.g-btn').forEach(b => { b.className = 'g-btn px-5 py-2 rounded-full text-sm border border-mint-300 text-gray-600 hover:border-gold-400 hover:text-gold-500 transition'; });
+            btn.className = 'g-btn px-5 py-2 rounded-full text-sm border border-gold-400 bg-gold-400 text-slate-900 font-bold transition';
+            document.querySelectorAll('.g-item').forEach(i => { i.classList.toggle('hidden', !(cat === 'all' || i.dataset.cat === cat)); });
         }
 
-        function showDetail(k) {
-            const evs = EVENTS[k];
-            if (!evs) { elDetail.classList.add('hidden'); return; }
-            const p = k.split('-');
-            let html = '<p class="text-gold-light text-[10px] font-bold uppercase tracking-[0.2em] mb-3"><i class="fas fa-calendar-check mr-1"></i> Agenda ' + Number(p[2]) + ' ' + BULAN[Number(p[1]) - 1] + ' ' + p[0] + '</p>';
-            html += '<div class="space-y-3">';
-            evs.forEach(function(e) {
-                html += '<div class="flex items-start gap-3">' +
-                    '<span class="shrink-0 text-[9px] font-bold uppercase tracking-widest text-slate-900 bg-gold-400 rounded-full px-2.5 py-1 mt-0.5">' + e.k + '</span>' +
-                    '<div><p class="text-white text-sm font-semibold leading-snug">' + e.t + '</p>' +
-                    '<p class="text-emerald-100/60 text-xs mt-0.5"><i class="far fa-clock mr-1"></i>' + e.j + '</p></div></div>';
-            });
-            html += '</div>';
-            elBody.innerHTML = html;
-            elDetail.classList.remove('hidden');
-            elDetail.classList.remove('cal-fade');
-            void elDetail.offsetWidth;
-            elDetail.classList.add('cal-fade');
+        /* ====== Lightbox ====== */
+        let lbItems = [], lbIndex = 0;
+        function getVisibleItems() { return Array.from(document.querySelectorAll('.g-item')).filter(i => !i.classList.contains('hidden')); }
+        function openLightbox(el) {
+            lbItems = getVisibleItems();
+            lbIndex = lbItems.indexOf(el);
+            const img = el.querySelector('img');
+            const title = el.querySelector('p') ? el.querySelector('p').textContent : '';
+            const cat = el.querySelectorAll('p')[1] ? el.querySelectorAll('p')[1].textContent : '';
+            document.getElementById('lightboxImg').src = img.src;
+            document.getElementById('lightboxTitle').textContent = title;
+            document.getElementById('lightboxCat').textContent = cat;
+            const lb = document.getElementById('lightbox');
+            lb.classList.remove('hidden'); lb.classList.add('flex');
+            document.body.style.overflow = 'hidden';
         }
+        function closeLightbox(e) {
+            if (e && e.target !== e.currentTarget) return;
+            const lb = document.getElementById('lightbox');
+            lb.classList.add('hidden'); lb.classList.remove('flex');
+            document.body.style.overflow = '';
+        }
+        function navLightbox(dir, e) {
+            if (e) { e.stopPropagation(); }
+            if (!lbItems.length) return;
+            lbIndex = (lbIndex + dir + lbItems.length) % lbItems.length;
+            const el = lbItems[lbIndex];
+            const img = el.querySelector('img');
+            document.getElementById('lightboxImg').src = img.src;
+            document.getElementById('lightboxTitle').textContent = el.querySelector('p') ? el.querySelector('p').textContent : '';
+            document.getElementById('lightboxCat').textContent = el.querySelectorAll('p')[1] ? el.querySelectorAll('p')[1].textContent : '';
+        }
+        document.addEventListener('keydown', e => {
+            const lb = document.getElementById('lightbox');
+            if (!lb.classList.contains('hidden')) {
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') navLightbox(-1);
+                if (e.key === 'ArrowRight') navLightbox(1);
+            }
+            const vm = document.getElementById('videoModal');
+            if (!vm.classList.contains('hidden') && e.key === 'Escape') closeVideo();
+        });
 
-        document.getElementById('btnPrev').addEventListener('click', function() {
-            view = new Date(view.getFullYear(), view.getMonth() - 1, 1);
-            selected = null; elDetail.classList.add('hidden'); render();
-        });
-        document.getElementById('btnNext').addEventListener('click', function() {
-            view = new Date(view.getFullYear(), view.getMonth() + 1, 1);
-            selected = null; elDetail.classList.add('hidden'); render();
-        });
-        document.getElementById('btnToday').addEventListener('click', function() {
-            view = new Date(today.getFullYear(), today.getMonth(), 1);
-            selected = key(today.getFullYear(), today.getMonth(), today.getDate());
-            render(); showDetail(selected);
-        });
-
-        render();
-        console.log('%c📅 Mini Kalender Aktif', 'color:#059669;font-size:12px;font-weight:bold;');
-    })();
+        /* ====== Modal Video ====== */
+        function openVideo(id, title) {
+            document.getElementById('videoFrame').src = 'https://www.youtube.com/embed/' + id + '?autoplay=1';
+            document.getElementById('videoTitle').textContent = title;
+            const vm = document.getElementById('videoModal');
+            vm.classList.remove('hidden'); vm.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeVideo(e) {
+            if (e && e.target !== e.currentTarget) return;
+            document.getElementById('videoFrame').src = '';
+            const vm = document.getElementById('videoModal');
+            vm.classList.add('hidden'); vm.classList.remove('flex');
+            document.body.style.overflow = '';
+        }
     </script>
-
     <!-- Jembatan CMS dashboard → halaman publik (INTEGRASI) -->
     <script src="cms-public.js"></script>
-
 <!-- ============================================================ -->
     <!-- 🔒 Proteksi Konten (TETAP SAMA)                              -->
     <!-- ============================================================ -->
