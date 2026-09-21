@@ -68,7 +68,14 @@
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #DCEFE2; }
         ::-webkit-scrollbar-thumb { background: #064E3B; border-radius: 4px; }
-        
+
+        /* ====== PATCH NORMALISASI CONTAINER LINTAS-BROWSER ====== */
+        /* Menimpa batas max-width bawaan Tailwind (.container mentok di 1536px)
+           yang membuat margin kiri-kanan raksasa di viewport/zoom tertentu.
+           Hasil: konten mengisi lebar layar (maks 1920px) di SEMUA browser. */
+        .container { max-width: 1920px !important; }
+
+       
         /* Navbar glass versi putih kehijauan (aktif saat scroll) */
         .glass-nav {
             background: rgba(232, 245, 236, 0.92);
