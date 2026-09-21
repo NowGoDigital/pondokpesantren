@@ -30,7 +30,6 @@
         .group:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
         .dropdown-menu { opacity: 0; visibility: hidden; transform: translateY(10px); transition: all .3s ease-in-out; }
         .pattern-islamic { background-image: radial-gradient(rgba(217,119,6,0.10) 1px, transparent 1px); background-size: 28px 28px; }
-        /* ====== KARTU HIJAU ELEGAN (sama dengan index.html) ====== */
         .card-green {
             background: linear-gradient(135deg, #065F46 0%, #064E3B 55%, #053B2C 100%);
             border: 1px solid rgba(16, 185, 129, 0.25);
@@ -48,8 +47,7 @@
             background: radial-gradient(circle at top left, rgba(252,211,77,0.08), transparent 45%);
             pointer-events: none;
         }
-        /* Overlay hover galeri foto */
-        .gallery-overlay { background: linear-gradient(to top, rgba(6,78,59,0.95) 0%, rgba(6,78,59,0.3) 50%, transparent 100%); }
+        .filter-btn.active { background: #D97706; color: #0f172a; border-color: #D97706; }
     </style>
 </head>
 <body class="bg-mint-50 text-gray-800 font-sans antialiased overflow-x-hidden">
@@ -103,14 +101,14 @@
         </div>
         <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-mint-50/95 backdrop-blur-xl border-t border-mint-200 p-6 flex-col gap-4 shadow-2xl max-h-[85vh] overflow-y-auto">
             <a href="index.html" class="block text-gray-700 hover:text-gold-500 py-2 font-medium">Beranda</a>
-            <div class="border-l-2 border-gold-400 pl-4 space-y-3 bg-gold-400/5 rounded-r-lg py-3 pr-3">
+            <div class="border-l-2 border-emerald-800 pl-4 space-y-3">
                 <p class="text-xs text-gold-500 uppercase tracking-widest font-bold mb-1">Profil</p>
                 <a href="profil.html" class="block text-sm text-gray-600 hover:text-emerald-900">Profil Sekolah (Visi, Misi, Sejarah)</a>
                 <a href="struktur.html" class="block text-sm text-gray-600 hover:text-emerald-900">Struktur Organisasi</a>
                 <a href="index.html#facilities" class="block text-sm text-gray-600 hover:text-emerald-900">Fasilitas & Infrastruktur</a>
                 <a href="galeri.html" class="block text-sm text-gold-500 font-semibold">Galeri Foto & Video</a>
             </div>
-            <div class="border-l-2 border-emerald-800 pl-4 space-y-3">
+            <div class="border-l-2 border-gold-400 pl-4 space-y-3 bg-gold-400/5 rounded-r-lg py-3 pr-3">
                 <p class="text-xs text-gold-500 uppercase tracking-widest font-bold mb-1">Kabar Berita</p>
                 <a href="berita.html" class="block text-sm text-gray-600 hover:text-emerald-900">Berita & Artikel Sekolah</a>
                 <a href="agenda.html" class="block text-sm text-gray-600 hover:text-emerald-900">Agenda & Kalender Kegiatan</a>
@@ -137,102 +135,79 @@
             <nav class="flex items-center justify-center gap-2 text-xs text-gray-400 mb-6" data-aos="fade-down">
                 <a href="index.html" class="hover:text-gold-400 transition">Beranda</a>
                 <i class="fas fa-chevron-right text-[8px] text-gold-400"></i>
-                <span class="text-gold-400 font-semibold">Galeri Foto & Video</span>
+                <span class="text-gold-400 font-semibold">Galeri</span>
             </nav>
-            <p class="text-gold-400 text-xs font-bold tracking-[0.35em] uppercase mb-4" data-aos="fade-up">Momen & Kenangan</p>
+            <p class="text-gold-400 text-xs font-bold tracking-[0.35em] uppercase mb-4" data-aos="fade-up">Dokumentasi Kegiatan</p>
             <h1 class="font-serif text-4xl md:text-6xl font-bold text-white mb-6 drop-shadow-2xl" data-aos="fade-up" data-aos-delay="100">Galeri <span class="text-gold-gradient italic">Foto & Video</span></h1>
             <div class="flex items-center justify-center gap-4 mb-6" data-aos="fade-up" data-aos-delay="200">
                 <span class="h-px w-16 md:w-24 bg-gradient-to-r from-transparent to-gold-400"></span>
                 <i class="fas fa-star-and-crescent text-gold-400 text-lg"></i>
                 <span class="h-px w-16 md:w-24 bg-gradient-to-l from-transparent to-gold-400"></span>
             </div>
-            <p class="text-gray-300 max-w-2xl mx-auto font-light leading-relaxed" data-aos="fade-up" data-aos-delay="300">Abadikan keindahan kehidupan pesantren — dari kekhusyukan ibadah, semangat belajar, hingga kehangatan persaudaraan.</p>
+            <p class="text-gray-300 max-w-2xl mx-auto font-light leading-relaxed" data-aos="fade-up" data-aos-delay="300">Potret kehidupan santri: ibadah, akademik, prestasi, dan kebersamaan di kampus Al-Izzah.</p>
         </div>
     </header>
 
     <!-- ============ GALERI FOTO ============ -->
     <section class="py-16 bg-mint-50">
         <div class="container mx-auto px-6">
-            <div class="text-center mb-10">
-                <p class="text-gold-500 text-xs font-bold tracking-[0.3em] uppercase mb-3" data-aos="fade-up">Dokumentasi Kegiatan</p>
-                <h2 class="font-serif text-3xl md:text-4xl font-bold text-slate-900 mb-4" data-aos="fade-up">Galeri Foto</h2>
-                <div class="w-24 h-1 bg-gradient-to-r from-transparent via-gold-400 to-transparent mx-auto rounded-full"></div>
+            <div class="flex flex-wrap justify-center gap-3 mb-10" data-aos="fade-up">
+                <button onclick="filterGallery('all', this)" class="filter-btn active px-5 py-2 rounded-full text-xs font-bold uppercase tracking-widest border border-mint-300 bg-white text-gray-600 transition">Semua</button>
+                <button onclick="filterGallery('kegiatan', this)" class="filter-btn px-5 py-2 rounded-full text-xs font-bold uppercase tracking-widest border border-mint-300 bg-white text-gray-600 transition">Kegiatan</button>
+                <button onclick="filterGallery('ibadah', this)" class="filter-btn px-5 py-2 rounded-full text-xs font-bold uppercase tracking-widest border border-mint-300 bg-white text-gray-600 transition">Tahfidz & Ibadah</button>
+                <button onclick="filterGallery('fasilitas', this)" class="filter-btn px-5 py-2 rounded-full text-xs font-bold uppercase tracking-widest border border-mint-300 bg-white text-gray-600 transition">Fasilitas</button>
+                <button onclick="filterGallery('prestasi', this)" class="filter-btn px-5 py-2 rounded-full text-xs font-bold uppercase tracking-widest border border-mint-300 bg-white text-gray-600 transition">Prestasi</button>
             </div>
 
-            <!-- Filter Kategori -->
-            <div class="flex flex-wrap justify-center gap-3 mb-12" data-aos="fade-up">
-                <button onclick="filterGallery('all', this)" class="g-btn px-5 py-2 rounded-full text-sm border border-gold-400 bg-gold-400 text-slate-900 font-bold transition">Semua</button>
-                <button onclick="filterGallery('ibadah', this)" class="g-btn px-5 py-2 rounded-full text-sm border border-mint-300 text-gray-600 hover:border-gold-400 hover:text-gold-500 transition">Ibadah</button>
-                <button onclick="filterGallery('akademik', this)" class="g-btn px-5 py-2 rounded-full text-sm border border-mint-300 text-gray-600 hover:border-gold-400 hover:text-gold-500 transition">Akademik</button>
-                <button onclick="filterGallery('kegiatan', this)" class="g-btn px-5 py-2 rounded-full text-sm border border-mint-300 text-gray-600 hover:border-gold-400 hover:text-gold-500 transition">Kegiatan</button>
-                <button onclick="filterGallery('fasilitas', this)" class="g-btn px-5 py-2 rounded-full text-sm border border-mint-300 text-gray-600 hover:border-gold-400 hover:text-gold-500 transition">Fasilitas</button>
-            </div>
-
-            <!-- GRID GALERI (mount CMS mengisi #galleryGrid) -->
-            <div id="galleryGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                <div class="g-item relative group rounded-xl overflow-hidden cursor-pointer aspect-square bg-emerald-900/40" data-cat="ibadah" onclick="openLightbox(this)" data-aos="zoom-in">
-                    <img onerror="imgFallback(this,'g1')" src="prestasi2.jpg" class="w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="Shalat Berjamaah">
-                    <div class="gallery-overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-4">
-                        <p class="text-white font-serif font-bold text-sm">Shalat Berjamaah</p>
-                        <p class="text-gold-light text-[10px] uppercase tracking-widest">Ibadah</p>
+            <!-- Grid galeri: item statis + item CMS (dirender cms-public.js v3) -->
+            <div id="galleryGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="g-item relative group overflow-hidden rounded-xl cursor-pointer aspect-video" data-cat="kegiatan" onclick="openLightbox('https://loremflickr.com/800/600/scout?lock=21','Upacara pembukaan tahun ajaran baru')">
+                    <img src="https://loremflickr.com/800/600/scout?lock=21" class="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="Kegiatan">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-4 z-10">
+                        <span class="inline-block bg-gold-400 text-slate-900 text-[8px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full mb-1.5">kegiatan</span>
+                        <p class="text-white text-sm font-semibold leading-snug">Upacara pembukaan tahun ajaran baru</p>
                     </div>
-                    <div class="absolute top-3 right-3 w-8 h-8 rounded-full bg-emerald-900/70 border border-gold-400/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition"><i class="fas fa-magnifying-glass-plus text-gold-light text-xs"></i></div>
                 </div>
-                <div class="g-item relative group rounded-xl overflow-hidden cursor-pointer aspect-square bg-emerald-900/40" data-cat="akademik" onclick="openLightbox(this)" data-aos="zoom-in" data-aos-delay="50">
-                    <img onerror="imgFallback(this,'g2')" src="prestasi3.jpg" class="w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="Belajar di Kelas">
-                    <div class="gallery-overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-4">
-                        <p class="text-white font-serif font-bold text-sm">KBM Cambridge</p>
-                        <p class="text-gold-light text-[10px] uppercase tracking-widest">Akademik</p>
+                <div class="g-item relative group overflow-hidden rounded-xl cursor-pointer aspect-video" data-cat="ibadah" onclick="openLightbox('https://loremflickr.com/800/600/quran?lock=22','Halaqah tahfidz ba\'da subuh')">
+                    <img src="https://loremflickr.com/800/600/quran?lock=22" class="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="Ibadah">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-4 z-10">
+                        <span class="inline-block bg-gold-400 text-slate-900 text-[8px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full mb-1.5">ibadah</span>
+                        <p class="text-white text-sm font-semibold leading-snug">Halaqah tahfidz ba'da subuh</p>
                     </div>
-                    <div class="absolute top-3 right-3 w-8 h-8 rounded-full bg-emerald-900/70 border border-gold-400/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition"><i class="fas fa-magnifying-glass-plus text-gold-light text-xs"></i></div>
                 </div>
-                <div class="g-item relative group rounded-xl overflow-hidden cursor-pointer aspect-square bg-emerald-900/40" data-cat="kegiatan" onclick="openLightbox(this)" data-aos="zoom-in" data-aos-delay="100">
-                    <img onerror="imgFallback(this,'g3')" src="prestasi1.jpg" class="w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="Upacara Wisuda Tahfidz">
-                    <div class="gallery-overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-4">
-                        <p class="text-white font-serif font-bold text-sm">Wisuda Tahfidz</p>
-                        <p class="text-gold-light text-[10px] uppercase tracking-widest">Kegiatan</p>
+                <div class="g-item relative group overflow-hidden rounded-xl cursor-pointer aspect-video" data-cat="fasilitas" onclick="openLightbox('https://loremflickr.com/800/600/library?lock=23','Digital library kampus')">
+                    <img src="https://loremflickr.com/800/600/library?lock=23" class="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="Fasilitas">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-4 z-10">
+                        <span class="inline-block bg-gold-400 text-slate-900 text-[8px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full mb-1.5">fasilitas</span>
+                        <p class="text-white text-sm font-semibold leading-snug">Digital library kampus</p>
                     </div>
-                    <div class="absolute top-3 right-3 w-8 h-8 rounded-full bg-emerald-900/70 border border-gold-400/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition"><i class="fas fa-magnifying-glass-plus text-gold-light text-xs"></i></div>
                 </div>
-                <div class="g-item relative group rounded-xl overflow-hidden cursor-pointer aspect-square bg-emerald-900/40" data-cat="fasilitas" onclick="openLightbox(this)" data-aos="zoom-in" data-aos-delay="150">
-                    <img onerror="imgFallback(this,'g4')" src="asrama.jpg" class="w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="Asrama Santri">
-                    <div class="gallery-overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-4">
-                        <p class="text-white font-serif font-bold text-sm">Asrama Modern</p>
-                        <p class="text-gold-light text-[10px] uppercase tracking-widest">Fasilitas</p>
+                <div class="g-item relative group overflow-hidden rounded-xl cursor-pointer aspect-video" data-cat="prestasi" onclick="openLightbox('https://loremflickr.com/800/600/trophy?lock=24','Juara olimpiade robotik nasional')">
+                    <img src="https://loremflickr.com/800/600/trophy?lock=24" class="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="Prestasi">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-4 z-10">
+                        <span class="inline-block bg-gold-400 text-slate-900 text-[8px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full mb-1.5">prestasi</span>
+                        <p class="text-white text-sm font-semibold leading-snug">Juara olimpiade robotik nasional</p>
                     </div>
-                    <div class="absolute top-3 right-3 w-8 h-8 rounded-full bg-emerald-900/70 border border-gold-400/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition"><i class="fas fa-magnifying-glass-plus text-gold-light text-xs"></i></div>
                 </div>
-                <div class="g-item relative group rounded-xl overflow-hidden cursor-pointer aspect-square bg-emerald-900/40" data-cat="ibadah" onclick="openLightbox(this)" data-aos="zoom-in">
-                    <img onerror="imgFallback(this,'g5')" src="https://loremflickr.com/600/600/quran?lock=21" class="w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="Halaqah Tahfidz">
-                    <div class="gallery-overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-4">
-                        <p class="text-white font-serif font-bold text-sm">Halaqah Tahfidz</p>
-                        <p class="text-gold-light text-[10px] uppercase tracking-widest">Ibadah</p>
+                <div class="g-item relative group overflow-hidden rounded-xl cursor-pointer aspect-video" data-cat="kegiatan" onclick="openLightbox('https://loremflickr.com/800/600/sport?lock=25','Class meeting & olahraga antar kelas')">
+                    <img src="https://loremflickr.com/800/600/sport?lock=25" class="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="Kegiatan">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-4 z-10">
+                        <span class="inline-block bg-gold-400 text-slate-900 text-[8px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full mb-1.5">kegiatan</span>
+                        <p class="text-white text-sm font-semibold leading-snug">Class meeting & olahraga antar kelas</p>
                     </div>
-                    <div class="absolute top-3 right-3 w-8 h-8 rounded-full bg-emerald-900/70 border border-gold-400/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition"><i class="fas fa-magnifying-glass-plus text-gold-light text-xs"></i></div>
                 </div>
-                <div class="g-item relative group rounded-xl overflow-hidden cursor-pointer aspect-square bg-emerald-900/40" data-cat="akademik" onclick="openLightbox(this)" data-aos="zoom-in" data-aos-delay="50">
-                    <img onerror="imgFallback(this,'g6')" src="https://loremflickr.com/600/600/laboratory?lock=22" class="w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="Praktikum Sains">
-                    <div class="gallery-overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-4">
-                        <p class="text-white font-serif font-bold text-sm">Praktikum Sains</p>
-                        <p class="text-gold-light text-[10px] uppercase tracking-widest">Akademik</p>
+                <div class="g-item relative group overflow-hidden rounded-xl cursor-pointer aspect-video" data-cat="ibadah" onclick="openLightbox('https://loremflickr.com/800/600/mosque?lock=26','I\'tikaf & qiyamul lail berjamaah')">
+                    <img src="https://loremflickr.com/800/600/mosque?lock=26" class="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="Ibadah">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-4 z-10">
+                        <span class="inline-block bg-gold-400 text-slate-900 text-[8px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full mb-1.5">ibadah</span>
+                        <p class="text-white text-sm font-semibold leading-snug">I'tikaf & qiyamul lail berjamaah</p>
                     </div>
-                    <div class="absolute top-3 right-3 w-8 h-8 rounded-full bg-emerald-900/70 border border-gold-400/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition"><i class="fas fa-magnifying-glass-plus text-gold-light text-xs"></i></div>
-                </div>
-                <div class="g-item relative group rounded-xl overflow-hidden cursor-pointer aspect-square bg-emerald-900/40" data-cat="kegiatan" onclick="openLightbox(this)" data-aos="zoom-in" data-aos-delay="100">
-                    <img onerror="imgFallback(this,'g7')" src="https://loremflickr.com/600/600/scout?lock=23" class="w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="Pramuka Santri">
-                    <div class="gallery-overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-4">
-                        <p class="text-white font-serif font-bold text-sm">Pramuka Santri</p>
-                        <p class="text-gold-light text-[10px] uppercase tracking-widest">Kegiatan</p>
-                    </div>
-                    <div class="absolute top-3 right-3 w-8 h-8 rounded-full bg-emerald-900/70 border border-gold-400/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition"><i class="fas fa-magnifying-glass-plus text-gold-light text-xs"></i></div>
-                </div>
-                <div class="g-item relative group rounded-xl overflow-hidden cursor-pointer aspect-square bg-emerald-900/40" data-cat="fasilitas" onclick="openLightbox(this)" data-aos="zoom-in" data-aos-delay="150">
-                    <img onerror="imgFallback(this,'g8')" src="https://loremflickr.com/600/600/library?lock=24" class="w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="Perpustakaan Digital">
-                    <div class="gallery-overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-4">
-                        <p class="text-white font-serif font-bold text-sm">Digital Library</p>
-                        <p class="text-gold-light text-[10px] uppercase tracking-widest">Fasilitas</p>
-                    </div>
-                    <div class="absolute top-3 right-3 w-8 h-8 rounded-full bg-emerald-900/70 border border-gold-400/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition"><i class="fas fa-magnifying-glass-plus text-gold-light text-xs"></i></div>
                 </div>
             </div>
         </div>
@@ -242,88 +217,82 @@
     <section class="py-16 bg-mint-100 pattern-islamic">
         <div class="container mx-auto px-6">
             <div class="text-center mb-12">
-                <p class="text-gold-500 text-xs font-bold tracking-[0.3em] uppercase mb-3" data-aos="fade-up">Channel Resmi</p>
+                <p class="text-gold-500 text-xs font-bold tracking-[0.3em] uppercase mb-3" data-aos="fade-up">Dokumentasi Bergerak</p>
                 <h2 class="font-serif text-3xl md:text-4xl font-bold text-slate-900 mb-4" data-aos="fade-up">Galeri Video</h2>
                 <div class="w-24 h-1 bg-gradient-to-r from-transparent via-gold-400 to-transparent mx-auto rounded-full"></div>
             </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-                <div class="card-green relative rounded-2xl overflow-hidden group cursor-pointer" onclick="openVideo('dQw4w9WgXcQ','Profil Pesantren Modern Al-Izzah')" data-aos="fade-up">
-                    <div class="relative h-44 bg-emerald-900/40 flex items-center justify-center overflow-hidden">
-                        <img src="https://loremflickr.com/640/360/mosque?lock=31" class="w-full h-full object-cover transition duration-700 group-hover:scale-110 opacity-80" alt="Profil Pesantren">
-                        <div class="absolute inset-0 bg-emerald-950/40 group-hover:bg-emerald-950/20 transition"></div>
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <span class="w-14 h-14 rounded-full bg-gold-400 text-slate-900 flex items-center justify-center shadow-[0_0_25px_rgba(217,119,6,0.5)] group-hover:scale-110 transition"><i class="fas fa-play ml-1"></i></span>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                <div class="card-green relative rounded-2xl overflow-hidden cursor-pointer group" onclick="openVideoModal('dQw4w9WgXcQ')" data-aos="fade-up">
+                    <div class="relative z-10">
+                        <div class="aspect-video bg-emerald-950/60 flex items-center justify-center">
+                            <span class="w-14 h-14 rounded-full bg-gold-400 text-slate-900 flex items-center justify-center group-hover:scale-110 transition"><i class="fas fa-play ml-1"></i></span>
                         </div>
-                        <span class="absolute bottom-3 right-3 bg-slate-900/80 text-white text-[10px] font-bold px-2 py-1 rounded"><i class="far fa-clock mr-1"></i>4:32</span>
-                    </div>
-                    <div class="p-5 relative z-10">
-                        <h3 class="font-serif font-bold text-white text-sm mb-1">Profil Pesantren Modern Al-Izzah</h3>
-                        <p class="text-emerald-100/60 text-xs"><i class="far fa-eye mr-1"></i> 12,4 rbx ditonton · 2 minggu lalu</p>
+                        <div class="p-5">
+                            <h4 class="font-serif font-bold text-white text-sm mb-1">Profil Kampus Al-Izzah</h4>
+                            <p class="text-emerald-100/60 text-[11px]">Video profil · 4:32</p>
+                        </div>
                     </div>
                 </div>
-                <div class="card-green relative rounded-2xl overflow-hidden group cursor-pointer" onclick="openVideo('dQw4w9WgXcQ','Wisuda Tahfidz Angkatan XII')" data-aos="fade-up" data-aos-delay="100">
-                    <div class="relative h-44 bg-emerald-900/40 flex items-center justify-center overflow-hidden">
-                        <img src="https://loremflickr.com/640/360/quran?lock=32" class="w-full h-full object-cover transition duration-700 group-hover:scale-110 opacity-80" alt="Wisuda Tahfidz">
-                        <div class="absolute inset-0 bg-emerald-950/40 group-hover:bg-emerald-950/20 transition"></div>
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <span class="w-14 h-14 rounded-full bg-gold-400 text-slate-900 flex items-center justify-center shadow-[0_0_25px_rgba(217,119,6,0.5)] group-hover:scale-110 transition"><i class="fas fa-play ml-1"></i></span>
+                <div class="card-green relative rounded-2xl overflow-hidden cursor-pointer group" onclick="openVideoModal('dQw4w9WgXcQ')" data-aos="fade-up" data-aos-delay="100">
+                    <div class="relative z-10">
+                        <div class="aspect-video bg-emerald-950/60 flex items-center justify-center">
+                            <span class="w-14 h-14 rounded-full bg-gold-400 text-slate-900 flex items-center justify-center group-hover:scale-110 transition"><i class="fas fa-play ml-1"></i></span>
                         </div>
-                        <span class="absolute bottom-3 right-3 bg-slate-900/80 text-white text-[10px] font-bold px-2 py-1 rounded"><i class="far fa-clock mr-1"></i>8:15</span>
-                    </div>
-                    <div class="p-5 relative z-10">
-                        <h3 class="font-serif font-bold text-white text-sm mb-1">Wisuda Tahfidz Angkatan XII</h3>
-                        <p class="text-emerald-100/60 text-xs"><i class="far fa-eye mr-1"></i> 8,7 rbx ditonton · 1 bulan lalu</p>
+                        <div class="p-5">
+                            <h4 class="font-serif font-bold text-white text-sm mb-1">Wisuda Tahfidz Angkatan XI</h4>
+                            <p class="text-emerald-100/60 text-[11px]">Dokumentasi · 8:15</p>
+                        </div>
                     </div>
                 </div>
-                <div class="card-green relative rounded-2xl overflow-hidden group cursor-pointer" onclick="openVideo('dQw4w9WgXcQ','Tur Virtual Fasilitas Kampus')" data-aos="fade-up" data-aos-delay="200">
-                    <div class="relative h-44 bg-emerald-900/40 flex items-center justify-center overflow-hidden">
-                        <img src="masjid.jpg" class="w-full h-full object-cover transition duration-700 group-hover:scale-110 opacity-80" alt="Tur Virtual">
-                        <div class="absolute inset-0 bg-emerald-950/40 group-hover:bg-emerald-950/20 transition"></div>
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <span class="w-14 h-14 rounded-full bg-gold-400 text-slate-900 flex items-center justify-center shadow-[0_0_25px_rgba(217,119,6,0.5)] group-hover:scale-110 transition"><i class="fas fa-play ml-1"></i></span>
+                <div class="card-green relative rounded-2xl overflow-hidden cursor-pointer group" onclick="openVideoModal('dQw4w9WgXcQ')" data-aos="fade-up" data-aos-delay="200">
+                    <div class="relative z-10">
+                        <div class="aspect-video bg-emerald-950/60 flex items-center justify-center">
+                            <span class="w-14 h-14 rounded-full bg-gold-400 text-slate-900 flex items-center justify-center group-hover:scale-110 transition"><i class="fas fa-play ml-1"></i></span>
                         </div>
-                        <span class="absolute bottom-3 right-3 bg-slate-900/80 text-white text-[10px] font-bold px-2 py-1 rounded"><i class="far fa-clock mr-1"></i>6:48</span>
-                    </div>
-                    <div class="p-5 relative z-10">
-                        <h3 class="font-serif font-bold text-white text-sm mb-1">Tur Virtual Fasilitas Kampus</h3>
-                        <p class="text-emerald-100/60 text-xs"><i class="far fa-eye mr-1"></i> 15,2 rbx ditonton · 3 bulan lalu</p>
+                        <div class="p-5">
+                            <h4 class="font-serif font-bold text-white text-sm mb-1">Tur Virtual Asrama & Fasilitas</h4>
+                            <p class="text-emerald-100/60 text-[11px]">Virtual tour · 6:40</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="text-center mt-10" data-aos="fade-up">
-                <a href="#" class="inline-flex items-center gap-2 px-8 py-4 border border-gold-400 text-gold-500 hover:bg-gold-400 hover:text-slate-900 font-bold rounded-lg transition"><i class="fab fa-youtube"></i> Kunjungi Channel YouTube Kami</a>
             </div>
         </div>
     </section>
 
-    <!-- ============ CTA SPMB ============ -->
-    <section class="py-16 bg-gradient-to-r from-emerald-900 via-emerald-800 to-emerald-900 relative overflow-hidden">
-        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#FCD34D 1px, transparent 1px); background-size: 24px 24px;"></div>
-        <div class="container mx-auto px-6 text-center relative z-10 max-w-3xl">
-            <i class="fas fa-camera-retro text-gold-400 text-4xl mb-6" data-aos="fade-up"></i>
-            <h2 class="font-serif text-3xl font-bold text-white mb-4" data-aos="fade-up">Abadikan Ceritamu di Al-Izzah</h2>
-            <p class="text-emerald-100/80 mb-8" data-aos="fade-up" data-aos-delay="100">Bergabunglah dan ciptakan kenangan indah bersama keluarga besar Pesantren Modern Al-Izzah. SPMB 2026/2027 telah dibuka!</p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center" data-aos="fade-up" data-aos-delay="200">
-                <a href="index.html#spmb-form" class="px-8 py-4 bg-gold-400 hover:bg-gold-500 text-slate-900 font-bold rounded-lg transition transform hover:-translate-y-0.5">Daftar Sekarang</a>
-                <a href="index.html#spmb-info" class="px-8 py-4 border border-gold-400/60 text-gold-light hover:bg-white/10 font-semibold rounded-lg transition">Info Lengkap SPMB</a>
+    <!-- ============ LIGHTBOX ============ -->
+    <div id="lightbox" class="hidden fixed inset-0 z-[90] bg-slate-900/95 backdrop-blur-sm flex items-center justify-center p-6" onclick="closeLightbox()">
+        <button class="absolute top-5 right-6 w-10 h-10 rounded-full bg-white/10 text-white hover:bg-gold-400 hover:text-slate-900 transition" onclick="closeLightbox()"><i class="fas fa-xmark"></i></button>
+        <figure class="max-w-4xl w-full" onclick="event.stopPropagation()">
+            <img id="lightboxImg" src="" class="w-full max-h-[75vh] object-contain rounded-xl border border-gold-400/40 shadow-2xl" alt="Pratinjau galeri">
+            <figcaption id="lightboxCap" class="text-center text-emerald-50 text-sm mt-4"></figcaption>
+        </figure>
+    </div>
+
+    <!-- ============ MODAL VIDEO ============ -->
+    <div id="videoModal" class="hidden fixed inset-0 z-[90] bg-slate-900/95 backdrop-blur-sm flex items-center justify-center p-6" onclick="closeVideoModal()">
+        <div class="max-w-3xl w-full" onclick="event.stopPropagation()">
+            <div class="flex justify-end mb-3">
+                <button class="w-10 h-10 rounded-full bg-white/10 text-white hover:bg-gold-400 hover:text-slate-900 transition" onclick="closeVideoModal()"><i class="fas fa-xmark"></i></button>
+            </div>
+            <div class="aspect-video rounded-xl overflow-hidden border border-gold-400/40 shadow-2xl">
+                <iframe id="videoFrame" class="w-full h-full" src="" title="Video galeri" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
         </div>
-    </section>
+    </div>
 
-        <!-- ============ FOOTER + PETA LOKASI ============ -->
+    <!-- ============ FOOTER + PETA LOKASI (UNIVERSAL + PATCH STYLE PETA) ============ -->
+    <style>
+        .map-frame { border: 0; filter: grayscale(1) contrast(1.05) brightness(1.02); transition: filter .7s ease; }
+        .map-wrap:hover .map-frame { filter: grayscale(0); }
+        .map-card { transition: transform .4s ease, box-shadow .4s ease; }
+        .map-card:hover { transform: translateY(-4px); box-shadow: 0 30px 70px -15px rgba(6, 78, 59, 0.45); }
+    </style>
     <footer class="bg-mint-100 pt-12 pb-5 border-t border-mint-200 relative overflow-hidden">
-        <!-- ornamen lembut sudut kanan atas -->
         <div class="pointer-events-none absolute -top-24 -right-24 w-72 h-72 rounded-full bg-gold-400/10 blur-3xl"></div>
-
         <div class="container mx-auto px-6 relative z-10">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-8">
-
-                <!-- ===== KOLOM KIRI: INFO & NAVIGASI ===== -->
                 <div class="lg:col-span-7">
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-x-8 gap-y-10 h-full">
-                        <!-- Brand -->
                         <div class="sm:col-span-3">
                             <div class="flex items-center gap-2 mb-5">
                                 <div class="w-10 h-10 rounded-full bg-emerald-900 border border-gold-400/60 flex items-center justify-center shadow-[0_0_15px_rgba(217,119,6,0.25)]"><i class="fas fa-mosque text-gold-400"></i></div>
@@ -336,26 +305,23 @@
                                 <a href="#" aria-label="Facebook" class="w-9 h-9 rounded-full bg-mint-200 flex items-center justify-center text-emerald-900 hover:bg-gold-400 hover:text-white transition"><i class="fab fa-facebook-f text-sm"></i></a>
                             </div>
                         </div>
-                        <!-- Navigasi -->
                         <div>
                             <h3 class="text-slate-900 font-bold mb-5 text-sm uppercase tracking-widest">Navigasi</h3>
                             <ul class="space-y-3 text-sm text-gray-600">
-                                <li><a href="#home" class="hover:text-gold-500 transition">Beranda</a></li>
+                                <li><a href="index.html" class="hover:text-gold-500 transition">Beranda</a></li>
                                 <li><a href="profil.html" class="hover:text-gold-500 transition">Profil Sekolah</a></li>
                                 <li><a href="berita.html" class="hover:text-gold-500 transition">Kabar Berita</a></li>
-                                <li><a href="#spmb" class="hover:text-gold-500 transition">SPMB Online</a></li>
+                                <li><a href="index.html#spmb" class="hover:text-gold-500 transition">SPMB Online</a></li>
                             </ul>
                         </div>
-                        <!-- Layanan SPMB -->
                         <div>
                             <h3 class="text-slate-900 font-bold mb-5 text-sm uppercase tracking-widest">Layanan SPMB</h3>
                             <ul class="space-y-3 text-sm text-gray-600">
-                                <li><a href="#spmb-info" class="hover:text-gold-500 transition">Informasi Pendaftaran</a></li>
-                                <li><a href="#spmb-result" class="hover:text-gold-500 transition">Hasil Seleksi</a></li>
-                                <li><a href="#spmb-form" class="hover:text-gold-500 transition">Formulir Pendaftaran</a></li>
+                                <li><a href="index.html#spmb-info" class="hover:text-gold-500 transition">Informasi Pendaftaran</a></li>
+                                <li><a href="index.html#spmb-result" class="hover:text-gold-500 transition">Hasil Seleksi</a></li>
+                                <li><a href="index.html#spmb-form" class="hover:text-gold-500 transition">Formulir Pendaftaran</a></li>
                             </ul>
                         </div>
-                        <!-- Kontak -->
                         <div>
                             <h3 class="text-slate-900 font-bold mb-5 text-sm uppercase tracking-widest">Hubungi Kami</h3>
                             <ul class="space-y-3 text-sm text-gray-600">
@@ -366,12 +332,8 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- ===== KOLOM KANAN: KARTU PETA GOOGLE MAPS ===== -->
                 <div class="lg:col-span-5" data-aos="fade-left">
                     <div class="map-card relative h-full min-h-[380px] rounded-3xl overflow-hidden bg-white border border-mint-200 shadow-[0_25px_60px_-15px_rgba(6,78,59,0.35)] flex flex-col">
-
-                        <!-- Header peta -->
                         <div class="relative z-10 flex items-center justify-between px-5 py-4 bg-gradient-to-r from-emerald-900 to-emerald-800">
                             <div class="flex items-center gap-3">
                                 <span class="w-9 h-9 rounded-xl bg-gold-400/20 border border-gold-400/40 flex items-center justify-center"><i class="fas fa-location-dot text-gold-light text-sm"></i></span>
@@ -384,68 +346,25 @@
                                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Boarding 24/7
                             </span>
                         </div>
-
-                        <!-- Frame peta -->
                         <div class="map-wrap relative flex-1 min-h-[240px]">
-                            <iframe
-                                class="map-frame absolute inset-0 w-full h-full"
-                                src="https://www.google.com/maps?q=Jl.+Pendidikan+Islam+No.+99,+Kota+Baru,+Indonesia&z=15&output=embed"
-                                loading="lazy"
-                                referrerpolicy="no-referrer-when-downgrade"
-                                allowfullscreen
-                                title="Lokasi Pesantren Modern Al-Izzah"></iframe>
-
-                            <!-- Sudut emas dekoratif -->
+                            <iframe class="map-frame absolute inset-0 w-full h-full" src="https://www.google.com/maps?q=Jl.+Pendidikan+Islam+No.+99,+Kota+Baru,+Indonesia&z=15&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen title="Lokasi Pesantren Modern Al-Izzah"></iframe>
                             <span class="pointer-events-none absolute top-3 left-3 w-6 h-6 border-t-2 border-l-2 border-gold-400 rounded-tl-lg"></span>
                             <span class="pointer-events-none absolute top-3 right-3 w-6 h-6 border-t-2 border-r-2 border-gold-400 rounded-tr-lg"></span>
                             <span class="pointer-events-none absolute bottom-3 left-3 w-6 h-6 border-b-2 border-l-2 border-gold-400 rounded-bl-lg"></span>
                             <span class="pointer-events-none absolute bottom-3 right-3 w-6 h-6 border-b-2 border-r-2 border-gold-400 rounded-br-lg"></span>
-
-                            <!-- Gradasi bawah -->
                             <div class="pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-emerald-950/50 to-transparent"></div>
                         </div>
-
-                        <!-- Bar alamat + tombol rute -->
                         <div class="relative z-10 px-5 py-4 bg-mint-50 border-t border-mint-200 flex items-center gap-3">
                             <i class="fas fa-map-pin text-gold-500"></i>
                             <p class="text-gray-600 text-xs leading-relaxed flex-1">Jl. Pendidikan Islam No. 99, Kota Baru, Indonesia 40123</p>
-                            <a href="https://www.google.com/maps/dir/?api=1&destination=Jl.+Pendidikan+Islam+No.+99,+Kota+Baru,+Indonesia" target="_blank" rel="noopener"
-                               class="shrink-0 inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-emerald-900 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-gold-400 hover:text-slate-900 transition">
-                                Rute <i class="fas fa-directions text-[9px]"></i>
-                            </a>
+                            <a href="https://www.google.com/maps/dir/?api=1&destination=Jl.+Pendidikan+Islam+No.+99,+Kota+Baru,+Indonesia" target="_blank" rel="noopener" class="shrink-0 inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-emerald-900 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-gold-400 hover:text-slate-900 transition">Rute <i class="fas fa-directions text-[9px]"></i></a>
                         </div>
                     </div>
                 </div>
             </div>
-
             <div class="border-t border-mint-200 pt-4 text-center text-sm text-gray-500">&copy; 2026 Pesantren Modern Al-Izzah. All Rights Reserved.</div>
         </div>
     </footer>
-
-    <!-- ============ LIGHTBOX FOTO ============ -->
-    <div id="lightbox" class="fixed inset-0 z-[9999] bg-slate-950/95 backdrop-blur-sm hidden items-center justify-center p-6" onclick="closeLightbox(event)">
-        <button onclick="closeLightbox()" class="absolute top-6 right-6 w-11 h-11 rounded-full bg-white/10 border border-white/20 text-white hover:bg-gold-400 hover:text-slate-900 transition flex items-center justify-center text-lg z-10"><i class="fas fa-xmark"></i></button>
-        <button onclick="navLightbox(-1, event)" class="absolute left-4 md:left-10 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 border border-white/20 text-white hover:bg-gold-400 hover:text-slate-900 transition flex items-center justify-center text-lg z-10"><i class="fas fa-chevron-left"></i></button>
-        <button onclick="navLightbox(1, event)" class="absolute right-4 md:right-10 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 border border-white/20 text-white hover:bg-gold-400 hover:text-slate-900 transition flex items-center justify-center text-lg z-10"><i class="fas fa-chevron-right"></i></button>
-        <div class="max-w-5xl max-h-full text-center" onclick="event.stopPropagation()">
-            <img id="lightboxImg" src="" class="max-h-[80vh] max-w-full rounded-xl shadow-2xl border border-white/10 object-contain" alt="">
-            <div class="mt-4">
-                <p id="lightboxTitle" class="text-white font-serif text-lg font-bold"></p>
-                <p id="lightboxCat" class="text-gold-light text-xs uppercase tracking-[0.25em] mt-1"></p>
-            </div>
-        </div>
-    </div>
-
-    <!-- ============ MODAL VIDEO ============ -->
-    <div id="videoModal" class="fixed inset-0 z-[9999] bg-slate-950/95 backdrop-blur-sm hidden items-center justify-center p-6" onclick="closeVideo(event)">
-        <button onclick="closeVideo()" class="absolute top-6 right-6 w-11 h-11 rounded-full bg-white/10 border border-white/20 text-white hover:bg-gold-400 hover:text-slate-900 transition flex items-center justify-center text-lg z-10"><i class="fas fa-xmark"></i></button>
-        <div class="w-full max-w-4xl" onclick="event.stopPropagation()">
-            <div class="relative rounded-xl overflow-hidden border border-gold-400/30 shadow-2xl" style="padding-bottom:56.25%; height:0;">
-                <iframe id="videoFrame" class="absolute top-0 left-0 w-full h-full" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            </div>
-            <p id="videoTitle" class="text-white font-serif text-center mt-4 font-bold"></p>
-        </div>
-    </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
@@ -456,145 +375,69 @@
             else { navbar.classList.remove('glass-nav', 'py-2'); navbar.classList.add('py-5'); }
         });
         function toggleMobileMenu() { const m = document.getElementById('mobile-menu'); m.classList.toggle('hidden'); m.classList.toggle('flex'); }
-        function imgFallback(img, seed) { if (!img.dataset.fb1) { img.dataset.fb1 = 1; img.src = 'https://picsum.photos/seed/' + seed + '/600/600'; } else { img.style.display = 'none'; } }
 
-        /* ====== Filter Galeri ====== */
+        /* Filter galeri — berlaku untuk item statis MAUPUN item CMS */
         function filterGallery(cat, btn) {
-            document.querySelectorAll('.g-btn').forEach(b => { b.className = 'g-btn px-5 py-2 rounded-full text-sm border border-mint-300 text-gray-600 hover:border-gold-400 hover:text-gold-500 transition'; });
-            btn.className = 'g-btn px-5 py-2 rounded-full text-sm border border-gold-400 bg-gold-400 text-slate-900 font-bold transition';
-            document.querySelectorAll('.g-item').forEach(i => { i.classList.toggle('hidden', !(cat === 'all' || i.dataset.cat === cat)); });
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.querySelectorAll('.g-item').forEach(el => {
+                el.classList.toggle('hidden', cat !== 'all' && el.dataset.cat !== cat);
+            });
         }
 
-        /* ====== Lightbox ====== */
-        let lbItems = [], lbIndex = 0;
-        function getVisibleItems() { return Array.from(document.querySelectorAll('.g-item')).filter(i => !i.classList.contains('hidden')); }
-        function openLightbox(el) {
-            lbItems = getVisibleItems();
-            lbIndex = lbItems.indexOf(el);
-            const img = el.querySelector('img');
-            const title = el.querySelector('p') ? el.querySelector('p').textContent : '';
-            const cat = el.querySelectorAll('p')[1] ? el.querySelectorAll('p')[1].textContent : '';
-            document.getElementById('lightboxImg').src = img.src;
-            document.getElementById('lightboxTitle').textContent = title;
-            document.getElementById('lightboxCat').textContent = cat;
+        /* Lightbox foto */
+        function openLightbox(src, caption) {
+            document.getElementById('lightboxImg').src = src;
+            document.getElementById('lightboxCap').textContent = caption || '';
             const lb = document.getElementById('lightbox');
             lb.classList.remove('hidden'); lb.classList.add('flex');
-            document.body.style.overflow = 'hidden';
         }
-        function closeLightbox(e) {
-            if (e && e.target !== e.currentTarget) return;
+        function closeLightbox() {
             const lb = document.getElementById('lightbox');
             lb.classList.add('hidden'); lb.classList.remove('flex');
-            document.body.style.overflow = '';
         }
-        function navLightbox(dir, e) {
-            if (e) { e.stopPropagation(); }
-            if (!lbItems.length) return;
-            lbIndex = (lbIndex + dir + lbItems.length) % lbItems.length;
-            const el = lbItems[lbIndex];
-            const img = el.querySelector('img');
-            document.getElementById('lightboxImg').src = img.src;
-            document.getElementById('lightboxTitle').textContent = el.querySelector('p') ? el.querySelector('p').textContent : '';
-            document.getElementById('lightboxCat').textContent = el.querySelectorAll('p')[1] ? el.querySelectorAll('p')[1].textContent : '';
-        }
-        document.addEventListener('keydown', e => {
-            const lb = document.getElementById('lightbox');
-            if (!lb.classList.contains('hidden')) {
-                if (e.key === 'Escape') closeLightbox();
-                if (e.key === 'ArrowLeft') navLightbox(-1);
-                if (e.key === 'ArrowRight') navLightbox(1);
-            }
-            const vm = document.getElementById('videoModal');
-            if (!vm.classList.contains('hidden') && e.key === 'Escape') closeVideo();
-        });
 
-        /* ====== Modal Video ====== */
-        function openVideo(id, title) {
+        /* Modal video */
+        function openVideoModal(id) {
             document.getElementById('videoFrame').src = 'https://www.youtube.com/embed/' + id + '?autoplay=1';
-            document.getElementById('videoTitle').textContent = title;
             const vm = document.getElementById('videoModal');
             vm.classList.remove('hidden'); vm.classList.add('flex');
-            document.body.style.overflow = 'hidden';
         }
-        function closeVideo(e) {
-            if (e && e.target !== e.currentTarget) return;
+        function closeVideoModal() {
             document.getElementById('videoFrame').src = '';
             const vm = document.getElementById('videoModal');
             vm.classList.add('hidden'); vm.classList.remove('flex');
-            document.body.style.overflow = '';
         }
     </script>
-    <!-- Jembatan CMS dashboard → halaman publik (INTEGRASI) -->
+
     <script src="cms-public.js"></script>
-<!-- ============================================================ -->
-    <!-- 🔒 Proteksi Konten (TETAP SAMA)                              -->
-    <!-- ============================================================ -->
+
+    <!-- 🔒 Proteksi Konten -->
     <script>
     (function() {
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-            showToastCustom('🔒 Konten dilindungi. Klik kanan dinonaktifkan.');
-            return false;
-        });
-
+        document.addEventListener('contextmenu', function(e) { e.preventDefault(); showToastCustom('🔒 Konten dilindungi. Klik kanan dinonaktifkan.'); return false; });
         document.addEventListener('keydown', function(e) {
             if (e.ctrlKey && e.key === 'u') { e.preventDefault(); return false; }
             if (e.ctrlKey && e.key === 's') { e.preventDefault(); return false; }
             if (e.ctrlKey && e.key === 'c') { e.preventDefault(); return false; }
-            if ((e.ctrlKey && e.shiftKey && e.key === 'I') || e.key === 'F12') { 
-                e.preventDefault(); 
-                showToastCustom('🔒 Developer Tools dinonaktifkan.');
-                return false; 
-            }
+            if ((e.ctrlKey && e.shiftKey && e.key === 'I') || e.key === 'F12') { e.preventDefault(); showToastCustom('🔒 Developer Tools dinonaktifkan.'); return false; }
             if (e.ctrlKey && e.shiftKey && e.key === 'J') { e.preventDefault(); return false; }
             if (e.ctrlKey && e.key === 'p') { e.preventDefault(); return false; }
         });
-
-        document.addEventListener('selectstart', function(e) {
-            if (!['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) {
-                e.preventDefault();
-                return false;
-            }
-        });
-
-        document.addEventListener('dragstart', function(e) {
-            e.preventDefault();
-            return false;
-        });
-
+        document.addEventListener('selectstart', function(e) { if (!['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) { e.preventDefault(); return false; } });
+        document.addEventListener('dragstart', function(e) { e.preventDefault(); return false; });
         function showToastCustom(message) {
             const toast = document.createElement('div');
-            toast.style.cssText = `
-                position: fixed; top: 20px; right: 20px; z-index: 99999;
-                background: linear-gradient(135deg, #064e3b, #059669);
-                color: white; padding: 14px 20px; border-radius: 10px;
-                font-weight: 600; font-size: 0.9rem; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-                font-family: 'Plus Jakarta Sans', sans-serif;
-                animation: slideInToast 0.3s ease-out;
-            `;
+            toast.style.cssText = `position: fixed; top: 20px; right: 20px; z-index: 99999; background: linear-gradient(135deg, #064e3b, #059669); color: white; padding: 14px 20px; border-radius: 10px; font-weight: 600; font-size: 0.9rem; box-shadow: 0 4px 15px rgba(0,0,0,0.2); font-family: 'Plus Jakarta Sans', sans-serif; animation: slideInToast 0.3s ease-out;`;
             toast.textContent = message;
             document.body.appendChild(toast);
-            setTimeout(() => {
-                toast.style.opacity = '0';
-                toast.style.transition = 'opacity 0.3s';
-                setTimeout(() => toast.remove(), 300);
-            }, 2500);
+            setTimeout(() => { toast.style.opacity = '0'; toast.style.transition = 'opacity 0.3s'; setTimeout(() => toast.remove(), 300); }, 2500);
         }
-
         const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideInToast {
-                from { transform: translateX(100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
-            }
-            body { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
-            input, textarea, select { -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text; }
-        `;
+        style.textContent = `@keyframes slideInToast { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } } body { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; } input, textarea, select { -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text; }`;
         document.head.appendChild(style);
-
         console.log('%c🔒 Proteksi Konten Aktif', 'color: #059669; font-size: 14px; font-weight: bold;');
     })();
     </script>
-
 </body>
 </html>
