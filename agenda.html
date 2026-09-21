@@ -30,7 +30,6 @@
         .group:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
         .dropdown-menu { opacity: 0; visibility: hidden; transform: translateY(10px); transition: all .3s ease-in-out; }
         .pattern-islamic { background-image: radial-gradient(rgba(217,119,6,0.10) 1px, transparent 1px); background-size: 28px 28px; }
-        /* ====== KARTU HIJAU ELEGAN (sama dengan index.html) ====== */
         .card-green {
             background: linear-gradient(135deg, #065F46 0%, #064E3B 55%, #053B2C 100%);
             border: 1px solid rgba(16, 185, 129, 0.25);
@@ -49,40 +48,19 @@
             pointer-events: none;
         }
 
-        /* ================= MINI CALENDAR (COMPACT & CANTIK) ================= */
+        /* ================= MINI CALENDAR ================= */
         .mini-cal { width: 100%; max-width: 420px; margin: 0 auto; }
-        .mini-cal-head {
-            background: linear-gradient(135deg, #D97706 0%, #B45309 100%);
-            position: relative; overflow: hidden;
-        }
-        .mini-cal-head::after {
-            content: ''; position: absolute; top: 0; bottom: 0; left: -40%; width: 40%;
-            background: linear-gradient(100deg, transparent, rgba(255,255,255,0.35), transparent);
-            animation: calShine 4s linear infinite; pointer-events: none;
-        }
+        .mini-cal-head { background: linear-gradient(135deg, #D97706 0%, #B45309 100%); position: relative; overflow: hidden; }
+        .mini-cal-head::after { content: ''; position: absolute; top: 0; bottom: 0; left: -40%; width: 40%; background: linear-gradient(100deg, transparent, rgba(255,255,255,0.35), transparent); animation: calShine 4s linear infinite; pointer-events: none; }
         @keyframes calShine { 0% { left: -40%; } 100% { left: 120%; } }
-        .cal-nav-btn {
-            width: 26px; height: 26px; border-radius: 8px;
-            background: rgba(15,23,42,0.25); border: 1px solid rgba(255,255,255,0.25);
-            color: #fff; display: inline-flex; align-items: center; justify-content: center;
-            font-size: 10px; cursor: pointer; transition: all .2s ease;
-        }
+        .cal-nav-btn { width: 26px; height: 26px; border-radius: 8px; background: rgba(15,23,42,0.25); border: 1px solid rgba(255,255,255,0.25); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-size: 10px; cursor: pointer; transition: all .2s ease; }
         .cal-nav-btn:hover { background: #0f172a; transform: scale(1.1); }
         .cal-nav-btn:active { transform: scale(0.95); }
-        .mcal-cell {
-            height: 34px; border-radius: 9px; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; font-size: 12px;
-            color: #fff; cursor: pointer; position: relative; transition: all .15s ease;
-            user-select: none;
-        }
+        .mcal-cell { height: 34px; border-radius: 9px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 12px; color: #fff; cursor: pointer; position: relative; transition: all .15s ease; user-select: none; }
         .mcal-cell:hover:not(.mcal-empty) { background: rgba(252,211,77,0.18); color: #FCD34D; }
         .mcal-empty { cursor: default; }
         .mcal-today { border: 1.5px solid #FCD34D; color: #FCD34D; font-weight: 700; }
-        .mcal-selected {
-            background: linear-gradient(135deg, #D97706, #B45309) !important;
-            color: #fff !important; font-weight: 700;
-            box-shadow: 0 3px 10px rgba(217,119,6,0.5);
-        }
+        .mcal-selected { background: linear-gradient(135deg, #D97706, #B45309) !important; color: #fff !important; font-weight: 700; box-shadow: 0 3px 10px rgba(217,119,6,0.5); }
         .mcal-dot { position: absolute; bottom: 4px; width: 4px; height: 4px; border-radius: 50%; background: #FCD34D; }
         .mcal-selected .mcal-dot { background: #fff; }
         .cal-fade { animation: calFadeIn .3s ease; }
@@ -192,10 +170,9 @@
         <div class="container mx-auto px-6">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 items-start max-w-6xl mx-auto">
 
-                <!-- ===== KOLOM 1: MINI KALENDER + DETAIL TANGGAL ===== -->
+                <!-- KOLOM 1: MINI KALENDER + DETAIL -->
                 <div class="space-y-3" data-aos="fade-up">
                     <div class="mini-cal card-green relative rounded-2xl overflow-hidden">
-                        <!-- Pita header emas -->
                         <div class="mini-cal-head px-4 py-3 flex items-center justify-between relative z-10">
                             <button id="btnPrev" class="cal-nav-btn" aria-label="Bulan sebelumnya"><i class="fas fa-chevron-left"></i></button>
                             <div class="text-center">
@@ -204,9 +181,7 @@
                             </div>
                             <button id="btnNext" class="cal-nav-btn" aria-label="Bulan berikutnya"><i class="fas fa-chevron-right"></i></button>
                         </div>
-
                         <div class="relative z-10 p-4">
-                            <!-- Nama hari -->
                             <div class="grid grid-cols-7 gap-0.5 mb-1 text-center">
                                 <div class="text-[8px] font-bold uppercase tracking-wider text-gold-light py-1">Min</div>
                                 <div class="text-[8px] font-bold uppercase tracking-wider text-emerald-100/50 py-1">Sen</div>
@@ -216,31 +191,23 @@
                                 <div class="text-[8px] font-bold uppercase tracking-wider text-emerald-100/50 py-1">Jum</div>
                                 <div class="text-[8px] font-bold uppercase tracking-wider text-emerald-100/50 py-1">Sab</div>
                             </div>
-                            <!-- Grid tanggal (dirender JS) -->
                             <div id="calGrid" class="grid grid-cols-7 gap-0.5"></div>
-
-                            <!-- Tombol hari ini -->
                             <button id="btnToday" class="mt-3 w-full py-2 rounded-lg bg-white/5 border border-gold-400/30 text-gold-light text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-gold-400 hover:text-slate-900 transition">
                                 <i class="fas fa-calendar-day mr-1"></i> Ke Hari Ini
                             </button>
-
-                            <!-- Legenda mini -->
                             <div class="flex items-center justify-center gap-4 mt-3 pt-3 border-t border-white/10 text-[9px] text-emerald-100/60">
                                 <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded border border-gold-light"></span> Hari ini</span>
                                 <span class="flex items-center gap-1"><span class="w-1 h-1 rounded-full bg-gold-light"></span> Ada kegiatan</span>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Panel detail tanggal terpilih (muncul saat tanggal bertitik diklik) -->
                     <div id="calDetail" class="card-green relative rounded-2xl p-5 hidden">
                         <div id="calDetailBody" class="relative z-10"></div>
                     </div>
                 </div>
 
-                <!-- ===== KOLOM 2: AGENDA HARI INI + MUTIARA NASIHAT ===== -->
+                <!-- KOLOM 2: HARI INI + MUTIARA NASIHAT -->
                 <div class="space-y-3" data-aos="fade-up" data-aos-delay="100">
-                    <!-- AGENDA HARI INI — minimalis -->
                     <div class="card-green relative rounded-2xl p-5">
                         <div class="relative z-10">
                             <div class="flex items-center gap-2.5 mb-3.5 pb-3 border-b border-white/10">
@@ -251,51 +218,14 @@
                                 </div>
                             </div>
                             <div class="space-y-2.5">
-                                <div class="flex items-center gap-3">
-                                    <span class="shrink-0 w-9 text-[10px] font-bold text-gold-light">04.00</span>
-                                    <span class="w-px self-stretch bg-gold-400/25"></span>
-                                    <div class="min-w-0">
-                                        <p class="text-white text-xs font-semibold truncate">Qiyamul Lail & Tahajud</p>
-                                        <p class="text-emerald-100/55 text-[10px] truncate">Masjid Agung Al-Izzah</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <span class="shrink-0 w-9 text-[10px] font-bold text-gold-light">05.00</span>
-                                    <span class="w-px self-stretch bg-gold-400/25"></span>
-                                    <div class="min-w-0">
-                                        <p class="text-white text-xs font-semibold truncate">Halaqah Tahfidz Ba'da Subuh</p>
-                                        <p class="text-emerald-100/55 text-[10px] truncate">Serambi Masjid & Asrama</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <span class="shrink-0 w-9 text-[10px] font-bold text-gold-light">07.00</span>
-                                    <span class="w-px self-stretch bg-gold-400/25"></span>
-                                    <div class="min-w-0">
-                                        <p class="text-white text-xs font-semibold truncate">KBM Cambridge & Nasional</p>
-                                        <p class="text-emerald-100/55 text-[10px] truncate">Gedung Akademik A & B</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <span class="shrink-0 w-9 text-[10px] font-bold text-gold-light">16.00</span>
-                                    <span class="w-px self-stretch bg-gold-400/25"></span>
-                                    <div class="min-w-0">
-                                        <p class="text-white text-xs font-semibold truncate">Ekstrakurikuler & Olahraga</p>
-                                        <p class="text-emerald-100/55 text-[10px] truncate">Lapangan & Aula Serbaguna</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <span class="shrink-0 w-9 text-[10px] font-bold text-gold-light">20.00</span>
-                                    <span class="w-px self-stretch bg-gold-400/25"></span>
-                                    <div class="min-w-0">
-                                        <p class="text-white text-xs font-semibold truncate">Muhadatsah Bilingual</p>
-                                        <p class="text-emerald-100/55 text-[10px] truncate">Area Asrama</p>
-                                    </div>
-                                </div>
+                                <div class="flex items-center gap-3"><span class="shrink-0 w-9 text-[10px] font-bold text-gold-light">04.00</span><span class="w-px self-stretch bg-gold-400/25"></span><div class="min-w-0"><p class="text-white text-xs font-semibold truncate">Qiyamul Lail & Tahajud</p><p class="text-emerald-100/55 text-[10px] truncate">Masjid Agung Al-Izzah</p></div></div>
+                                <div class="flex items-center gap-3"><span class="shrink-0 w-9 text-[10px] font-bold text-gold-light">05.00</span><span class="w-px self-stretch bg-gold-400/25"></span><div class="min-w-0"><p class="text-white text-xs font-semibold truncate">Halaqah Tahfidz Ba'da Subuh</p><p class="text-emerald-100/55 text-[10px] truncate">Serambi Masjid & Asrama</p></div></div>
+                                <div class="flex items-center gap-3"><span class="shrink-0 w-9 text-[10px] font-bold text-gold-light">07.00</span><span class="w-px self-stretch bg-gold-400/25"></span><div class="min-w-0"><p class="text-white text-xs font-semibold truncate">KBM Cambridge & Nasional</p><p class="text-emerald-100/55 text-[10px] truncate">Gedung Akademik A & B</p></div></div>
+                                <div class="flex items-center gap-3"><span class="shrink-0 w-9 text-[10px] font-bold text-gold-light">16.00</span><span class="w-px self-stretch bg-gold-400/25"></span><div class="min-w-0"><p class="text-white text-xs font-semibold truncate">Ekstrakurikuler & Olahraga</p><p class="text-emerald-100/55 text-[10px] truncate">Lapangan & Aula Serbaguna</p></div></div>
+                                <div class="flex items-center gap-3"><span class="shrink-0 w-9 text-[10px] font-bold text-gold-light">20.00</span><span class="w-px self-stretch bg-gold-400/25"></span><div class="min-w-0"><p class="text-white text-xs font-semibold truncate">Muhadatsah Bilingual</p><p class="text-emerald-100/55 text-[10px] truncate">Area Asrama</p></div></div>
                             </div>
                         </div>
                     </div>
-
-                    <!-- ORNAMEN: MUTIARA NASIHAT -->
                     <div class="card-green relative rounded-2xl p-5 overflow-hidden">
                         <div class="absolute inset-0 opacity-[0.07]" style="background-image: radial-gradient(#FCD34D 1px, transparent 1px); background-size: 14px 14px;"></div>
                         <div class="relative z-10">
@@ -309,9 +239,8 @@
                     </div>
                 </div>
 
-                <!-- ===== KOLOM 3: PENGINGAT WALI SANTRI + COUNTDOWN + ORNAMEN DOA ===== -->
+                <!-- KOLOM 3: PENGINGAT + COUNTDOWN + DOA -->
                 <div class="space-y-3" data-aos="fade-up" data-aos-delay="200">
-                    <!-- PENGINGAT WALI SANTRI — minimalis -->
                     <div class="card-green relative rounded-2xl p-5 border-gold-400/30">
                         <div class="relative z-10 flex items-start gap-2.5">
                             <div class="w-8 h-8 shrink-0 rounded-lg bg-gold-400/15 border border-gold-400/40 flex items-center justify-center"><i class="fas fa-bell text-gold-light text-xs"></i></div>
@@ -321,8 +250,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- PROP: HITUNG MUNDUR SPMB GELOMBANG 1 -->
                     <div class="card-green relative rounded-2xl p-5">
                         <div class="relative z-10">
                             <div class="flex items-center justify-between mb-3">
@@ -339,8 +266,6 @@
                             <p class="text-emerald-100/60 text-[10px]">Periode 1 – 30 September 2026 · diskon 25% uang pangkal</p>
                         </div>
                     </div>
-
-                    <!-- ORNAMEN: DOA & POLA ISLAMI -->
                     <div class="card-green relative rounded-2xl p-5 overflow-hidden text-center">
                         <div class="absolute inset-0 opacity-[0.07]" style="background-image: radial-gradient(#FCD34D 1px, transparent 1px); background-size: 14px 14px;"></div>
                         <div class="relative z-10">
@@ -443,7 +368,6 @@
                 <div class="w-24 h-1 bg-gradient-to-r from-transparent via-gold-400 to-transparent mx-auto rounded-full"></div>
                 <p class="text-gray-600 max-w-2xl mx-auto mt-4 text-sm md:text-base" data-aos="fade-up">Keseimbangan ibadah, akademik, dan pengembangan diri dalam 24 jam kehidupan pesantren.</p>
             </div>
-
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
                 <div class="card-green relative rounded-2xl p-6" data-aos="fade-up">
                     <div class="relative z-10">
@@ -511,18 +435,19 @@
         </div>
     </section>
 
-        <!-- ============ FOOTER + PETA LOKASI ============ -->
+    <!-- ============ FOOTER + PETA LOKASI (UNIVERSAL + PATCH STYLE PETA) ============ -->
+    <style>
+        .map-frame { border: 0; filter: grayscale(1) contrast(1.05) brightness(1.02); transition: filter .7s ease; }
+        .map-wrap:hover .map-frame { filter: grayscale(0); }
+        .map-card { transition: transform .4s ease, box-shadow .4s ease; }
+        .map-card:hover { transform: translateY(-4px); box-shadow: 0 30px 70px -15px rgba(6, 78, 59, 0.45); }
+    </style>
     <footer class="bg-mint-100 pt-12 pb-5 border-t border-mint-200 relative overflow-hidden">
-        <!-- ornamen lembut sudut kanan atas -->
         <div class="pointer-events-none absolute -top-24 -right-24 w-72 h-72 rounded-full bg-gold-400/10 blur-3xl"></div>
-
         <div class="container mx-auto px-6 relative z-10">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-8">
-
-                <!-- ===== KOLOM KIRI: INFO & NAVIGASI ===== -->
                 <div class="lg:col-span-7">
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-x-8 gap-y-10 h-full">
-                        <!-- Brand -->
                         <div class="sm:col-span-3">
                             <div class="flex items-center gap-2 mb-5">
                                 <div class="w-10 h-10 rounded-full bg-emerald-900 border border-gold-400/60 flex items-center justify-center shadow-[0_0_15px_rgba(217,119,6,0.25)]"><i class="fas fa-mosque text-gold-400"></i></div>
@@ -535,26 +460,23 @@
                                 <a href="#" aria-label="Facebook" class="w-9 h-9 rounded-full bg-mint-200 flex items-center justify-center text-emerald-900 hover:bg-gold-400 hover:text-white transition"><i class="fab fa-facebook-f text-sm"></i></a>
                             </div>
                         </div>
-                        <!-- Navigasi -->
                         <div>
                             <h3 class="text-slate-900 font-bold mb-5 text-sm uppercase tracking-widest">Navigasi</h3>
                             <ul class="space-y-3 text-sm text-gray-600">
-                                <li><a href="#home" class="hover:text-gold-500 transition">Beranda</a></li>
+                                <li><a href="index.html" class="hover:text-gold-500 transition">Beranda</a></li>
                                 <li><a href="profil.html" class="hover:text-gold-500 transition">Profil Sekolah</a></li>
                                 <li><a href="berita.html" class="hover:text-gold-500 transition">Kabar Berita</a></li>
-                                <li><a href="#spmb" class="hover:text-gold-500 transition">SPMB Online</a></li>
+                                <li><a href="index.html#spmb" class="hover:text-gold-500 transition">SPMB Online</a></li>
                             </ul>
                         </div>
-                        <!-- Layanan SPMB -->
                         <div>
                             <h3 class="text-slate-900 font-bold mb-5 text-sm uppercase tracking-widest">Layanan SPMB</h3>
                             <ul class="space-y-3 text-sm text-gray-600">
-                                <li><a href="#spmb-info" class="hover:text-gold-500 transition">Informasi Pendaftaran</a></li>
-                                <li><a href="#spmb-result" class="hover:text-gold-500 transition">Hasil Seleksi</a></li>
-                                <li><a href="#spmb-form" class="hover:text-gold-500 transition">Formulir Pendaftaran</a></li>
+                                <li><a href="index.html#spmb-info" class="hover:text-gold-500 transition">Informasi Pendaftaran</a></li>
+                                <li><a href="index.html#spmb-result" class="hover:text-gold-500 transition">Hasil Seleksi</a></li>
+                                <li><a href="index.html#spmb-form" class="hover:text-gold-500 transition">Formulir Pendaftaran</a></li>
                             </ul>
                         </div>
-                        <!-- Kontak -->
                         <div>
                             <h3 class="text-slate-900 font-bold mb-5 text-sm uppercase tracking-widest">Hubungi Kami</h3>
                             <ul class="space-y-3 text-sm text-gray-600">
@@ -565,12 +487,8 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- ===== KOLOM KANAN: KARTU PETA GOOGLE MAPS ===== -->
                 <div class="lg:col-span-5" data-aos="fade-left">
                     <div class="map-card relative h-full min-h-[380px] rounded-3xl overflow-hidden bg-white border border-mint-200 shadow-[0_25px_60px_-15px_rgba(6,78,59,0.35)] flex flex-col">
-
-                        <!-- Header peta -->
                         <div class="relative z-10 flex items-center justify-between px-5 py-4 bg-gradient-to-r from-emerald-900 to-emerald-800">
                             <div class="flex items-center gap-3">
                                 <span class="w-9 h-9 rounded-xl bg-gold-400/20 border border-gold-400/40 flex items-center justify-center"><i class="fas fa-location-dot text-gold-light text-sm"></i></span>
@@ -583,40 +501,22 @@
                                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Boarding 24/7
                             </span>
                         </div>
-
-                        <!-- Frame peta -->
                         <div class="map-wrap relative flex-1 min-h-[240px]">
-                            <iframe
-                                class="map-frame absolute inset-0 w-full h-full"
-                                src="https://www.google.com/maps?q=Jl.+Pendidikan+Islam+No.+99,+Kota+Baru,+Indonesia&z=15&output=embed"
-                                loading="lazy"
-                                referrerpolicy="no-referrer-when-downgrade"
-                                allowfullscreen
-                                title="Lokasi Pesantren Modern Al-Izzah"></iframe>
-
-                            <!-- Sudut emas dekoratif -->
+                            <iframe class="map-frame absolute inset-0 w-full h-full" src="https://www.google.com/maps?q=Jl.+Pendidikan+Islam+No.+99,+Kota+Baru,+Indonesia&z=15&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen title="Lokasi Pesantren Modern Al-Izzah"></iframe>
                             <span class="pointer-events-none absolute top-3 left-3 w-6 h-6 border-t-2 border-l-2 border-gold-400 rounded-tl-lg"></span>
                             <span class="pointer-events-none absolute top-3 right-3 w-6 h-6 border-t-2 border-r-2 border-gold-400 rounded-tr-lg"></span>
                             <span class="pointer-events-none absolute bottom-3 left-3 w-6 h-6 border-b-2 border-l-2 border-gold-400 rounded-bl-lg"></span>
                             <span class="pointer-events-none absolute bottom-3 right-3 w-6 h-6 border-b-2 border-r-2 border-gold-400 rounded-br-lg"></span>
-
-                            <!-- Gradasi bawah -->
                             <div class="pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-emerald-950/50 to-transparent"></div>
                         </div>
-
-                        <!-- Bar alamat + tombol rute -->
                         <div class="relative z-10 px-5 py-4 bg-mint-50 border-t border-mint-200 flex items-center gap-3">
                             <i class="fas fa-map-pin text-gold-500"></i>
                             <p class="text-gray-600 text-xs leading-relaxed flex-1">Jl. Pendidikan Islam No. 99, Kota Baru, Indonesia 40123</p>
-                            <a href="https://www.google.com/maps/dir/?api=1&destination=Jl.+Pendidikan+Islam+No.+99,+Kota+Baru,+Indonesia" target="_blank" rel="noopener"
-                               class="shrink-0 inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-emerald-900 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-gold-400 hover:text-slate-900 transition">
-                                Rute <i class="fas fa-directions text-[9px]"></i>
-                            </a>
+                            <a href="https://www.google.com/maps/dir/?api=1&destination=Jl.+Pendidikan+Islam+No.+99,+Kota+Baru,+Indonesia" target="_blank" rel="noopener" class="shrink-0 inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-emerald-900 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-gold-400 hover:text-slate-900 transition">Rute <i class="fas fa-directions text-[9px]"></i></a>
                         </div>
                     </div>
                 </div>
             </div>
-
             <div class="border-t border-mint-200 pt-4 text-center text-sm text-gray-500">&copy; 2026 Pesantren Modern Al-Izzah. All Rights Reserved.</div>
         </div>
     </footer>
@@ -632,14 +532,10 @@
         function toggleMobileMenu() { const m = document.getElementById('mobile-menu'); m.classList.toggle('hidden'); m.classList.toggle('flex'); }
     </script>
 
-    <!-- ============================================================
-         MINI KALENDER INTERAKTIF + HITUNG MUNDUR SPMB
-         ============================================================ -->
+    <!-- MINI KALENDER INTERAKTIF + COUNTDOWN -->
     <script>
     (function() {
         const BULAN = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
-
-        /* Data kegiatan — key: YYYY-MM-DD (mudah ditambah nanti) */
         const EVENTS = {
             '2026-09-01': [{ t: 'Upacara Pembukaan Tahun Ajaran Baru', k: 'Kegiatan', j: '07.00 WIB · Lapangan Utama' }],
             '2026-09-05': [{ t: 'Milad ke-16 Pesantren Al-Izzah', k: 'Kegiatan', j: '08.00 WIB · Aula Serbaguna' }],
@@ -655,32 +551,22 @@
             '2026-12-01': [{ t: 'Pendaftaran SPMB Gelombang 2 Dibuka', k: 'SPMB', j: 'Sepanjang hari · Online' }],
             '2026-12-18': [{ t: 'Pembagian Rapor Semester Ganjil', k: 'Akademik', j: '08.00 WIB · Gedung Akademik' }]
         };
-
         const today = new Date();
         let view = new Date(today.getFullYear(), today.getMonth(), 1);
         let selected = null;
-
-        const elGrid   = document.getElementById('calGrid');
-        const elTitle  = document.getElementById('calTitle');
+        const elGrid = document.getElementById('calGrid');
+        const elTitle = document.getElementById('calTitle');
         const elDetail = document.getElementById('calDetail');
-        const elBody   = document.getElementById('calDetailBody');
-
+        const elBody = document.getElementById('calDetailBody');
         function key(y, m, d) { return y + '-' + String(m + 1).padStart(2,'0') + '-' + String(d).padStart(2,'0'); }
-
         function render() {
             const y = view.getFullYear(), m = view.getMonth();
             elTitle.textContent = BULAN[m] + ' ' + y;
             elGrid.innerHTML = '';
-
             const first = new Date(y, m, 1).getDay();
             const total = new Date(y, m + 1, 0).getDate();
             const todayKey = key(today.getFullYear(), today.getMonth(), today.getDate());
-
-            for (let i = 0; i < first; i++) {
-                const s = document.createElement('div');
-                s.className = 'mcal-cell mcal-empty';
-                elGrid.appendChild(s);
-            }
+            for (let i = 0; i < first; i++) { const s = document.createElement('div'); s.className = 'mcal-cell mcal-empty'; elGrid.appendChild(s); }
             for (let d = 1; d <= total; d++) {
                 const k = key(y, m, d);
                 const cell = document.createElement('div');
@@ -688,24 +574,12 @@
                 cell.textContent = d;
                 if (k === selected) cell.classList.add('mcal-selected');
                 else if (k === todayKey) cell.classList.add('mcal-today');
-                if (EVENTS[k]) {
-                    const dot = document.createElement('span');
-                    dot.className = 'mcal-dot';
-                    cell.appendChild(dot);
-                }
-                cell.addEventListener('click', function() {
-                    selected = k;
-                    render();
-                    showDetail(k);
-                });
+                if (EVENTS[k]) { const dot = document.createElement('span'); dot.className = 'mcal-dot'; cell.appendChild(dot); }
+                cell.addEventListener('click', function() { selected = k; render(); showDetail(k); });
                 elGrid.appendChild(cell);
             }
-            elGrid.classList.remove('cal-fade');
-            void elGrid.offsetWidth;
-            elGrid.classList.add('cal-fade');
+            elGrid.classList.remove('cal-fade'); void elGrid.offsetWidth; elGrid.classList.add('cal-fade');
         }
-
-        /* Panel detail — gaya minimalis serasi */
         function showDetail(k) {
             const evs = EVENTS[k];
             if (!evs) { elDetail.classList.add('hidden'); return; }
@@ -724,121 +598,55 @@
             html += '</div>';
             elBody.innerHTML = html;
             elDetail.classList.remove('hidden');
-            elDetail.classList.remove('cal-fade');
-            void elDetail.offsetWidth;
-            elDetail.classList.add('cal-fade');
+            elDetail.classList.remove('cal-fade'); void elDetail.offsetWidth; elDetail.classList.add('cal-fade');
         }
-
-        document.getElementById('btnPrev').addEventListener('click', function() {
-            view = new Date(view.getFullYear(), view.getMonth() - 1, 1);
-            selected = null; elDetail.classList.add('hidden'); render();
-        });
-        document.getElementById('btnNext').addEventListener('click', function() {
-            view = new Date(view.getFullYear(), view.getMonth() + 1, 1);
-            selected = null; elDetail.classList.add('hidden'); render();
-        });
-        document.getElementById('btnToday').addEventListener('click', function() {
-            view = new Date(today.getFullYear(), today.getMonth(), 1);
-            selected = key(today.getFullYear(), today.getMonth(), today.getDate());
-            render(); showDetail(selected);
-        });
-
-        /* ====== Hitung mundur penutupan SPMB Gelombang 1 ====== */
+        document.getElementById('btnPrev').addEventListener('click', function() { view = new Date(view.getFullYear(), view.getMonth() - 1, 1); selected = null; elDetail.classList.add('hidden'); render(); });
+        document.getElementById('btnNext').addEventListener('click', function() { view = new Date(view.getFullYear(), view.getMonth() + 1, 1); selected = null; elDetail.classList.add('hidden'); render(); });
+        document.getElementById('btnToday').addEventListener('click', function() { view = new Date(today.getFullYear(), today.getMonth(), 1); selected = key(today.getFullYear(), today.getMonth(), today.getDate()); render(); showDetail(selected); });
         (function() {
-            const start = new Date(2026, 8, 1);          /* 1 Sep 2026 */
-            const end   = new Date(2026, 8, 30, 23, 59); /* 30 Sep 2026 */
-            const now   = new Date();
-            const elD   = document.getElementById('cdDays');
-            const elB   = document.getElementById('cdBar');
+            const start = new Date(2026, 8, 1);
+            const end = new Date(2026, 8, 30, 23, 59);
+            const now = new Date();
+            const elD = document.getElementById('cdDays');
+            const elB = document.getElementById('cdBar');
             if (!elD || !elB) return;
             const days = Math.ceil((end - now) / 86400000);
-            if (days > 0) {
-                elD.textContent = days;
-                const pct = Math.min(100, Math.max(0, ((now - start) / (end - start)) * 100));
-                elB.style.width = pct.toFixed(0) + '%';
-            } else {
-                elD.textContent = '0';
-                elB.style.width = '100%';
-            }
+            if (days > 0) { elD.textContent = days; const pct = Math.min(100, Math.max(0, ((now - start) / (end - start)) * 100)); elB.style.width = pct.toFixed(0) + '%'; }
+            else { elD.textContent = '0'; elB.style.width = '100%'; }
         })();
-
         render();
         console.log('%c📅 Mini Kalender Aktif', 'color:#059669;font-size:12px;font-weight:bold;');
     })();
     </script>
 
-    <!-- Jembatan CMS dashboard → halaman publik (INTEGRASI) -->
     <script src="cms-public.js"></script>
 
-<!-- ============================================================ -->
-    <!-- 🔒 Proteksi Konten (TETAP SAMA)                              -->
-    <!-- ============================================================ -->
+    <!-- 🔒 Proteksi Konten -->
     <script>
     (function() {
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-            showToastCustom('🔒 Konten dilindungi. Klik kanan dinonaktifkan.');
-            return false;
-        });
-
+        document.addEventListener('contextmenu', function(e) { e.preventDefault(); showToastCustom('🔒 Konten dilindungi. Klik kanan dinonaktifkan.'); return false; });
         document.addEventListener('keydown', function(e) {
             if (e.ctrlKey && e.key === 'u') { e.preventDefault(); return false; }
             if (e.ctrlKey && e.key === 's') { e.preventDefault(); return false; }
             if (e.ctrlKey && e.key === 'c') { e.preventDefault(); return false; }
-            if ((e.ctrlKey && e.shiftKey && e.key === 'I') || e.key === 'F12') { 
-                e.preventDefault(); 
-                showToastCustom('🔒 Developer Tools dinonaktifkan.');
-                return false; 
-            }
+            if ((e.ctrlKey && e.shiftKey && e.key === 'I') || e.key === 'F12') { e.preventDefault(); showToastCustom('🔒 Developer Tools dinonaktifkan.'); return false; }
             if (e.ctrlKey && e.shiftKey && e.key === 'J') { e.preventDefault(); return false; }
             if (e.ctrlKey && e.key === 'p') { e.preventDefault(); return false; }
         });
-
-        document.addEventListener('selectstart', function(e) {
-            if (!['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) {
-                e.preventDefault();
-                return false;
-            }
-        });
-
-        document.addEventListener('dragstart', function(e) {
-            e.preventDefault();
-            return false;
-        });
-
+        document.addEventListener('selectstart', function(e) { if (!['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) { e.preventDefault(); return false; } });
+        document.addEventListener('dragstart', function(e) { e.preventDefault(); return false; });
         function showToastCustom(message) {
             const toast = document.createElement('div');
-            toast.style.cssText = `
-                position: fixed; top: 20px; right: 20px; z-index: 99999;
-                background: linear-gradient(135deg, #064e3b, #059669);
-                color: white; padding: 14px 20px; border-radius: 10px;
-                font-weight: 600; font-size: 0.9rem; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-                font-family: 'Plus Jakarta Sans', sans-serif;
-                animation: slideInToast 0.3s ease-out;
-            `;
+            toast.style.cssText = `position: fixed; top: 20px; right: 20px; z-index: 99999; background: linear-gradient(135deg, #064e3b, #059669); color: white; padding: 14px 20px; border-radius: 10px; font-weight: 600; font-size: 0.9rem; box-shadow: 0 4px 15px rgba(0,0,0,0.2); font-family: 'Plus Jakarta Sans', sans-serif; animation: slideInToast 0.3s ease-out;`;
             toast.textContent = message;
             document.body.appendChild(toast);
-            setTimeout(() => {
-                toast.style.opacity = '0';
-                toast.style.transition = 'opacity 0.3s';
-                setTimeout(() => toast.remove(), 300);
-            }, 2500);
+            setTimeout(() => { toast.style.opacity = '0'; toast.style.transition = 'opacity 0.3s'; setTimeout(() => toast.remove(), 300); }, 2500);
         }
-
         const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideInToast {
-                from { transform: translateX(100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
-            }
-            body { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
-            input, textarea, select { -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text; }
-        `;
+        style.textContent = `@keyframes slideInToast { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } } body { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; } input, textarea, select { -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text; }`;
         document.head.appendChild(style);
-
         console.log('%c🔒 Proteksi Konten Aktif', 'color: #059669; font-size: 14px; font-weight: bold;');
     })();
     </script>
-
 </body>
 </html>
